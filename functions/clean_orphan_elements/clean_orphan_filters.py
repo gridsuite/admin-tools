@@ -1,15 +1,13 @@
 import constant
 import requests
 
-from script_mode import ScriptMode
-
 
 def get_directory_element_uuid(element):
     return element["elementUuid"]
 
 
-def delete_filters(filter_uuids, script_mode):
-    if script_mode == ScriptMode.TEST:
+def delete_filters(filter_uuids, dry_run):
+    if dry_run:
         for orphan_f in filter_uuids:
             print("DELETE " + constant.DELETE_FILTERS + "/" + orphan_f)
     else:
@@ -21,7 +19,7 @@ def get_element_id(element):
     return element["id"]
 
 
-def delete_orphan_filters(script_mode):
+def delete_orphan_filters(dry_run):
     # DELETING ORPHAN FILTERS IN FILTER SERVER
     print("/// Orphan filters deletion ///")
     # GET EXISTING FILTERS FROM DIRECTORY SERVER
@@ -56,7 +54,7 @@ def delete_orphan_filters(script_mode):
     for orphan_cl in orphan_filters:
         print(" - ", orphan_cl)
 
-    delete_filters(orphan_filters, script_mode)
+    delete_filters(orphan_filters, dry_run)
 
     print("Done")
 
