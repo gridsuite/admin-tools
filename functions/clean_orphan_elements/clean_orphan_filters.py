@@ -3,24 +3,28 @@ import requests
 
 from script_mode import ScriptMode
 
+
 def get_directory_element_uuid(element):
     return element["elementUuid"]
 
+
 def delete_filters(filter_uuids, script_mode):
-    if(script_mode == ScriptMode.TEST):
+    if script_mode == ScriptMode.TEST:
         for orphan_f in filter_uuids:
             print("DELETE " + constant.DELETE_FILTERS + "/" + orphan_f)
     else:
         for orphan_f in filter_uuids:
             requests.delete(constant.DELETE_FILTERS + "/" + orphan_f)
 
+
 def get_element_id(element):
     return element["id"]
+
 
 def delete_orphan_filters(script_mode):
     # DELETING ORPHAN FILTERS IN FILTER SERVER
     print("/// Orphan filters deletion ///")
-    ### GET EXISTING FILTERS FROM DIRECTORY SERVER
+    # GET EXISTING FILTERS FROM DIRECTORY SERVER
     print("Getting existing filters from directory-server")
     get_directory_filters_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "FILTER"})
     get_directory_filters_response_json = get_directory_filters_response.json()
@@ -29,7 +33,7 @@ def delete_orphan_filters(script_mode):
 
     print("Done")
 
-    ### GET CONTINGENCY LISTS FROM ACTIONS SERVER
+    # GET CONTINGENCY LISTS FROM ACTIONS SERVER
     print("Getting all filters from filter-server")
     get_actions_filters_response = requests.get(constant.GET_FILTERS)
     get_actions_filters_json = get_actions_filters_response.json()
@@ -38,16 +42,16 @@ def delete_orphan_filters(script_mode):
 
     print("Done")
 
-    ### GET ORPHANS CONTINGENCY LISTS - CONTINGENCY LISTS IN ACTIONS SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
+    # GET ORPHANS CONTINGENCY LISTS - CONTINGENCY LISTS IN ACTIONS SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
     print("Computing orphan filters")
     orphan_filters = []
     for element_uuid in all_filters_uuid:
-        if(element_uuid not in existing_filters_uuid):
+        if element_uuid not in existing_filters_uuid:
             orphan_filters.append(element_uuid)
 
     print("Done")
 
-    ### DELETING OPRHANS
+    # DELETING OPRHANS
     print("Deleting the following orphan filters : ")
     for orphan_cl in orphan_filters:
         print(" - ", orphan_cl)
