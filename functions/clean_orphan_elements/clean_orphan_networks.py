@@ -1,7 +1,5 @@
 import requests
-
 import constant
-from script_mode import ScriptMode
 
 
 def get_network_uuid_from_study(study):
@@ -12,8 +10,8 @@ def get_network_uuid_from_network(network):
     return network["uuid"]
 
 
-def delete_networks(network_uuids, script_mode):
-    if script_mode == ScriptMode.TEST:
+def delete_networks(network_uuids, dry_run):
+    if dry_run:
         for orphan_n in network_uuids:
             print("DELETE " + constant.DELETE_NETWORKS + "/" + orphan_n)
     else:
@@ -21,7 +19,7 @@ def delete_networks(network_uuids, script_mode):
             requests.delete(constant.DELETE_NETWORKS + "/" + orphan_n)
 
 
-def delete_orphan_network(script_mode):
+def delete_orphan_network(dry_run):
     # DELETING ORPHAN NETWORKS IN NETWORK STORE SERVER
     print("/// Orphan networks deletion ///")
     # GET EXISTING NETWORKS AMONG EXISTING STUDIES
@@ -55,7 +53,7 @@ def delete_orphan_network(script_mode):
     for orphan_n in orphan_networks:
         print(" - ", orphan_n)
 
-    delete_networks(orphan_networks, script_mode)
+    delete_networks(orphan_networks, dry_run)
 
     print("Done")
 

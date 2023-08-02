@@ -1,6 +1,5 @@
 import requests
 import constant
-from script_mode import ScriptMode
 
 
 def get_directory_element_uuid(element):
@@ -11,8 +10,8 @@ def get_actions_element_uuid(element):
     return element["id"]
 
 
-def delete_contingency_lists(contingency_list_uuids, script_mode):
-    if script_mode == ScriptMode.TEST:
+def delete_contingency_lists(contingency_list_uuids, dry_run):
+    if dry_run:
         for orphan_cl in contingency_list_uuids:
             print("DELETE " + constant.DELETE_CONTINGENCY_LISTS + "/" + orphan_cl)
     else:
@@ -20,7 +19,7 @@ def delete_contingency_lists(contingency_list_uuids, script_mode):
             requests.delete(constant.DELETE_CONTINGENCY_LISTS + "/" + orphan_cl)
 
 
-def delete_orphan_contingency_lists(script_mode):
+def delete_orphan_contingency_lists(dry_run):
     # DELETING ORPHAN ACTIONS IN ACTIONS SERVER
     print("/// Orphan actions deletion ///")
     # GET EXISTING ACTIONS FROM DIRECTORY SERVER
@@ -57,7 +56,7 @@ def delete_orphan_contingency_lists(script_mode):
     for orphan_cl in orphan_contingency_lists:
         print(" - ", orphan_cl)
 
-    delete_contingency_lists(orphan_contingency_lists, script_mode)
+    delete_contingency_lists(orphan_contingency_lists, dry_run)
 
     print("Done")
 
