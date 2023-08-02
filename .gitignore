@@ -1,1 +1,7 @@
+# Python
 __pycache__/
+/venv
+
+# IntelliJ
+/.idea
+*.iml

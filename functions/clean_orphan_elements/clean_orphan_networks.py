@@ -1,7 +1,8 @@
 import requests
-import constant
 
+import constant
 from script_mode import ScriptMode
+
 
 def get_network_uuid_from_study(study):
     return study["networkUuid"]
