@@ -1,11 +1,18 @@
 import argparse
+import constant
+import requests
 
-from functions.clean_simulation_results.clean_loadflow_results import delete_loadflow_results
-from functions.clean_simulation_results.clean_dynamic_simulation_results import delete_dynamic_simulation_results
-from functions.clean_simulation_results.clean_security_analysis_results import delete_security_analysis_results
-from functions.clean_simulation_results.clean_sensitivity_analysis_results import delete_sensitivity_analysis_results
-from functions.clean_simulation_results.clean_shortcircuit_results import delete_shortcircuit_results
-from functions.clean_simulation_results.clean_voltage_init_results import delete_voltage_init_results
+def delete_simulation_results(dry_run, name, endpoint, dry_run_endpoint):
+    print("/// " + name + " results deletion ///")
+    if dry_run: 
+        resultsCount = requests.get(dry_run_endpoint).json()
+        print("Here's the count of stored results : " + str(resultsCount))
+    else :
+        result = requests.delete(endpoint)
+        if result.ok :
+            print("Done")
+        else :
+            print("An error occured : " + str(result.status_code))
 
 parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete simulation results', )
 
@@ -43,24 +50,22 @@ else:
 print("\n")
 
 if runAll:
-    delete_loadflow_results(dry_run)    
-    delete_dynamic_simulation_results(dry_run)
-    delete_security_analysis_results(dry_run)
-    delete_sensitivity_analysis_results(dry_run)    
-    delete_shortcircuit_results(dry_run)    
-    delete_voltage_init_results(dry_run) 
+    delete_simulation_results(dry_run, "LoadFlow", constant.DELETE_STUDY_LOADFLOW_RESULTS, constant.GET_LOADFLOW_RESULTS_COUNT)
+    delete_simulation_results(dry_run, "Dynamic simulation", constant.DELETE_STUDY_DYNAMIC_SIMULATION_RESULTS, constant.GET_DYNAMIC_SIMULATION_RESULTS_COUNT)
+    delete_simulation_results(dry_run, "Security analysis", constant.DELETE_STUDY_SECURITY_ANALYSIS_RESULTS, constant.GET_SECURITY_ANALYSIS_RESULTS_COUNT)
+    delete_simulation_results(dry_run, "Sensitivity analysis", constant.DELETE_STUDY_SENSITIVITY_ANALYSIS_RESULTS, constant.GET_SENSITIVITY_ANALYSIS_RESULTS_COUNT)
+    delete_simulation_results(dry_run, "Shortcircuit", constant.DELETE_STUDY_SHORTCIRCUIT_RESULTS, constant.GET_SHORTCIRCUIT_RESULTS_COUNT) 
+    delete_simulation_results(dry_run, "Voltage init", constant.DELETE_STUDY_VOLTAGE_INIT_RESULTS, constant.GET_VOLTAGE_INIT_RESULTS_COUNT)
 else: 
     if loadflow:
-        delete_loadflow_results(dry_run)
+        delete_simulation_results(dry_run, "LoadFlow", constant.DELETE_STUDY_LOADFLOW_RESULTS, constant.GET_LOADFLOW_RESULTS_COUNT)    
     if dynamicsimulation:
-        delete_dynamic_simulation_results(dry_run)
+        delete_simulation_results(dry_run, "Dynamic simulation", constant.DELETE_STUDY_DYNAMIC_SIMULATION_RESULTS, constant.GET_DYNAMIC_SIMULATION_RESULTS_COUNT)
     if security:
-        delete_security_analysis_results(dry_run)
+        delete_simulation_results(dry_run, "Security analysis", constant.DELETE_STUDY_SECURITY_ANALYSIS_RESULTS, constant.GET_SECURITY_ANALYSIS_RESULTS_COUNT)
     if sensitivity:
-        delete_sensitivity_analysis_results(dry_run)
+        delete_simulation_results(dry_run, "Sensitivity analysis", constant.DELETE_STUDY_SENSITIVITY_ANALYSIS_RESULTS, constant.GET_SENSITIVITY_ANALYSIS_RESULTS_COUNT)
     if shortcircuit:
-        delete_shortcircuit_results(dry_run)
+        delete_simulation_results(dry_run, "Shortcircuit", constant.DELETE_STUDY_SHORTCIRCUIT_RESULTS, constant.GET_SHORTCIRCUIT_RESULTS_COUNT) 
     if voltageinit:
-        delete_voltage_init_results(dry_run)
-
-   
+        delete_simulation_results(dry_run, "Voltage init", constant.DELETE_STUDY_VOLTAGE_INIT_RESULTS, constant.GET_VOLTAGE_INIT_RESULTS_COUNT)
