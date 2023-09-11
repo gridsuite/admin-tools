@@ -49,23 +49,15 @@ else:
     print("Simulation results deletion script (exec mode)")
 print("\n")
 
-if runAll:
-    delete_simulation_results(dry_run, "LoadFlow", constant.DELETE_STUDY_LOADFLOW_RESULTS, constant.GET_LOADFLOW_RESULTS_COUNT)
+if loadflow or runAll:
+    delete_simulation_results(dry_run, "LoadFlow", constant.DELETE_STUDY_LOADFLOW_RESULTS, constant.GET_LOADFLOW_RESULTS_COUNT)    
+if dynamicsimulation or runAll:
     delete_simulation_results(dry_run, "Dynamic simulation", constant.DELETE_STUDY_DYNAMIC_SIMULATION_RESULTS, constant.GET_DYNAMIC_SIMULATION_RESULTS_COUNT)
+if security or runAll:
     delete_simulation_results(dry_run, "Security analysis", constant.DELETE_STUDY_SECURITY_ANALYSIS_RESULTS, constant.GET_SECURITY_ANALYSIS_RESULTS_COUNT)
+if sensitivity or runAll:
     delete_simulation_results(dry_run, "Sensitivity analysis", constant.DELETE_STUDY_SENSITIVITY_ANALYSIS_RESULTS, constant.GET_SENSITIVITY_ANALYSIS_RESULTS_COUNT)
+if shortcircuit or runAll:
     delete_simulation_results(dry_run, "Shortcircuit", constant.DELETE_STUDY_SHORTCIRCUIT_RESULTS, constant.GET_SHORTCIRCUIT_RESULTS_COUNT) 
+if voltageinit or runAll:
     delete_simulation_results(dry_run, "Voltage init", constant.DELETE_STUDY_VOLTAGE_INIT_RESULTS, constant.GET_VOLTAGE_INIT_RESULTS_COUNT)
-else: 
-    if loadflow:
-        delete_simulation_results(dry_run, "LoadFlow", constant.DELETE_STUDY_LOADFLOW_RESULTS, constant.GET_LOADFLOW_RESULTS_COUNT)    
-    if dynamicsimulation:
-        delete_simulation_results(dry_run, "Dynamic simulation", constant.DELETE_STUDY_DYNAMIC_SIMULATION_RESULTS, constant.GET_DYNAMIC_SIMULATION_RESULTS_COUNT)
-    if security:
-        delete_simulation_results(dry_run, "Security analysis", constant.DELETE_STUDY_SECURITY_ANALYSIS_RESULTS, constant.GET_SECURITY_ANALYSIS_RESULTS_COUNT)
-    if sensitivity:
-        delete_simulation_results(dry_run, "Sensitivity analysis", constant.DELETE_STUDY_SENSITIVITY_ANALYSIS_RESULTS, constant.GET_SENSITIVITY_ANALYSIS_RESULTS_COUNT)
-    if shortcircuit:
-        delete_simulation_results(dry_run, "Shortcircuit", constant.DELETE_STUDY_SHORTCIRCUIT_RESULTS, constant.GET_SHORTCIRCUIT_RESULTS_COUNT) 
-    if voltageinit:
-        delete_simulation_results(dry_run, "Voltage init", constant.DELETE_STUDY_VOLTAGE_INIT_RESULTS, constant.GET_VOLTAGE_INIT_RESULTS_COUNT)
