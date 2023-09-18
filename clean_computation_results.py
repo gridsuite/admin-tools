@@ -60,4 +60,4 @@ if sensitivity or runAll:
 if shortcircuit or runAll:
     delete_computation_results(dry_run, constant.SHORTCIRCUIT)
 if voltageinit or runAll:
-    delete_simulation_results(dry_run, constant.VOLTAGE_INIT)
+    delete_computation_results(dry_run, constant.VOLTAGE_INIT)
