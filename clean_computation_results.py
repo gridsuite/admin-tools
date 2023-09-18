@@ -7,23 +7,11 @@
 
 import argparse
 import constant
-import requests
+from functions.clean_computation_results import delete_computation_results 
 
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
 #
-
-def delete_computation_results(dry_run, computationType):
-    print("/// " + computationType + " results deletion ///")
-    if dry_run: 
-        resultsCount = requests.delete(constant.DELETE_COMPUTATION_RESULTS, params={'type': computationType, "dryRun": "true"})
-        print("Here's the count of stored results : " + str(resultsCount.json()))
-    else :
-        result = requests.delete(constant.DELETE_COMPUTATION_RESULTS, params={'type': computationType, "dryRun": "false"})
-        if result.ok :
-            print("Here's the count of deleted results : " + str(result.json()))
-        else :
-            print("An error occured : " + str(result.status_code))
 
 parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete computation results', )
 
