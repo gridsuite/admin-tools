@@ -7,7 +7,7 @@
 
 import argparse
 import constant
-from functions.clean_computation_results import delete_computation_results 
+from functions.delete_computation_results import delete_computation_results 
 
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
