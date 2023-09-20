@@ -7,7 +7,7 @@
 
 import argparse
 import constant
-from functions.indexes import indexes 
+from functions.indexes.indexes import delete_equipments_indexes 
 
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
@@ -18,10 +18,14 @@ parser = argparse.ArgumentParser(description='Send requests to the gridsuite ser
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion request",
                     action="store_true")                                                          
 
+
+args = parser.parse_args()
+dry_run = args.dry_run
+
 if dry_run:
     print("Studies equipments indexes deletion script will run without deleting anything (test mode)")
 else:
     print("Studies equipments indexes deletion script (exec mode)")
 print("\n")
 
-delete_computation_results(dry_run, constant.LOADFLOW)    
+delete_equipments_indexes(dry_run)    
