@@ -1,11 +1,3 @@
-# ENV FOLDERS
-DEV_FOLDER = "sql/dev/"
-PROD_FOLDER = "sql/prod/"
-
-# SQL FILES
-GET_EXISTING_NETWORKS_SQL = "get_existing_networks.sql"
-GET_ORPHAN_NETWORKS_SQL = "get_orphan_networks.sql"
-DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
 #
 # Copyright (c) 2023, RTE (http://www.rte-france.com)
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -16,6 +8,15 @@ DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
 #
+
+# ENV FOLDERS
+DEV_FOLDER = "sql/dev/"
+PROD_FOLDER = "sql/prod/"
+
+# SQL FILES
+GET_EXISTING_NETWORKS_SQL = "get_existing_networks.sql"
+GET_ORPHAN_NETWORKS_SQL = "get_orphan_networks.sql"
+DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
 
 # SERVICES URL
 HTTP_PROTOCOL = "http://"
