@@ -6,6 +6,16 @@ PROD_FOLDER = "sql/prod/"
 GET_EXISTING_NETWORKS_SQL = "get_existing_networks.sql"
 GET_ORPHAN_NETWORKS_SQL = "get_orphan_networks.sql"
 DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
+#
+# Copyright (c) 2023, RTE (http://www.rte-france.com)
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+#
+# @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
+#
 
 # SERVICES URL
 HTTP_PROTOCOL = "http://"
