@@ -12,14 +12,14 @@ import constant
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
 #
 
-def delete_equipments_indexes(dry_run):
-    print("/// Studies equipments indexes deletion ///")
+def delete_indexed_equipments(dry_run):
+    print("/// Studies indexed equipments deletion ///")
     if dry_run: 
-        resultsCount = requests.delete(constant.DELETE_STUDIES_EQUIPMENTS_INDEXES, params={"dryRun": "true"})
-        print("Here's the count of stored indexes : " + str(resultsCount.json()))
+        resultsCount = requests.delete(constant.DELETE_STUDIES_INDEXED_EQUIPMENTS, params={"dryRun": "true"})
+        print("Here's the count of stored indexed equipments : " + str(resultsCount.json()))
     else :
-        result = requests.delete(constant.DELETE_STUDIES_EQUIPMENTS_INDEXES, params={"dryRun": "false"})
+        result = requests.delete(constant.DELETE_STUDIES_INDEXED_EQUIPMENTS, params={"dryRun": "false"})
         if result.ok :
-            print("Here's the count of deleted equipment indexes : " + str(result.json()))
+            print("Here's the count of deleted indexed equipments : " + str(result.json()))
         else :
             print("An error occured : " + str(result.json()))
