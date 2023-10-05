@@ -13,7 +13,7 @@ from functions.indexes.indexes import delete_indexed_equipments
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
 #
 
-parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete studies indexed equipments and tomstoned', )
+parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete studies indexed equipments and tombstoned', )
 
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion request",
                     action="store_true")                                                          
@@ -23,9 +23,9 @@ args = parser.parse_args()
 dry_run = args.dry_run
 
 if dry_run:
-    print("Studies indexed equipments and tomstoned deletion script will run without deleting anything (test mode)")
+    print("Studies indexed equipments and tombstoned deletion script will run without deleting anything (test mode)")
 else:
-    print("Studies indexed equipments and tomstoned deletion script (exec mode)")
+    print("Studies indexed equipments and tombstoned deletion script (exec mode)")
 print("\n")
 
 delete_indexed_equipments(dry_run)    

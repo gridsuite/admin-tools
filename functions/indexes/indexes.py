@@ -13,13 +13,13 @@ import constant
 #
 
 def delete_indexed_equipments(dry_run):
-    print("/// Studies indexed equipments and tomstoned deletion ///")
+    print("/// Studies indexed equipments and tombstoned deletion ///")
     if dry_run: 
         resultsCount = requests.delete(constant.DELETE_STUDIES_INDEXED_EQUIPMENTS, params={"dryRun": "true"})
-        print("Here's the count of stored indexed equipments and tomstoned : " + str(resultsCount.json()))
+        print("Here's the count of stored indexed equipments and tombstoned : " + str(resultsCount.json()))
     else :
         result = requests.delete(constant.DELETE_STUDIES_INDEXED_EQUIPMENTS, params={"dryRun": "false"})
         if result.ok :
-            print("Here's the count of deleted indexed equipments and tomstoned : " + str(result.json()))
+            print("Here's the count of deleted indexed equipments and tombstoned : " + str(result.json()))
         else :
             print("An error occured : " + str(result.json()))
