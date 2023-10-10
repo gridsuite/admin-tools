@@ -7,6 +7,7 @@
 
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
+# @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
 # ENV FOLDERS
@@ -51,7 +52,7 @@ SHORTCIRCUIT_SERVER_URL = HTTP_PROTOCOL + SHORTCIRCUIT_SERVER_HOSTNAME + API_VER
 VOLTAGE_INIT_SERVER_URL = HTTP_PROTOCOL + VOLTAGE_INIT_SERVER_HOSTNAME + API_VERSION
 
 # PATHS
-GET_STUDIES = STUDY_SERVER_URL + "/supervision/studies"
+GET_STUDIES = STUDY_SERVER_URL + "/studies"
 
 GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
@@ -75,5 +76,8 @@ SHORTCIRCUIT = "SHORT_CIRCUIT"
 VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 
 # INDEXED EQUIPMENTS
-DELETE_STUDIES_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/indexed-equipments"
+DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/indexed-equipments"
+GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-equipments-count"
+GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"
+
 
