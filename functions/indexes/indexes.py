@@ -32,4 +32,5 @@ def delete_indexed_equipments(studyUuid):
         print("An error occured : " + str(result.json()))
 
 def expunge_deletes(indexName):
+    print("ES Force merge : " + constant.ES_FORCE_MERGE.format(indexName = indexName) + "?only_expunge_deletes=true")
     result = requests.post(url = constant.ES_FORCE_MERGE.format(indexName = indexName), params={'only_expunge_deletes': 'true'})

@@ -8,6 +8,7 @@
 import argparse
 import constant
 import socket
+import time
 from tqdm import tqdm
 
 from functions.indexes.indexes import delete_indexed_equipments
@@ -56,6 +57,8 @@ if not dry_run:
     print("Studies indexed equipments and tombstoned deletion processing...")
     for study in tqdm(studies):
         delete_indexed_equipments(study['id'])
+    print("Waiting 30 secondes before force merger expunge_deletes...")
+    time.sleep(30)    
     expunge_deletes(equipments_index_name + "," + tombstoned_equipments_index_name)
     print("End of deletion")
 else:
