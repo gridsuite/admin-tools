@@ -10,10 +10,13 @@ import constant
 import socket
 from tqdm import tqdm
 
-from functions.indexes.indexes import delete_indexed_equipments 
-from functions.indexes.indexes import get_nb_indexed_equipments 
-from functions.indexes.indexes import get_nb_indexed_tombstoned_equipments 
-from functions.studies.studies import get_all_studies_uuid 
+from functions.indexes.indexes import delete_indexed_equipments
+from functions.indexes.indexes import get_nb_indexed_equipments
+from functions.indexes.indexes import get_nb_indexed_tombstoned_equipments
+from functions.indexes.indexes import get_equipments_index_name
+from functions.indexes.indexes import get_tombstoned_equipments_index_name
+from functions.indexes.indexes import expunge_deletes
+from functions.studies.studies import get_all_studies_uuid
 
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
@@ -33,21 +36,28 @@ print("---------------------------------------------------------")
 print("Studies indexed equipments and tombstoned deletion script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without deleting anything (test mode)")
+if constant.DEV:
+    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (localhost:xxxx)")
 print("\n")
 
 studies = get_all_studies_uuid()
 
 print("---------------------------------------------------------")
-print("This script will apply on Host = " + socket.gethostname())
-print("nb indexed equipments = " + get_nb_indexed_equipments())
-print("nb indexed tombstoned_equipments = " + get_nb_indexed_tombstoned_equipments())
-print("for a total of = " + str(len(studies)) + " studies")
+hostname = socket.gethostname()
+host_ip = socket.gethostbyname(hostname)
+equipments_index_name = get_equipments_index_name()
+tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()
+print("This script will apply on Host = " + hostname + "(" + host_ip + ")")
+print("Number of indexed equipments (name: " + equipments_index_name + ") = " + get_nb_indexed_equipments())
+print("Number of indexed tombstoned_equipments (name: " + tombstoned_equipments_index_name + ") = " + get_nb_indexed_tombstoned_equipments())
+print("For a total of = " + str(len(studies)) + " studies")
 print("---------------------------------------------------------")
 if not dry_run:
     print("Studies indexed equipments and tombstoned deletion processing...")
     for study in tqdm(studies):
         delete_indexed_equipments(study['id'])
+    expunge_deletes(equipments_index_name + "," + tombstoned_equipments_index_name)
     print("End of deletion")
 else:
-    print("nothing has been impacted (dry-run)")
-   
+    print("Nothing has been impacted (dry-run)")
+

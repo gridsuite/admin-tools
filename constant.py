@@ -23,21 +23,26 @@ DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
 HTTP_PROTOCOL = "http://"
 API_VERSION = "/v1"
 
+DEV = False
 # hostnames
-STUDY_SERVER_HOSTNAME = "study-server"
-NETWORK_STORE_SERVER_HOSTNAME = "network-store-server"
-DIRECTORY_SERVER_HOSTNAME = "directory-server"
-ACTIONS_SERVER_HOSTNAME = "actions-server"
-FILTER_SERVER_HOSTNAME = "filter-server"
+STUDY_SERVER_HOSTNAME = "localhost:5001" if DEV else "study-server"
+ES_HOSTNAME = "localhost:9200" if DEV else "ES_HOSTNAME to configure"
 
-LOADFLOW_SERVER_HOSTNAME = "loadflow-server"
-DYNAMIC_SIMULATION_SERVER_HOSTNAME = "dynamic-simulation-server"
-SECURITY_ANALYSIS_SERVER_HOSTNAME = "security-analysis-server"
-SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "sensitivity-analysis-server"
-SHORTCIRCUIT_SERVER_HOSTNAME = "shortcircuit-server"
-VOLTAGE_INIT_SERVER_HOSTNAME = "voltage-init-server"
+NETWORK_STORE_SERVER_HOSTNAME = "localhost:8080" if DEV else "network-store-server"
+DIRECTORY_SERVER_HOSTNAME = "localhost:5026" if DEV else "directory-server"
+ACTIONS_SERVER_HOSTNAME = "localhost:5022" if DEV else "actions-server"
+FILTER_SERVER_HOSTNAME = "localhost:5027" if DEV else "filter-server"
+
+LOADFLOW_SERVER_HOSTNAME = "localhost:5008" if DEV else "loadflow-server"
+DYNAMIC_SIMULATION_SERVER_HOSTNAME = "localhost:5032" if DEV else "dynamic-simulation-server"
+SECURITY_ANALYSIS_SERVER_HOSTNAME = "localhost:5023" if DEV else "security-analysis-server"
+SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "localhost:5030" if DEV else "sensitivity-analysis-server"
+SHORTCIRCUIT_SERVER_HOSTNAME = "localhost:5031" if DEV else "shortcircuit-server"
+VOLTAGE_INIT_SERVER_HOSTNAME = "localhost:5038" if DEV else "voltage-init-server"
 
 # URLs
+ES_URL = HTTP_PROTOCOL + ES_HOSTNAME
+
 STUDY_SERVER_URL = HTTP_PROTOCOL + STUDY_SERVER_HOSTNAME + API_VERSION
 NETWORK_STORE_SERVER_URL = HTTP_PROTOCOL + NETWORK_STORE_SERVER_HOSTNAME + API_VERSION
 DIRECTORY_SERVER_URL = HTTP_PROTOCOL + DIRECTORY_SERVER_HOSTNAME + API_VERSION
@@ -79,5 +84,9 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/indexed-equipments"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-equipments-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"
+GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-equipments-index-name"
+GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-index-name"
+
+ES_FORCE_MERGE = ES_URL + "/{indexName}/_forcemerge"
 
 

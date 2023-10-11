@@ -14,12 +14,22 @@ import constant
 #
 
 def get_nb_indexed_equipments():
-    return requests.get(constant.GET_STUDIES_INDEXED_EQUIPMENTS_COUNT, params={}).text
+    return requests.get(constant.GET_STUDIES_INDEXED_EQUIPMENTS_COUNT).text
 
 def get_nb_indexed_tombstoned_equipments():
-    return requests.get(constant.GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT, params={}).text
+    return requests.get(constant.GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT).text
+
+def get_equipments_index_name():
+    return requests.get(constant.GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME).text
+
+def get_tombstoned_equipments_index_name():
+    return requests.get(constant.GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME).text
+
 
 def delete_indexed_equipments(studyUuid):    
-    result = requests.delete(url = constant.DELETE_STUDY_INDEXED_EQUIPMENTS.format(studyUuid = studyUuid), params={})
+    result = requests.delete(url = constant.DELETE_STUDY_INDEXED_EQUIPMENTS.format(studyUuid = studyUuid))
     if not result.ok :
         print("An error occured : " + str(result.json()))
+
+def expunge_deletes(indexName):
+    result = requests.post(url = constant.ES_FORCE_MERGE.format(indexName = indexName), params={'only_expunge_deletes': 'true'})
