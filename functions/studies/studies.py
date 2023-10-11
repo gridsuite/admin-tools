@@ -13,5 +13,5 @@ import constant
 #
 
 def get_all_studies_uuid():
-    return requests.get(constant.GET_STUDIES, params={}).json()
+    return requests.get(constant.GET_STUDIES).json()
     
