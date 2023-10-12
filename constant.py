@@ -23,7 +23,9 @@ DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
 HTTP_PROTOCOL = "http://"
 API_VERSION = "/v1"
 
+# TODO add command parameter to set this DEV
 DEV = False
+
 # hostnames
 GRIDEXPLORE_HOSTNAME = "localhost:80" if DEV else "gridexplore-app"
 STUDY_SERVER_HOSTNAME = "localhost:5001" if DEV else "study-server"
@@ -58,6 +60,7 @@ VOLTAGE_INIT_SERVER_URL = HTTP_PROTOCOL + VOLTAGE_INIT_SERVER_HOSTNAME + API_VER
 
 # PATHS
 GET_STUDIES = STUDY_SERVER_URL + "/studies"
+GET_ACTUATOR_INFO = HTTP_PROTOCOL + STUDY_SERVER_HOSTNAME + "/actuator/info"
 
 GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
