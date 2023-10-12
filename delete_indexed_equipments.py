@@ -49,6 +49,8 @@ print("\n")
 # Check study-server
 if not check_status_study_server(): sys.exit()
 print("\n")
+# Just getting an enlightening url opportunistically from here because it exists
+# TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
 elasticsearch_host = get_eleasticsearch_host()
 # TODO don't parse here, instead have the server return structured information
