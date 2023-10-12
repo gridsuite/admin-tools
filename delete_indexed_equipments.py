@@ -7,7 +7,6 @@
 
 import argparse
 import constant
-import socket
 import time
 from tqdm import tqdm
 
@@ -16,8 +15,10 @@ from functions.indexes.indexes import get_nb_indexed_equipments
 from functions.indexes.indexes import get_nb_indexed_tombstoned_equipments
 from functions.indexes.indexes import get_equipments_index_name
 from functions.indexes.indexes import get_tombstoned_equipments_index_name
+from functions.indexes.indexes import get_eleasticsearch_host
 from functions.indexes.indexes import expunge_deletes
 from functions.studies.studies import get_all_studies_uuid
+from functions.plateform.plateform import get_plateform_info
 
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
@@ -44,11 +45,12 @@ print("\n")
 studies = get_all_studies_uuid()
 
 print("---------------------------------------------------------")
-hostname = socket.gethostname()
-host_ip = socket.gethostbyname(hostname)
+plateformName = get_plateform_info()['redirect_uri']
+elasticsearch_host = get_eleasticsearch_host()
 equipments_index_name = get_equipments_index_name()
 tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()
-print("This script will apply on Host = " + hostname + "(" + host_ip + ")")
+print("This script will apply on plateform = " + plateformName )
+print("This script will execute queries on elasticsearch = " + elasticsearch_host)
 print("Number of indexed equipments (name: " + equipments_index_name + ") = " + get_nb_indexed_equipments())
 print("Number of indexed tombstoned_equipments (name: " + tombstoned_equipments_index_name + ") = " + get_nb_indexed_tombstoned_equipments())
 print("For a total of = " + str(len(studies)) + " studies")
@@ -59,7 +61,7 @@ if not dry_run:
         delete_indexed_equipments(study['id'])
     print("Waiting 30 secondes before force merger expunge_deletes...")
     time.sleep(30)    
-    expunge_deletes(equipments_index_name + "," + tombstoned_equipments_index_name)
+    expunge_deletes(elasticsearch_host, equipments_index_name + "," + tombstoned_equipments_index_name)
     print("End of deletion")
 else:
     print("Nothing has been impacted (dry-run)")

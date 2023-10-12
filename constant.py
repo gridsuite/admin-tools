@@ -25,8 +25,8 @@ API_VERSION = "/v1"
 
 DEV = False
 # hostnames
+GRIDEXPLORE_HOSTNAME = "localhost:80" if DEV else "gridexplore-app"
 STUDY_SERVER_HOSTNAME = "localhost:5001" if DEV else "study-server"
-ES_HOSTNAME = "localhost:9200" if DEV else "ES_HOSTNAME to configure"
 
 NETWORK_STORE_SERVER_HOSTNAME = "localhost:8080" if DEV else "network-store-server"
 DIRECTORY_SERVER_HOSTNAME = "localhost:5026" if DEV else "directory-server"
@@ -41,7 +41,7 @@ SHORTCIRCUIT_SERVER_HOSTNAME = "localhost:5031" if DEV else "shortcircuit-server
 VOLTAGE_INIT_SERVER_HOSTNAME = "localhost:5038" if DEV else "voltage-init-server"
 
 # URLs
-ES_URL = HTTP_PROTOCOL + ES_HOSTNAME
+GRIDEXPLORE_URL = HTTP_PROTOCOL + GRIDEXPLORE_HOSTNAME
 
 STUDY_SERVER_URL = HTTP_PROTOCOL + STUDY_SERVER_HOSTNAME + API_VERSION
 NETWORK_STORE_SERVER_URL = HTTP_PROTOCOL + NETWORK_STORE_SERVER_HOSTNAME + API_VERSION
@@ -81,12 +81,13 @@ SHORTCIRCUIT = "SHORT_CIRCUIT"
 VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 
 # INDEXED EQUIPMENTS
+GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
 DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/indexed-equipments"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-equipments-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"
 GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-equipments-index-name"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-index-name"
-
-ES_FORCE_MERGE = ES_URL + "/{indexName}/_forcemerge"
+GET_ELASTICSEARCH_HOST = STUDY_SERVER_URL + "/supervision/elasticsearch-host"
+ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
 
