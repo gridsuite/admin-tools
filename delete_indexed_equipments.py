@@ -65,6 +65,7 @@ print("\n")
 
 print("---------------------------------------------------------")
 print("This script will apply on plateform = " + plateformName )
+# TODO It would be nice to show the environment prefix used for elasticsearch indexes names 
 print("This plateform will execute delete queries on elasticsearch = " + elasticsearch_url + " (" + elasticsearch_ip + ")")
 print("\n")
 print("===> Both elasticsearch and study-server seem OK ! The script can proceed")
