@@ -53,6 +53,7 @@ plateformName = get_plateform_info()['redirect_uri']
 elasticsearch_host = get_eleasticsearch_host()
 # TODO don't parse here, instead have the server return structured information
 elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
+# TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for example
 elasticsearch_url = constant.HTTP_PROTOCOL + elasticsearch_host
 equipments_index_name = get_equipments_index_name()
 tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()

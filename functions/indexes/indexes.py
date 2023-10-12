@@ -34,9 +34,7 @@ def get_tombstoned_equipments_index_name():
         return ""
 
 def get_eleasticsearch_host():
-    # TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for exemple
     # TODO use credentials because some server could have
-    # TODO get elasticsearch_ip from the server for debug because only the server has the DNS to return the IP
     # we override host value in DEV otherwise study-server return 'elasticsearch:9200' as hostname
     try:
         return "localhost:9200" if constant.DEV else requests.get(constant.GET_ELASTICSEARCH_HOST).text
