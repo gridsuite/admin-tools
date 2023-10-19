@@ -1,10 +1,13 @@
 FROM python:3.8.12-alpine
-RUN mkdir -p /app
-COPY functions /app/functions
+
+RUN adduser -D powsybl
+USER powsybl
+WORKDIR /home/powsybl
+COPY functions functions
 COPY requirements.txt \
     constant.py \
     delete_computation_results.py \
     delete_indexed_equipments.py \
-    /app/
-RUN pip3 install -r /app/requirements.txt
-CMD [ "python", "./app/delete_indexed_equipments.py" ]
+    ./
+RUN pip3 install -r requirements.txt
+CMD [ "python", "delete_indexed_equipments.py" ]
