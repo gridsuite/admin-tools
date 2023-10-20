@@ -22,4 +22,4 @@ def delete_computation_results(dry_run, computationType):
         if result.ok :
             print("Here's the count of processed nodes results : " + str(result.json()))
         else :
-            print("An error occured : " + str(result.json()))
+            print("An error occurred with status code:", result.status_code)
