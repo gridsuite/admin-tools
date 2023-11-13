@@ -8,6 +8,10 @@ COPY requirements.txt \
     constant.py \
     delete_computation_results.py \
     delete_indexed_equipments.py \
+    invalide_nodes.py \
     ./
 RUN pip3 install -r requirements.txt
-CMD [ "python", "delete_indexed_equipments.py" ]
+# We call a script here, but it's overwritten at job execution by the way
+# depending at which script should be applied
+# it's a dry-run call by default to avoid unexpected impact with this image
+CMD [ "python", "delete_indexed_equipments.py --dry-run" ]
