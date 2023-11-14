@@ -15,7 +15,7 @@ import constant
 def get_all_studies_uuid():
     return requests.get(constant.GET_STUDIES).json()
 
-def delete_nodes_builds(studyUuid):
+def invalidate_nodes_builds(studyUuid):
     return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = studyUuid))
 
 def check_status_study_server():

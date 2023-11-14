@@ -8,7 +8,7 @@ COPY requirements.txt \
     constant.py \
     delete_computation_results.py \
     delete_indexed_equipments.py \
-    invalide_nodes.py \
+    invalidate_nodes_builds.py \
     ./
 RUN pip3 install -r requirements.txt
 # We call a script here, but it's overwritten at job execution by the way

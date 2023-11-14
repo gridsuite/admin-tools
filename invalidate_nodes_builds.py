@@ -13,7 +13,7 @@ import sys
 from tqdm import tqdm
 
 from functions.studies.studies import get_all_studies_uuid
-from functions.studies.studies import delete_nodes_builds
+from functions.studies.studies import invalidate_nodes_builds
 from functions.studies.studies import check_status_study_server
 from functions.plateform.plateform import get_plateform_info
 
@@ -21,7 +21,7 @@ from functions.plateform.plateform import get_plateform_info
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
-parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to update studies nodes status', )
+parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to invalidate studies nodes builds', )
 
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion request",
                     action="store_true")                                                          
@@ -31,7 +31,7 @@ args = parser.parse_args()
 dry_run = args.dry_run
 
 print("---------------------------------------------------------")
-print("Studies nodes built status invalidation script")
+print("Studies nodes builds invalidation script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without modifying anything (test mode)")
 if constant.DEV:
@@ -56,9 +56,9 @@ studies = get_all_studies_uuid()
 print("For a total of " + str(len(studies)) + " studies")
 print("---------------------------------------------------------")
 if not dry_run:
-    print("Studies nodes built status invalidation processing...")
+    print("Studies nodes builds invalidation in processing...")
     for study in tqdm(studies):
-        delete_nodes_builds(study['id'])
+        invalidate_nodes_builds(study['id'])
     print("End of process")
 else:
     print("Nothing has been impacted (dry-run)")
