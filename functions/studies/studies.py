@@ -16,7 +16,7 @@ def get_all_studies_uuid():
     return requests.get(constant.GET_STUDIES).json()
 
 def reset_node_status(studyUuid):
-    return requests.put(constant.RESET_STUDY_NODE_STATUS.format(studyUuid = studyUuid))
+    return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = studyUuid))
 
 def check_status_study_server():
     try:
