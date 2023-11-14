@@ -13,7 +13,7 @@ import sys
 from tqdm import tqdm
 
 from functions.studies.studies import get_all_studies_uuid
-from functions.studies.studies import reset_node_status
+from functions.studies.studies import delete_nodes_builds
 from functions.studies.studies import check_status_study_server
 from functions.plateform.plateform import get_plateform_info
 
@@ -58,7 +58,7 @@ print("---------------------------------------------------------")
 if not dry_run:
     print("Studies nodes built status invalidation processing...")
     for study in tqdm(studies):
-        reset_node_status(study['id'])
+        delete_nodes_builds(study['id'])
     print("End of process")
 else:
     print("Nothing has been impacted (dry-run)")
