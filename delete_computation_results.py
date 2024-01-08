@@ -25,6 +25,8 @@ parser.add_argument("-sa", "--security", help="delete all security analysis resu
                     action="store_true")
 parser.add_argument("-ss", "--sensitivity", help="delete all sensitivity analysis results",
                     action="store_true")
+parser.add_argument("-nee", "--nonevacuatedenergy", help="delete all non evacuated energy analysis results",
+                    action="store_true")
 parser.add_argument("-sc", "--shortcircuit", help="delete all shortcircuit results",
                     action="store_true")
 parser.add_argument("-vi", "--voltageinit", help="delete all voltage init results",
@@ -37,10 +39,11 @@ loadflow = args.loadflow
 dynamicsimulation = args.dynamicsimulation
 security = args.security
 sensitivity = args.sensitivity
+nonevacuatedenergy = args.nonevacuatedenergy
 shortcircuit = args.shortcircuit
 voltageinit = args.voltageinit
 
-runAll = not(loadflow or dynamicsimulation or security or sensitivity or shortcircuit or voltageinit) 
+runAll = not(loadflow or dynamicsimulation or security or sensitivity or nonevacuatedenergy or shortcircuit or voltageinit)
 
 if dry_run:
     print("Computation results deletion script will run without deleting anything (test mode)")
@@ -56,6 +59,8 @@ if security or runAll:
     delete_computation_results(dry_run, constant.SECURITY_ANALYSIS)
 if sensitivity or runAll:
     delete_computation_results(dry_run, constant.SENSITIVITY_ANALYSIS)
+if nonevacuatedenergy or runAll:
+    delete_computation_results(dry_run, constant.NON_EVACUATED_ENERGY_ANALYSIS)
 if shortcircuit or runAll:
     delete_computation_results(dry_run, constant.SHORTCIRCUIT)
 if voltageinit or runAll:
