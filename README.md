@@ -22,7 +22,7 @@ Check Loadflow results number :
 python3 delete_computation_results.py -lf -n
 ```
 
-delete Loadflow results definitively 
+Delete Loadflow results definitively :
 ```py
 python3 delete_computation_results.py -lf
 ```
