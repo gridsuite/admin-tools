@@ -24,9 +24,7 @@ def delete_stashed_elements(dry_run):
     print("Here are the elements that will be deleted")
     print("\n".join(map(deleted_element_described, stashed_elements)))
     if not dry_run :
-        print(constant.DELETE_EXPLORE_ELEMENTS)
         data = {'ids': list(map(lambda element: element["elementUuid"], stashed_elements))}
-        print(data)
         result = requests.delete(constant.DELETE_EXPLORE_ELEMENTS, params=data, headers={"userId": "supervision"})
         if result.ok :
             print("Elements were deleted with success")
