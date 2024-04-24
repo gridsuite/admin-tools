@@ -8,6 +8,7 @@ COPY requirements.txt \
     constant.py \
     delete_computation_results.py \
     delete_indexed_equipments.py \
+    delete_stashed_elements.py \
     invalidate_nodes_builds.py \
     ./
 RUN pip3 install -r requirements.txt
