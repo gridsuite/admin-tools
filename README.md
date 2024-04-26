@@ -28,6 +28,7 @@ python3 delete_computation_results.py -lf
 ```
 
 ## Grafana scripts
+All post requests are sent with the header "X-Disable-Provenance" set to "true". Without it, all created entities would be read-only.
 ### Import existing alert-rules JSON
 First, we need to create a folder.
 Execute this command :
@@ -38,12 +39,15 @@ python3 grafana_create_folder.py {{FOLDER_NAME}}
 This command should return a json with a field "uid" which will be {{FOLDER_UID}} for the next command
 
 Then we can create alert-rules in the previously created folder.
+**Default interval value for rule-group is 60s. If you want a different value, use "-i" option (run "python3 grafana_create_alerts.py -h" for more infos**
 Execute this command :
 ```py
 python3 grafana_create_alerts.py -f {{PATH_TO_ALERT_RULES_1}} -f {{PATH_TO_ALERT_RULES_2}} -d {{DATASOURCE_UID}} -p {{FOLDER_UID}}
 ```
 
-*Note: **DATASOURCE_UID** can be found in URL by editing a datasource in grafana UI*
+*Notes:*
+- **DATASOURCE_UID** can be found in URL by editing a datasource in grafana UI*
+- **FOLDER_UID** can be found in URL by clicking on a folder in grafana UI, "Dashboard" menu
 
 ### Create a new alert-rule JSON file
 From local grafana, create the alert you want to export as a JSON file

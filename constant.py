@@ -28,7 +28,7 @@ GRAFANA_API = "/api"
 GRAFANA_PROVISIONING = "/provisioning"
 
 # TODO add command parameter to set this DEV
-DEV = True
+DEV = False
 
 # hostnames
 GRIDEXPLORE_HOSTNAME = "localhost:80" if DEV else "gridexplore-app"
