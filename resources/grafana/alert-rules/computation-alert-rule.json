@@ -1,0 +1,88 @@
+{
+  "orgID": 1,
+  "folderUID": "{{FOLDER_UID}}",
+  "ruleGroup": "computationRuleGroup",
+  "title": "CheckReadyQueues",
+  "condition": "Is over the threshold",
+  "data": [
+    {
+      "refId": "Ready queues",
+      "queryType": "",
+      "relativeTimeRange": { "from": 21600, "to": 0 },
+      "datasourceUid": "{{DATASOURCE_UID}}",
+      "model": {
+        "datasource": { "type": "prometheus", "uid": "{{DATASOURCE_UID}}" },
+        "disableTextWrap": false,
+        "editorMode": "builder",
+        "expr": "rabbitmq_detailed_queue_messages_ready{queue=~\".*.run.*\"}",
+        "fullMetaSearch": false,
+        "includeNullMetadata": true,
+        "instant": false,
+        "interval": "",
+        "intervalMs": 15000,
+        "legendFormat": "__auto",
+        "maxDataPoints": 43200,
+        "range": true,
+        "refId": "Ready queues",
+        "useBackend": false
+      }
+    },
+    {
+      "refId": "Last time series value",
+      "queryType": "",
+      "relativeTimeRange": { "from": 21600, "to": 0 },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": { "params": [], "type": "gt" },
+            "operator": { "type": "and" },
+            "query": { "params": ["Last time series value"] },
+            "reducer": { "params": [], "type": "last" },
+            "type": "query"
+          }
+        ],
+        "datasource": { "type": "__expr__", "uid": "__expr__" },
+        "expression": "Ready queues",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "reducer": "last",
+        "refId": "Last time series value",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "Is over the threshold",
+      "queryType": "",
+      "relativeTimeRange": { "from": 21600, "to": 0 },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": { "params": [5], "type": "gt" },
+            "operator": { "type": "and" },
+            "query": { "params": ["Is over the threshold"] },
+            "reducer": { "params": [], "type": "last" },
+            "type": "query"
+          }
+        ],
+        "datasource": { "type": "__expr__", "uid": "__expr__" },
+        "expression": "Last time series value",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "refId": "Is over the threshold",
+        "type": "threshold"
+      }
+    }
+  ],
+  "noDataState": "NoData",
+  "execErrState": "Error",
+  "for": "30s",
+  "annotations": {
+    "__dashboardUid__": "UplRgsDIz",
+    "__panelId__": "14",
+    "description": "The rule checks regularly if the \"run computation\" ready queues have more than X messages",
+    "summary": "If this alert is triggered TEST, there is probably an issue with the calculation server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to run calculations"
+  },
+  "isPaused": false
+}
