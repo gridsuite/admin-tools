@@ -62,7 +62,7 @@ VOLTAGE_INIT_SERVER_URL = HTTP_PROTOCOL + VOLTAGE_INIT_SERVER_HOSTNAME + API_VER
 
 # PATHS
 GET_STUDIES = STUDY_SERVER_URL + "/studies"
-GET_ACTUATOR_INFO = HTTP_PROTOCOL + STUDY_SERVER_HOSTNAME + "/actuator/info"
+GET_ACTUATOR_INFO = HTTP_PROTOCOL + "{serverHostName}/actuator/info"
 
 GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
@@ -79,6 +79,8 @@ DELETE_FILTERS = FILTER_SERVER_URL + "/filters"
 DELETE_EXPLORE_ELEMENTS = EXPLORE_SERVER_URL + "/supervision/explore/elements"
 
 DELETE_COMPUTATION_RESULTS = STUDY_SERVER_URL + "/supervision/computation/results"
+
+GET_DIRECTORIES = DIRECTORY_SERVER_URL + "/supervision/directories"
 
 # COMPUTATION TYPES FOR RESULTS DELETION
 LOADFLOW = "LOAD_FLOW"
@@ -100,4 +102,8 @@ GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supe
 GET_ELASTICSEARCH_HOST = STUDY_SERVER_URL + "/supervision/elasticsearch-host"
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
-
+# INDEXED ELEMENTS
+GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/indexed-directory-elements-count"
+GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/indexed-directory-elements-index-name"
+DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/directories/{directoryUuid}/indexed-directory-elements"
+REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/directoris/{directoryUuid}/reindex"

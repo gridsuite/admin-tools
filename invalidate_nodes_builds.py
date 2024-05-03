@@ -14,8 +14,8 @@ from tqdm import tqdm
 
 from functions.studies.studies import get_all_studies_uuid
 from functions.studies.studies import invalidate_nodes_builds
-from functions.studies.studies import check_status_study_server
 from functions.plateform.plateform import get_plateform_info
+from functions.plateform.plateform import check_server_status
 
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
@@ -39,7 +39,7 @@ if constant.DEV:
 print("\n")
 
 # Check study-server
-if not check_status_study_server(): sys.exit()
+if not check_server_status(constant.STUDY_SERVER_HOSTNAME): sys.exit()
 print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
 # TODO better ?

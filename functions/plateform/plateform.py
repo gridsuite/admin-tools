@@ -14,3 +14,23 @@ import constant
 
 def get_plateform_info():
     return requests.get(constant.GET_PLATEFORM_INFO).json()
+
+
+def check_server_status(serverHostName):
+    try:
+        result = requests.get(constant.GET_ACTUATOR_INFO.format(serverHostName = serverHostName))
+
+        if not result.ok :
+            # TODO this might not be a json format
+            print("An error occured : " + str(result.json()))
+            return False
+        status = result.json()
+        print("-----------------------")
+        print(serverHostName + " describe-short : " + status['git']['commit']['id']['describe-short'])
+        print(serverHostName + " name : " + status['build']['name'])
+        print(serverHostName + " version : " + status['build']['version'])
+        return True
+    except requests.exceptions.RequestException as e:
+        print("Exception during " + serverHostName + " check status")
+        print(e)
+        return False
