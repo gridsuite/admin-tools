@@ -20,14 +20,16 @@ def deleted_element_described(element):
 def delete_stashed_elements(dry_run):
     print("/// stashed elements deletion ///")
     stashed_elements = requests.get(constant.GET_DIRECTORY_STASHED_ELEMENTS).json()
-    print(stashed_elements)
-    print("Here are the elements that will be deleted")
-    print("\n".join(map(deleted_element_described, stashed_elements)))
-    if not dry_run :
-        data = {'ids': list(map(lambda element: element["elementUuid"], stashed_elements))}
-        result = requests.delete(constant.DELETE_EXPLORE_ELEMENTS, params=data, headers={"userId": "supervision"})
-        if result.ok :
-            print("Elements were deleted with success")
-        else :
-            print("An error occurred with status code:", result.status_code)
+    if not stashed_elements :
+        print("No element to delete")
+    else :
+        print("Here are the elements that will be deleted")
+        print("\n".join(map(deleted_element_described, stashed_elements)))
+        if not dry_run :
+            data = {'ids': list(map(lambda element: element["elementUuid"], stashed_elements))}
+            result = requests.delete(constant.DELETE_EXPLORE_ELEMENTS, params=data, headers={"userId": "supervision"})
+            if result.ok :
+                print("Elements were deleted with success")
+            else :
+                print("An error occurred with status code:", result.status_code)
 
