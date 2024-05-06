@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2023, RTE (http://www.rte-france.com)
+# Copyright (c) 2024, RTE (http://www.rte-france.com)
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -24,7 +24,6 @@ from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
 
 #
-# @author Hugo Marcellin <hugo.marcelin at rte-france.com>
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
