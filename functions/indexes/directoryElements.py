@@ -22,13 +22,13 @@ def get_elements_index_name():
         print(e)
         return ""
 
-def delete_indexed_elements(directoryUuid):    
-    result = requests.delete(url = constant.DELETE_INDEXED_ELEMENTS.format(directoryUuid = directoryUuid))
+def delete_indexed_elements():    
+    result = requests.delete(url = constant.DELETE_INDEXED_ELEMENTS)
     if not result.ok :
         print("An error occured : " + str(result.json()))
 
-def reindex_elements(directoryUuid):    
-    result = requests.post(url = constant.REINDEX_ELEMENTS.format(directoryUuid = directoryUuid))
+def reindex_elements():    
+    result = requests.post(url = constant.REINDEX_ELEMENTS)
     if not result.ok :
         print("An error occured : " + str(result.json()))
 

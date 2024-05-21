@@ -50,7 +50,7 @@ print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
 # TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
-elasticsearch_host = get_eleasticsearch_host()
+elasticsearch_host = get_eleasticsearch_host(constant.DIRECTORY_SERVER_HOSTNAME)
 # TODO don't parse here, instead have the server return structured information
 elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
 # TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for example
@@ -68,21 +68,17 @@ print("\n")
 print("===> Both elasticsearch and directory-server seem OK ! The script can proceed")
 print("\n")
 print("Number of indexed directory elements (name: " + elements_index_name + ") = " + get_nb_indexed_elements())
-directories = get_all_directories_uuid()
-print("For a total of " + str(len(directories)) + " directories")
 print("And will execute on elasticsearch force merge expunge deletes to reclaim space.")
 print("---------------------------------------------------------")
 if not dry_run:
     print("Directory indexed elements deletion processing...")
-    for directory in tqdm(directories):
-        delete_indexed_elements(directory['elementUuid'])
+    delete_indexed_elements()
     print("Waiting 30 secondes before force merge expunge_deletes...")
     time.sleep(30)    
     expunge_deletes(elasticsearch_url, elements_index_name)
     print("End of deletion")
     print("Directory indexed elements reindexation processing...")
-    for directory in tqdm(directories):
-        reindex_elements(directory['elementUuid'])
+    reindex_elements()
     print("End of reindexation")
 else:
     print("Nothing has been impacted (dry-run)")

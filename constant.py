@@ -71,6 +71,7 @@ GRAFANA_URL = HTTP_PROTOCOL + GRAFANA_HOSTNAME + GRAFANA_API
 # PATHS
 GET_STUDIES = STUDY_SERVER_URL + "/studies"
 GET_ACTUATOR_INFO = HTTP_PROTOCOL + "{serverHostName}/actuator/info"
+GET_ELASTICSEARCH_HOST = HTTP_PROTOCOL + "{serverHostName}/supervision/elasticsearch-host"
 
 GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
@@ -107,7 +108,6 @@ GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"
 GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-equipments-index-name"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-index-name"
-GET_ELASTICSEARCH_HOST = STUDY_SERVER_URL + "/supervision/elasticsearch-host"
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
 # GRAFANA ENDPOINTS
@@ -118,5 +118,5 @@ GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folde
 # INDEXED ELEMENTS
 GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/indexed-directory-elements-count"
 GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/indexed-directory-elements-index-name"
-DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/directories/{directoryUuid}/indexed-directory-elements"
-REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/directoris/{directoryUuid}/reindex"
+DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/indexed-directory-elements"
+REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/reindex"
