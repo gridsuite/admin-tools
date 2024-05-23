@@ -7,13 +7,35 @@
 
 import requests
 import constant
+import logging
 
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 def get_all_studies_uuid():
     return requests.get(constant.GET_STUDIES).json()
+
+def get_all_orphan_indexed_equipments_count():
+    return requests.get(constant.GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_COUNT).text
+def delete_all_orphan_indexed_equipments():
+    try:
+        result = requests.delete(constant.DELETE_ALL_ORPHAN_INDEXED_EQUIPMENTS_COUNT)
+
+        # Check if the response status code indicates success
+        if result.status_code == 200:
+            logger.info("Successfully deleted all orphan indexed equipments.")
+            return True
+        else:
+            logger.error(f"Failed to delete orphan indexed equipments: {result.status_code} - {result.text}")
+            return False
+    except requests.exceptions.RequestException as e:
+        logger.exception("Exception occurred while deleting orphan indexed equipments: " + str(e))
+        return False
 
 def invalidate_nodes_builds(studyUuid):
     return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = studyUuid))

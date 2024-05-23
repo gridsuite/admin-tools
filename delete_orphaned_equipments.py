@@ -1,0 +1,72 @@
+#
+# Copyright (c) 2024, RTE (http://www.rte-france.com)
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+import argparse
+import constant
+import time
+import socket
+import sys
+
+from functions.indexes.indexes import get_equipments_index_name
+from functions.indexes.indexes import get_tombstoned_equipments_index_name
+from functions.indexes.indexes import get_eleasticsearch_host
+from functions.indexes.indexes import check_status_eleasticsearch
+from functions.indexes.indexes import expunge_deletes
+from functions.studies.studies import check_status_study_server
+from functions.studies.studies import get_all_orphan_indexed_equipments_count
+from functions.studies.studies import delete_all_orphan_indexed_equipments
+
+#
+# @author Achour Berrahma <achour.berrahma at rte-france.com>
+#
+
+parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete orphan studies indexed equipments and tombstoned', )
+
+parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion request",
+                    action="store_true")                                                          
+
+
+args = parser.parse_args()
+dry_run = args.dry_run
+
+print("---------------------------------------------------------")
+print("Orphan studies indexed equipments and tombstoned deletion script")
+if dry_run:
+    print("dry-run=" + str(dry_run) + " -> will run without deleting anything (test mode)")
+if constant.DEV:
+    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (localhost:xxxx)")
+print("\n")
+
+# Check study-server
+if not check_status_study_server(): sys.exit()
+print("\n")
+# Just getting an enlightening url opportunistically from here because it exists
+elasticsearch_host = get_eleasticsearch_host()
+elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
+elasticsearch_url = constant.HTTP_PROTOCOL + elasticsearch_host
+equipments_index_name = get_equipments_index_name()
+tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()
+
+if not check_status_eleasticsearch(elasticsearch_url) : sys.exit()
+print("\n")
+
+print("---------------------------------------------------------")
+print("This plateform will execute delete queries on elasticsearch = " + elasticsearch_url + " (" + elasticsearch_ip + ")")
+print("\n")
+print("===> Both elasticsearch and study-server seem OK ! The script can proceed")
+print("\n")
+print("Number of orphan indexed equipments = " + get_all_orphan_indexed_equipments_count())
+if not dry_run:
+    print("Orphan indexed equipments deletion processing...")
+    delete_all_orphan_indexed_equipments()
+    print("Waiting 30 secondes before force merger expunge_deletes...")
+    time.sleep(30)
+    expunge_deletes(elasticsearch_url, equipments_index_name + "," + tombstoned_equipments_index_name)
+    print("End of deletion")
+else:
+    print("Nothing has been impacted (dry-run)")
+
