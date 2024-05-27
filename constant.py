@@ -70,8 +70,7 @@ GRAFANA_URL = HTTP_PROTOCOL + GRAFANA_HOSTNAME + GRAFANA_API
 
 # PATHS
 GET_STUDIES = STUDY_SERVER_URL + "/studies"
-GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/orphan_indexed_equipments_count"
-DELETE_ALL_ORPHAN_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/orphan_indexed_equipments"
+GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS = STUDY_SERVER_URL + "/supervision/orphan_indexed_equipments"
 GET_ACTUATOR_INFO = HTTP_PROTOCOL + STUDY_SERVER_HOSTNAME + "/actuator/info"
 
 GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
@@ -102,6 +101,7 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 # INDEXED EQUIPMENTS
 GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
 DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/indexed-equipments"
+DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-equipments-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"

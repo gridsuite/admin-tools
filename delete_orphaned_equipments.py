@@ -10,6 +10,7 @@ import constant
 import time
 import socket
 import sys
+from tqdm import tqdm
 
 from functions.indexes.indexes import get_equipments_index_name
 from functions.indexes.indexes import get_tombstoned_equipments_index_name
@@ -17,14 +18,14 @@ from functions.indexes.indexes import get_eleasticsearch_host
 from functions.indexes.indexes import check_status_eleasticsearch
 from functions.indexes.indexes import expunge_deletes
 from functions.studies.studies import check_status_study_server
-from functions.studies.studies import get_all_orphan_indexed_equipments_count
-from functions.studies.studies import delete_all_orphan_indexed_equipments
+from functions.studies.studies import delete_indexed_equipments
+from functions.studies.studies import get_all_orphan_indexed_equipments_network_uuids
 
 #
 # @author Achour Berrahma <achour.berrahma at rte-france.com>
 #
 
-parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete orphan studies indexed equipments and tombstoned', )
+parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to delete orphaned studies indexed equipments and tombstoned equipments.', )
 
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion request",
                     action="store_true")                                                          
@@ -34,7 +35,7 @@ args = parser.parse_args()
 dry_run = args.dry_run
 
 print("---------------------------------------------------------")
-print("Orphan studies indexed equipments and tombstoned deletion script")
+print("Orphaned studies indexed equipments and tombstoned deletion script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without deleting anything (test mode)")
 if constant.DEV:
@@ -55,15 +56,20 @@ if not check_status_eleasticsearch(elasticsearch_url) : sys.exit()
 print("\n")
 
 print("---------------------------------------------------------")
-print("This plateform will execute delete queries on elasticsearch = " + elasticsearch_url + " (" + elasticsearch_ip + ")")
+print("This platform will execute delete queries on elasticsearch = " + elasticsearch_url + " (" + elasticsearch_ip + ")")
 print("\n")
 print("===> Both elasticsearch and study-server seem OK ! The script can proceed")
 print("\n")
-print("Number of orphan indexed equipments = " + get_all_orphan_indexed_equipments_count())
+networkUuids = get_all_orphan_indexed_equipments_network_uuids()
+print("Orphaned indexed equipments network uuids = " + str(networkUuids))
+print("For a total of " + str(len(networkUuids)) + " studies")
+print("And will execute on elasticsearch force merge expunge deletes to reclaim space.")
+print("---------------------------------------------------------")
 if not dry_run:
-    print("Orphan indexed equipments deletion processing...")
-    delete_all_orphan_indexed_equipments()
-    print("Waiting 30 secondes before force merger expunge_deletes...")
+    print("Orphaned indexed equipments deletion processing...")
+    for networkUuid in tqdm(networkUuids):
+        delete_indexed_equipments(networkUuid)
+    print("Waiting 30 seconds before forcing merge expunge_deletes...")
     time.sleep(30)
     expunge_deletes(elasticsearch_url, equipments_index_name + "," + tombstoned_equipments_index_name)
     print("End of deletion")

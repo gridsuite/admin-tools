@@ -20,18 +20,19 @@ logger = logging.getLogger(__name__)
 def get_all_studies_uuid():
     return requests.get(constant.GET_STUDIES).json()
 
-def get_all_orphan_indexed_equipments_count():
-    return requests.get(constant.GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_COUNT).text
-def delete_all_orphan_indexed_equipments():
+def get_all_orphan_indexed_equipments_network_uuids():
+    return requests.get(constant.GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS).json()
+
+def delete_indexed_equipments(networkUuid):
     try:
-        result = requests.delete(constant.DELETE_ALL_ORPHAN_INDEXED_EQUIPMENTS_COUNT)
+        result = requests.delete(url = constant.DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID.format(networkUuid = networkUuid))
 
         # Check if the response status code indicates success
         if result.status_code == 200:
-            logger.info("Successfully deleted all orphan indexed equipments.")
+            logger.info("Successfully deleted all orphan indexed equipments for network UUID: " + networkUuid)
             return True
         else:
-            logger.error(f"Failed to delete orphan indexed equipments: {result.status_code} - {result.text}")
+            logger.error(f"Failed to delete orphan indexed equipments for network UUID: {networkUuid}. Response status code: {result.status_code} - Response content: {result.content}")
             return False
     except requests.exceptions.RequestException as e:
         logger.exception("Exception occurred while deleting orphan indexed equipments: " + str(e))
