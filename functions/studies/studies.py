@@ -7,15 +7,11 @@
 
 import requests
 import constant
-import logging
 
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 def get_all_studies_uuid():
     return requests.get(constant.GET_STUDIES).json()
@@ -29,13 +25,14 @@ def delete_indexed_equipments(networkUuid):
 
         # Check if the response status code indicates success
         if result.status_code == 200:
-            logger.info("Successfully deleted all orphan indexed equipments for network UUID: " + networkUuid)
+            print(f"Successfully deleted indexed equipments for network UUID: {networkUuid}")
             return True
         else:
-            logger.error(f"Failed to delete orphan indexed equipments for network UUID: {networkUuid}. Response status code: {result.status_code} - Response content: {result.content}")
+            print(f"Failed to delete indexed equipments for network UUID: {networkUuid}. "
+                  f"Response status code: {result.status_code} - Response content: {result.content}")
             return False
     except requests.exceptions.RequestException as e:
-        logger.exception("Exception occurred while deleting orphan indexed equipments: " + str(e))
+        print(f"Exception occurred while deleting indexed equipments for network UUID: {networkUuid}. Exception: {e}")
         return False
 
 def invalidate_nodes_builds(studyUuid):
