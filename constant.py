@@ -102,12 +102,12 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 
 # INDEXED EQUIPMENTS
 GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
-DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/indexed-equipments"
+DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/equipments/indexation"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
-GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-equipments-count"
-GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"
-GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-equipments-index-name"
-GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-index-name"
+GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/equipments/indexation-count"
+GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/indexation-count"
+GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/equipments/index-name"
+GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/index-name"
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
 # GRAFANA ENDPOINTS
@@ -116,7 +116,7 @@ GRAFANA_ALERT_RULES = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/alert
 GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folder/{folderUid}/rule-groups/{ruleGroupId}"
 
 # INDEXED ELEMENTS
-GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/indexed-directory-elements-count"
-GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/indexed-directory-elements-index-name"
-DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/indexed-directory-elements"
+GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/elements/indexation-count"
+GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/elements/index-name"
+DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/indexation"
 REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/reindex"
