@@ -1,0 +1,127 @@
+{
+  "orgID": 1,
+  "folderUID": "{{FOLDER_UID}}",
+  "ruleGroup": "30sEval",
+  "title": "Pods not ready",
+  "condition": "C",
+  "data": [
+    {
+      "refId": "A",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 10800,
+        "to": 0
+      },
+      "datasourceUid": "{{DATASOURCE_UID}}",
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "{{DATASOURCE_UID}}"
+        },
+        "editorMode": "code",
+        "expr": "sum((kube_replicaset_spec_replicas - kube_replicaset_status_ready_replicas) and kube_replicaset_spec_replicas>0)",
+        "instant": false,
+        "interval": "",
+        "intervalMs": 15000,
+        "legendFormat": "__auto",
+        "maxDataPoints": 43200,
+        "range": true,
+        "refId": "A"
+      }
+    },
+    {
+      "refId": "B",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 10800,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "B"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "A",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "reducer": "last",
+        "refId": "B",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "C",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 10800,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "C"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "B",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "refId": "C",
+        "type": "threshold"
+      }
+    }
+  ],
+  "noDataState": "NoData",
+  "execErrState": "Error",
+  "for": "15m",
+  "annotations": {
+    "__dashboardUid__": "a24365d3-fb9c-407b-99d6-5b0b14de5adc",
+    "__panelId__": "49",
+    "summary": "Triggered when pods are not ready"
+  },
+  "isPaused": false
+}
