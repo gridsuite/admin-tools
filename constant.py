@@ -103,11 +103,14 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 # INDEXED EQUIPMENTS
 GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
 DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/equipments/indexation"
+DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/equipments/indexation-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/indexation-count"
 GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/equipments/index-name"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/index-name"
+GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS = STUDY_SERVER_URL + "/supervision/orphan_indexed_network_uuids"
+
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
 # GRAFANA ENDPOINTS
