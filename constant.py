@@ -31,23 +31,24 @@ GRAFANA_PROVISIONING = "/provisioning"
 DEV = False
 
 # hostnames
-GRIDEXPLORE_HOSTNAME = "localhost:80" if DEV else "gridexplore-app"
-STUDY_SERVER_HOSTNAME = "localhost:5001" if DEV else "study-server"
+GRIDEXPLORE_HOSTNAME = "172.17.0.1:80" if DEV else "gridexplore-app"
+STUDY_SERVER_HOSTNAME = "172.17.0.1:5001" if DEV else "study-server"
 
-NETWORK_STORE_SERVER_HOSTNAME = "localhost:8080" if DEV else "network-store-server"
-DIRECTORY_SERVER_HOSTNAME = "localhost:5026" if DEV else "directory-server"
-ACTIONS_SERVER_HOSTNAME = "localhost:5022" if DEV else "actions-server"
-FILTER_SERVER_HOSTNAME = "localhost:5027" if DEV else "filter-server"
-EXPLORE_SERVER_HOSTNAME = "localhost:5029" if DEV else "explore-server"
+NETWORK_STORE_SERVER_HOSTNAME = "172.17.0.1:8080" if DEV else "network-store-server"
+DIRECTORY_SERVER_HOSTNAME = "172.17.0.1:5026" if DEV else "directory-server"
+ACTIONS_SERVER_HOSTNAME = "172.17.0.1:5022" if DEV else "actions-server"
+FILTER_SERVER_HOSTNAME = "172.17.0.1:5027" if DEV else "filter-server"
+EXPLORE_SERVER_HOSTNAME = "172.17.0.1:5029" if DEV else "explore-server"
 
-LOADFLOW_SERVER_HOSTNAME = "localhost:5008" if DEV else "loadflow-server"
-DYNAMIC_SIMULATION_SERVER_HOSTNAME = "localhost:5032" if DEV else "dynamic-simulation-server"
-SECURITY_ANALYSIS_SERVER_HOSTNAME = "localhost:5023" if DEV else "security-analysis-server"
-SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "localhost:5030" if DEV else "sensitivity-analysis-server"
-SHORTCIRCUIT_SERVER_HOSTNAME = "localhost:5031" if DEV else "shortcircuit-server"
-VOLTAGE_INIT_SERVER_HOSTNAME = "localhost:5038" if DEV else "voltage-init-server"
+LOADFLOW_SERVER_HOSTNAME = "172.17.0.1:5008" if DEV else "loadflow-server"
+DYNAMIC_SIMULATION_SERVER_HOSTNAME = "172.17.0.1:5032" if DEV else "dynamic-simulation-server"
+SECURITY_ANALYSIS_SERVER_HOSTNAME = "172.17.0.1:5023" if DEV else "security-analysis-server"
+SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "172.17.0.1:5030" if DEV else "sensitivity-analysis-server"
+SHORTCIRCUIT_SERVER_HOSTNAME = "172.17.0.1:5031" if DEV else "shortcircuit-server"
+VOLTAGE_INIT_SERVER_HOSTNAME = "172.17.0.1:5038" if DEV else "voltage-init-server"
 
-GRAFANA_HOSTNAME = "localhost:7000" if DEV else "grafana"
+GRAFANA_HOSTNAME = "172.17.0.1:7000" if DEV else "grafana"
+ELASTICSEARCH_HOSTNAME = "172.17.0.1:9200" if DEV else "elasticsearch"
 
 # URLs
 GRIDEXPLORE_URL = HTTP_PROTOCOL + GRIDEXPLORE_HOSTNAME
@@ -70,8 +71,8 @@ GRAFANA_URL = HTTP_PROTOCOL + GRAFANA_HOSTNAME + GRAFANA_API
 
 # PATHS
 GET_STUDIES = STUDY_SERVER_URL + "/studies"
-GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS = STUDY_SERVER_URL + "/supervision/orphan_indexed_network_uuids"
-GET_ACTUATOR_INFO = HTTP_PROTOCOL + STUDY_SERVER_HOSTNAME + "/actuator/info"
+GET_ACTUATOR_INFO = HTTP_PROTOCOL + "{serverHostName}/actuator/info"
+GET_ELASTICSEARCH_HOST = HTTP_PROTOCOL + "{serverHostName}/supervision/elasticsearch-host"
 
 GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
@@ -100,17 +101,24 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 
 # INDEXED EQUIPMENTS
 GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
-DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/indexed-equipments"
+DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/equipments/indexation"
 DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
-GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-equipments-count"
-GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-count"
-GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-equipments-index-name"
-GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/indexed-tombstoned-equipments-index-name"
-GET_ELASTICSEARCH_HOST = STUDY_SERVER_URL + "/supervision/elasticsearch-host"
+GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/equipments/indexation-count"
+GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/indexation-count"
+GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/equipments/index-name"
+GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/index-name"
+GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS = STUDY_SERVER_URL + "/supervision/orphan_indexed_network_uuids"
+
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
 # GRAFANA ENDPOINTS
 GRAFANA_FOLDER = GRAFANA_URL + "/folders"
 GRAFANA_ALERT_RULES = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/alert-rules"
 GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folder/{folderUid}/rule-groups/{ruleGroupId}"
+
+# INDEXED ELEMENTS
+GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/elements/indexation-count"
+GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/elements/index-name"
+DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/indexation"
+REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/reindex"

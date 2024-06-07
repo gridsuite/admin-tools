@@ -12,14 +12,15 @@ import socket
 import sys
 from tqdm import tqdm
 
-from functions.indexes.indexes import get_equipments_index_name
-from functions.indexes.indexes import get_tombstoned_equipments_index_name
-from functions.indexes.indexes import get_eleasticsearch_host
-from functions.indexes.indexes import check_status_eleasticsearch
-from functions.indexes.indexes import expunge_deletes
-from functions.studies.studies import check_status_study_server
+from functions.indexes.studyEquipments import get_equipments_index_name
+from functions.indexes.studyEquipments import get_tombstoned_equipments_index_name
+from functions.indexes.elasticsearch import get_eleasticsearch_host
+from functions.indexes.elasticsearch import check_status_eleasticsearch
+from functions.indexes.elasticsearch import expunge_deletes
 from functions.studies.studies import delete_indexed_equipments
 from functions.studies.studies import get_all_orphan_indexed_equipments_network_uuids
+from functions.plateform.plateform import check_server_status
+from functions.plateform.plateform import get_plateform_info
 
 #
 # @author Achour Berrahma <achour.berrahma at rte-france.com>
@@ -39,14 +40,16 @@ print("Orphaned studies indexed equipments and tombstoned deletion script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without deleting anything (test mode)")
 if constant.DEV:
-    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (localhost:xxxx)")
+    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 print("\n")
 
 # Check study-server
-if not check_status_study_server(): sys.exit()
+if not check_server_status(constant.STUDY_SERVER_HOSTNAME): sys.exit()
 print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
-elasticsearch_host = get_eleasticsearch_host()
+# TODO better ?
+plateformName = get_plateform_info()['redirect_uri']
+elasticsearch_host = get_eleasticsearch_host(constant.STUDY_SERVER_HOSTNAME)
 elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
 elasticsearch_url = constant.HTTP_PROTOCOL + elasticsearch_host
 equipments_index_name = get_equipments_index_name()
@@ -56,6 +59,7 @@ if not check_status_eleasticsearch(elasticsearch_url) : sys.exit()
 print("\n")
 
 print("---------------------------------------------------------")
+print("This script will apply on plateform = " + plateformName )
 print("This platform will execute delete queries on elasticsearch = " + elasticsearch_url + " (" + elasticsearch_ip + ")")
 print("\n")
 print("===> Both elasticsearch and study-server seem OK ! The script can proceed")

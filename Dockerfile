@@ -10,6 +10,7 @@ COPY requirements.txt \
     delete_indexed_equipments.py \
     delete_stashed_elements.py \
     invalidate_nodes_builds.py \
+    reset_indexed_elements.py \
     ./
 RUN pip3 install -r requirements.txt
 # We call a script here, but it's overwritten at job execution by the way

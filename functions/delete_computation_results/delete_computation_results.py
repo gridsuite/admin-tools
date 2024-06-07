@@ -16,10 +16,13 @@ def delete_computation_results(dry_run, computationType):
     print("/// " + computationType + " results deletion ///")
     if dry_run: 
         resultsCount = requests.delete(constant.DELETE_COMPUTATION_RESULTS, params={'type': computationType, "dryRun": "true"})
-        print("Here's the count of stored computation results : " + str(resultsCount.json()))
+        if resultsCount.ok :
+            print("Here's the count of stored computation results : " + str(resultsCount.json()))
+        else :
+            print("An error occurred :" + str(resultsCount.json()))
     else :
         result = requests.delete(constant.DELETE_COMPUTATION_RESULTS, params={'type': computationType, "dryRun": "false"})
         if result.ok :
             print("Here's the count of processed nodes results : " + str(result.json()))
         else :
-            print("An error occurred with status code:", result.status_code)
+            print("An error occurred :" + str(result.json()))
