@@ -3,7 +3,7 @@ Gridsuite admin tools
 
 
 ## How to use locally
-Use locally by settings the `DEV` property to in `constant.py`
+Use locally by settings the `DEV` property to in `scripts/constant.py`
 ```diff
 -DEV = False
 +DEV = True
@@ -23,12 +23,12 @@ some example :
 
 Check Loadflow results number :
 ```py
-python3 delete_computation_results.py -lf -n
+python3 scripts/delete_computation_results.py -lf -n
 ```
 
 Delete Loadflow results definitively :
 ```py
-python3 delete_computation_results.py -lf
+python3 scripts/delete_computation_results.py -lf
 ```
 
 ## How to use locally with a container
@@ -50,16 +50,16 @@ All post requests are sent with the header "X-Disable-Provenance" set to "true".
 First, we need to create a folder.
 Execute this command :
 ```py
-python3 grafana_create_folder.py {{FOLDER_NAME}}
+python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 ```
 
 This command should return a json with a field "uid" which will be {{FOLDER_UID}} for the next command
 
 Then we can create alert-rules in the previously created folder.
-**Default interval value for rule-group is 60s. If you want a different value, use "-i" option (run "python3 grafana_create_alerts.py -h" for more infos**
+**Default interval value for rule-group is 60s. If you want a different value, use "-i" option (run "python3 scripts/grafana_create_alerts.py -h" for more infos**
 Execute this command :
 ```py
-python3 grafana_create_alerts.py -f {{PATH_TO_ALERT_RULES_1}} -f {{PATH_TO_ALERT_RULES_2}} -d {{DATASOURCE_UID}} -p {{FOLDER_UID}}
+python3 scripts/grafana_create_alerts.py -f {{PATH_TO_ALERT_RULES_1}} -f {{PATH_TO_ALERT_RULES_2}} -d {{DATASOURCE_UID}} -p {{FOLDER_UID}}
 ```
 
 *Notes:*

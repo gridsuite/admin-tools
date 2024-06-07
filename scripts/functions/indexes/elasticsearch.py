@@ -7,7 +7,6 @@
 
 import requests
 import constant
-
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
