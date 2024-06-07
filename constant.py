@@ -28,7 +28,7 @@ GRAFANA_API = "/api"
 GRAFANA_PROVISIONING = "/provisioning"
 
 # TODO add command parameter to set this DEV
-DEV = False
+DEV = True
 
 # hostnames
 GRIDEXPLORE_HOSTNAME = "localhost:80" if DEV else "gridexplore-app"
@@ -88,8 +88,6 @@ DELETE_FILTERS = FILTER_SERVER_URL + "/filters"
 DELETE_EXPLORE_ELEMENTS = EXPLORE_SERVER_URL + "/supervision/explore/elements"
 
 DELETE_COMPUTATION_RESULTS = STUDY_SERVER_URL + "/supervision/computation/results"
-
-GET_DIRECTORIES = DIRECTORY_SERVER_URL + "/supervision/directories"
 
 # COMPUTATION TYPES FOR RESULTS DELETION
 LOADFLOW = "LOAD_FLOW"
