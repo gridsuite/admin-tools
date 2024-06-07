@@ -35,7 +35,7 @@ print("Studies nodes builds invalidation script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without modifying anything (test mode)")
 if constant.DEV:
-    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (localhost:xxxx)")
+    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 print("\n")
 
 # Check study-server

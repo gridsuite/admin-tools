@@ -19,7 +19,6 @@ from functions.indexes.directoryElements import get_elements_index_name
 from functions.indexes.elasticsearch import get_eleasticsearch_host
 from functions.indexes.elasticsearch import check_status_eleasticsearch
 from functions.indexes.elasticsearch import expunge_deletes
-from functions.directoryElements.directoryElements import get_all_directories_uuid
 from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
 
@@ -41,7 +40,7 @@ print("Directory indexed elements reset script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without deleting or saving anything (test mode)")
 if constant.DEV:
-    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (localhost:xxxx)")
+    print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 print("\n")
 
 # Check directory-server

@@ -31,23 +31,24 @@ GRAFANA_PROVISIONING = "/provisioning"
 DEV = False
 
 # hostnames
-GRIDEXPLORE_HOSTNAME = "localhost:80" if DEV else "gridexplore-app"
-STUDY_SERVER_HOSTNAME = "localhost:5001" if DEV else "study-server"
+GRIDEXPLORE_HOSTNAME = "172.17.0.1:80" if DEV else "gridexplore-app"
+STUDY_SERVER_HOSTNAME = "172.17.0.1:5001" if DEV else "study-server"
 
-NETWORK_STORE_SERVER_HOSTNAME = "localhost:8080" if DEV else "network-store-server"
-DIRECTORY_SERVER_HOSTNAME = "localhost:5026" if DEV else "directory-server"
-ACTIONS_SERVER_HOSTNAME = "localhost:5022" if DEV else "actions-server"
-FILTER_SERVER_HOSTNAME = "localhost:5027" if DEV else "filter-server"
-EXPLORE_SERVER_HOSTNAME = "localhost:5029" if DEV else "explore-server"
+NETWORK_STORE_SERVER_HOSTNAME = "172.17.0.1:8080" if DEV else "network-store-server"
+DIRECTORY_SERVER_HOSTNAME = "172.17.0.1:5026" if DEV else "directory-server"
+ACTIONS_SERVER_HOSTNAME = "172.17.0.1:5022" if DEV else "actions-server"
+FILTER_SERVER_HOSTNAME = "172.17.0.1:5027" if DEV else "filter-server"
+EXPLORE_SERVER_HOSTNAME = "172.17.0.1:5029" if DEV else "explore-server"
 
-LOADFLOW_SERVER_HOSTNAME = "localhost:5008" if DEV else "loadflow-server"
-DYNAMIC_SIMULATION_SERVER_HOSTNAME = "localhost:5032" if DEV else "dynamic-simulation-server"
-SECURITY_ANALYSIS_SERVER_HOSTNAME = "localhost:5023" if DEV else "security-analysis-server"
-SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "localhost:5030" if DEV else "sensitivity-analysis-server"
-SHORTCIRCUIT_SERVER_HOSTNAME = "localhost:5031" if DEV else "shortcircuit-server"
-VOLTAGE_INIT_SERVER_HOSTNAME = "localhost:5038" if DEV else "voltage-init-server"
+LOADFLOW_SERVER_HOSTNAME = "172.17.0.1:5008" if DEV else "loadflow-server"
+DYNAMIC_SIMULATION_SERVER_HOSTNAME = "172.17.0.1:5032" if DEV else "dynamic-simulation-server"
+SECURITY_ANALYSIS_SERVER_HOSTNAME = "172.17.0.1:5023" if DEV else "security-analysis-server"
+SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "172.17.0.1:5030" if DEV else "sensitivity-analysis-server"
+SHORTCIRCUIT_SERVER_HOSTNAME = "172.17.0.1:5031" if DEV else "shortcircuit-server"
+VOLTAGE_INIT_SERVER_HOSTNAME = "172.17.0.1:5038" if DEV else "voltage-init-server"
 
-GRAFANA_HOSTNAME = "localhost:7000" if DEV else "grafana"
+GRAFANA_HOSTNAME = "172.17.0.1:7000" if DEV else "grafana"
+ELASTICSEARCH_HOSTNAME = "172.17.0.1:9200" if DEV else "elasticsearch"
 
 # URLs
 GRIDEXPLORE_URL = HTTP_PROTOCOL + GRIDEXPLORE_HOSTNAME

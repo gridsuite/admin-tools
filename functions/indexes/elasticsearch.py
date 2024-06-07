@@ -16,7 +16,7 @@ def get_eleasticsearch_host(serverHostName):
     # TODO use credentials because some server could have
     # we override host value in DEV otherwise study-server return 'elasticsearch:9200' as hostname
     try:
-        return "localhost:9200" if constant.DEV else requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName)).text
+        return constant.ELASTICSEARCH_HOSTNAME if constant.DEV else requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName)).text
     except requests.exceptions.RequestException as e:
         print(e)
         return ""

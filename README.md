@@ -15,6 +15,10 @@ Then
 python3 [scriptName] [parameters]
 ```
 
+> **_NOTE:_**  
+> Please be sure to exclude 172.17.0.1 from your proxy configuration.    
+> export NO_PROXY=localhost,172.17.0.1
+
 some example :
 
 Check Loadflow results number :
@@ -25,6 +29,19 @@ python3 delete_computation_results.py -lf -n
 Delete Loadflow results definitively :
 ```py
 python3 delete_computation_results.py -lf
+```
+
+## How to use locally with a container
+
+If you want to run a python script via a docker container, please edit the Dockerfile CMD content as you wish, be sure to still activate DEV mode. 
+
+```py
+DEV = True
+```
+And finally:
+```docker
+docker build . < Dockerfile --tag admin-tools
+docker run admin-tools
 ```
 
 ## Grafana scripts
