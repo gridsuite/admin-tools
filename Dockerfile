@@ -12,7 +12,6 @@ COPY requirements.txt \
     invalidate_nodes_builds.py \
     reset_indexed_elements.py \
     ./
-# ENV PIP_PROXY="http://[NNI]:[PASSWORD]@proxy-surf.rte-france.com:3128"
 RUN pip3 install -r requirements.txt
 # We call a script here, but it's overwritten at job execution by the way
 # depending at which script should be applied
