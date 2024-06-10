@@ -41,8 +41,16 @@ DEV = True
 And finally:
 ```docker
 docker build . < Dockerfile --tag admin-tools
-docker run admin-tools
+docker run admin-tools python [SCRIPT_NAME].py [...OPTIONS]
 ```
+**SCRIPT_NAME**: script file name in 'scripts/' folder    
+**OPTIONS** :    
+    (see individual scripts)    
+    common option is :    
+    
+| -n, --dry-run  | test mode (default) will not execute any deletion or saving request |
+| -------------- | ------------------------------------------------------------------- |
+
 
 ## Grafana scripts
 All post requests are sent with the header "X-Disable-Provenance" set to "true". Without it, all created entities would be read-only.
