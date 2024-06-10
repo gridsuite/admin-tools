@@ -7,7 +7,6 @@
 
 import requests
 import constant
-
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
 #

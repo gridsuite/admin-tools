@@ -7,7 +7,6 @@
 
 import requests
 import constant
-
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
