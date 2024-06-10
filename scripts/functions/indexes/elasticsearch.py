@@ -13,7 +13,7 @@ import constant
 
 def get_eleasticsearch_host(serverHostName):
     # TODO use credentials because some server could have
-    # we override host value in DEV otherwise study-server return 'elasticsearch:9200' as hostname
+    # we override host value in DEV otherwise services return 'elasticsearch:9200' as hostname
     try:
         return constant.ELASTICSEARCH_HOSTNAME if constant.DEV else requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName)).text
     except requests.exceptions.RequestException as e:
