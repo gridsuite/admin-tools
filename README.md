@@ -51,6 +51,15 @@ docker run admin-tools python [SCRIPT_NAME].py [...OPTIONS]
 | -n, --dry-run  | test mode (default) will not execute any deletion or saving request |
 | -------------- | ------------------------------------------------------------------- |
 
+## Elasticsearch scripts
+
+You could use `scripts/ES_requests.py` to execute requests on elasticsearch host directly
+respecting the REST API documentation (i.e. https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html)
+
+example:
+```py
+python3 scripts/ES_requests.py -m GET -u /_cat/indices?v
+```
 
 ## Grafana scripts
 All post requests are sent with the header "X-Disable-Provenance" set to "true". Without it, all created entities would be read-only.

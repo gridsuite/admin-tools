@@ -7,25 +7,46 @@
 
 import requests
 import constant
+import socket
+from simplejson import JSONDecodeError
+from simplejson import dumps
+
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
-def get_eleasticsearch_host(serverHostName):
+def prettyprint(result):
+    try:
+        # TODO this might not be a json format
+        pretty = dumps(result.json(), indent=2)
+        print(pretty)
+    except JSONDecodeError as jsonE:
+        print('Response could not be JSON serialized')
+        print(result.text) # try to print text if not JSON serialized
+
+def get_elasticsearch_host(serverHostName):
     # TODO use credentials because some server could have
     # we override host value in DEV otherwise services return 'elasticsearch:9200' as hostname
     try:
-        return constant.ELASTICSEARCH_HOSTNAME if constant.DEV else requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName)).text
+        if constant.DEV :
+            return constant.DEV_ELASTICSEARCH_IP, constant.DEV_ELASTICSEARCH_URL 
+        else:
+            elasticsearch_host = requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName)).text
+            # TODO don't parse here, instead have the server return structured information
+            elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
+            # TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for example
+            elasticsearch_url = constant.HTTP_PROTOCOL + elasticsearch_host
+            return elasticsearch_ip, elasticsearch_url
     except requests.exceptions.RequestException as e:
         print(e)
         return ""
 
-def check_status_eleasticsearch(url):
+def check_status_elasticsearch(url):
     try:
         result = requests.get(url + '/')
         if not result.ok :
-            # TODO this might not be a json format
-            print("An error occured : " + str(result.json()))
+            print("An error occured : ")
+            prettyprint(result)
             return False
         status = result.json()
         print("-----------------------")
@@ -35,6 +56,22 @@ def check_status_eleasticsearch(url):
         return True
     except requests.exceptions.RequestException as e:
         print("Exception during elasticsearch check status")
+        print(e)
+        return False
+
+def request_elasticsearch(method, url):
+    try:
+        print(method + " " + url)
+        result = requests.request(method, url)
+        if not result.ok :
+            print("An error occured : ")
+            prettyprint(result)
+            return False
+        print("-----------------------")
+        prettyprint(result)
+        return True
+    except requests.exceptions.RequestException as e:
+        print("Exception during elasticsearch request")
         print(e)
         return False
 
