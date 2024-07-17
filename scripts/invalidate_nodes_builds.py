@@ -7,8 +7,6 @@
 
 import argparse
 import constant
-import time
-import socket
 import sys
 from tqdm import tqdm
 
