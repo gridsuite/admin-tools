@@ -7,9 +7,23 @@
 
 import requests
 import constant
+from simplejson import JSONDecodeError
+from simplejson import dumps
+
+# from requests.exceptions import JSONDecodeError
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
+
+def prettyprint(result):
+    try:
+        pretty = dumps(result.json(), indent=2)
+        print(pretty)
+        return True
+    except JSONDecodeError as jsonE:
+        print('Response could not be JSON serialized')
+        print(result.text)
+        return True
 
 def get_eleasticsearch_host(serverHostName):
     # TODO use credentials because some server could have
@@ -35,6 +49,27 @@ def check_status_eleasticsearch(url):
         return True
     except requests.exceptions.RequestException as e:
         print("Exception during elasticsearch check status")
+        print(e)
+        return False
+
+def request_elasticsearch(method, url):
+    try:
+        print(method + " " + url)
+        result = requests.request(method, url)
+        if not result.ok :
+            # TODO this might not be a json format
+            print("An error occured : ")
+            prettyprint(result)
+            return False
+        print("-----------------------")
+        prettyprint(result)
+        return True
+    except JSONDecodeError:
+        print('Response could not be JSON serialized')
+        print(result.text)
+        return True
+    except requests.exceptions.RequestException as e:
+        print("Exception during elasticsearch request")
         print(e)
         return False
 
