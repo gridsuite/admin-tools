@@ -16,8 +16,8 @@ from functions.indexes.studyEquipments import get_nb_indexed_equipments
 from functions.indexes.studyEquipments import get_nb_indexed_tombstoned_equipments
 from functions.indexes.studyEquipments import get_equipments_index_name
 from functions.indexes.studyEquipments import get_tombstoned_equipments_index_name
-from functions.indexes.elasticsearch import get_eleasticsearch_host
-from functions.indexes.elasticsearch import check_status_eleasticsearch
+from functions.indexes.elasticsearch import get_elasticsearch_host
+from functions.indexes.elasticsearch import check_status_elasticsearch
 from functions.indexes.elasticsearch import expunge_deletes
 from functions.studies.studies import get_all_studies_uuid
 from functions.plateform.plateform import check_server_status
@@ -51,11 +51,11 @@ print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
 # TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
-elasticsearch_ip, elasticsearch_url = get_eleasticsearch_host(constant.STUDY_SERVER_HOSTNAME)
+elasticsearch_ip, elasticsearch_url = get_elasticsearch_host(constant.STUDY_SERVER_HOSTNAME)
 equipments_index_name = get_equipments_index_name()
 tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()
 
-if not check_status_eleasticsearch(elasticsearch_url) : sys.exit()
+if not check_status_elasticsearch(elasticsearch_url) : sys.exit()
 print("\n")
 
 print("---------------------------------------------------------")

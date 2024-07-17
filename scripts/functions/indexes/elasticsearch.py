@@ -23,7 +23,7 @@ def prettyprint(result):
         print('Response could not be JSON serialized')
         print(result.text) # try to print text if not JSON serialized
 
-def get_eleasticsearch_host(serverHostName):
+def get_elasticsearch_host(serverHostName):
     # TODO use credentials because some server could have
     # we override host value in DEV otherwise services return 'elasticsearch:9200' as hostname
     try:
@@ -40,7 +40,7 @@ def get_eleasticsearch_host(serverHostName):
         print(e)
         return ""
 
-def check_status_eleasticsearch(url):
+def check_status_elasticsearch(url):
     try:
         result = requests.get(url + '/')
         if not result.ok :

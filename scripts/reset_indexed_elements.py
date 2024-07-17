@@ -15,8 +15,8 @@ from functions.indexes.directoryElements import delete_indexed_elements
 from functions.indexes.directoryElements import reindex_elements
 from functions.indexes.directoryElements import get_nb_indexed_elements
 from functions.indexes.directoryElements import get_elements_index_name
-from functions.indexes.elasticsearch import get_eleasticsearch_host
-from functions.indexes.elasticsearch import check_status_eleasticsearch
+from functions.indexes.elasticsearch import get_elasticsearch_host
+from functions.indexes.elasticsearch import check_status_elasticsearch
 from functions.indexes.elasticsearch import expunge_deletes
 from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
@@ -48,10 +48,10 @@ print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
 # TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
-elasticsearch_ip, elasticsearch_url = get_eleasticsearch_host(constant.DIRECTORY_SERVER_HOSTNAME)
+elasticsearch_ip, elasticsearch_url = get_elasticsearch_host(constant.DIRECTORY_SERVER_HOSTNAME)
 elements_index_name = get_elements_index_name()
 
-if not check_status_eleasticsearch(elasticsearch_url) : sys.exit()
+if not check_status_elasticsearch(elasticsearch_url) : sys.exit()
 print("\n")
 
 print("---------------------------------------------------------")
