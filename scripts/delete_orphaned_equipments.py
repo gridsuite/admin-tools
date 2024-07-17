@@ -8,7 +8,6 @@
 import argparse
 import constant
 import time
-import socket
 import sys
 from tqdm import tqdm
 
@@ -49,9 +48,7 @@ print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
 # TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
-elasticsearch_host = get_eleasticsearch_host(constant.STUDY_SERVER_HOSTNAME)
-elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
-elasticsearch_url = constant.HTTP_PROTOCOL + elasticsearch_host
+elasticsearch_ip, elasticsearch_url = get_eleasticsearch_host(constant.STUDY_SERVER_HOSTNAME)
 equipments_index_name = get_equipments_index_name()
 tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()
 

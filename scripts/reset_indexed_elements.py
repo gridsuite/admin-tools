@@ -8,7 +8,6 @@
 import argparse
 import constant
 import time
-import socket
 import sys
 from tqdm import tqdm
 
@@ -49,11 +48,7 @@ print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
 # TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
-elasticsearch_host = get_eleasticsearch_host(constant.DIRECTORY_SERVER_HOSTNAME)
-# TODO don't parse here, instead have the server return structured information
-elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
-# TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for example
-elasticsearch_url = constant.HTTP_PROTOCOL + elasticsearch_host
+elasticsearch_ip, elasticsearch_url = get_eleasticsearch_host(constant.DIRECTORY_SERVER_HOSTNAME)
 elements_index_name = get_elements_index_name()
 
 if not check_status_eleasticsearch(elasticsearch_url) : sys.exit()
