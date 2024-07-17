@@ -17,6 +17,7 @@ from simplejson import dumps
 
 def prettyprint(result):
     try:
+        # TODO this might not be a json format
         pretty = dumps(result.json(), indent=2)
         print(pretty)
     except JSONDecodeError as jsonE:
@@ -44,8 +45,8 @@ def check_status_elasticsearch(url):
     try:
         result = requests.get(url + '/')
         if not result.ok :
-            # TODO this might not be a json format
-            print("An error occured : " + str(result.json()))
+            print("An error occured : ")
+            prettyprint(result)
             return False
         status = result.json()
         print("-----------------------")
@@ -63,7 +64,6 @@ def request_elasticsearch(method, url):
         print(method + " " + url)
         result = requests.request(method, url)
         if not result.ok :
-            # TODO this might not be a json format
             print("An error occured : ")
             prettyprint(result)
             return False
