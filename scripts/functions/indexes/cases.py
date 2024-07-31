@@ -1,0 +1,33 @@
+#
+# Copyright (c) 2024, RTE (http://www.rte-france.com)
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+
+import requests
+import constant
+#
+# @author Jamal KHEYYAD <jamal.kheyyad at rte-international.com>
+#
+
+def get_nb_indexed_elements():
+    return requests.get(constant.GET_CASES_ELEMENTS_COUNT).text
+
+def get_elements_index_name():
+    try:
+        return requests.get(constant.GET_CASES_ELEMENTS_INDEX_NAME).text
+    except requests.exceptions.RequestException as e:
+        print(e)
+        return ""
+
+def delete_indexed_elements():    
+    result = requests.delete(url = constant.DELETE_INDEXED_CASES_ELEMENTS)
+    if not result.ok :
+        print("An error occured : " + str(result.json()))
+
+def reindex_elements():    
+    result = requests.post(url = constant.REINDEX_CASES_ELEMENTS)
+    if not result.ok :
+        print("An error occured : " + str(result.json()))
+
