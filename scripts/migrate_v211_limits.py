@@ -37,11 +37,10 @@ if constant.DEV:
     print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 print("\n")
 
-# Check study-server
+# Check network-store-server
 if not check_server_status(constant.NETWORK_STORE_SERVER_HOSTNAME): sys.exit()
 print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
-# TODO better ?
 plateformName = get_plateform_info()['redirect_uri']
 
 print("\n")
