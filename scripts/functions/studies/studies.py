@@ -11,7 +11,6 @@ import constant
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
-
 def get_all_studies_uuid():
     return requests.get(constant.GET_STUDIES).json()
 
