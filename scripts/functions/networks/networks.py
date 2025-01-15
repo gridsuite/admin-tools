@@ -18,8 +18,8 @@ def get_variants(network_id):
     return requests.get(constant.GET_NETWORK.format(networkId = network_id)).json()
 
 def migrate_v211_limits(network_id, variant_num):
-    result = requests.put(constant.MIGRATE_V211_LIMITS.format(networkId = network_id, variantNum = variant_num))
-    if result.ok :
-        print("network " + network_id + "/variantNum=" + str(variant_num) + " => migration OK.")
-    else :
+    try:
+        requests.put(constant.MIGRATE_V211_LIMITS.format(networkId = network_id, variantNum = variant_num))
+    except requests.exceptions.RequestException as e:
         print("network " + network_id + "/variantNum=" + str(variant_num) + " => migration failed.")
+        print(f"Exception: {e}")
