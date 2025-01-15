@@ -14,12 +14,12 @@ import constant
 def get_all_networks_uuid():
     return requests.get(constant.GET_NETWORKS).json()
 
-def get_variants(networkId):
-    return requests.get(constant.GET_NETWORK.format(networkId = networkId)).json()
+def get_variants(network_id):
+    return requests.get(constant.GET_NETWORK.format(networkId = network_id)).json()
 
-def migrate_v211_limits(networkId, variantNum):
-    result = requests.put(constant.MIGRATE_V211_LIMITS.format(networkId = networkId, variantNum = variantNum))
+def migrate_v211_limits(network_id, variant_num):
+    result = requests.put(constant.MIGRATE_V211_LIMITS.format(networkId = network_id, variantNum = variant_num))
     if result.ok :
-        print("network " + networkId + "/variantNum=" + str(variantNum) + " => migration OK.")
+        print("network " + network_id + "/variantNum=" + str(variant_num) + " => migration OK.")
     else :
-        print("network " + networkId + "/variantNum=" + str(variantNum) + " => migration failed.")
+        print("network " + network_id + "/variantNum=" + str(variant_num) + " => migration failed.")
