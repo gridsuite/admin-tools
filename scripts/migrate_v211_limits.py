@@ -54,11 +54,17 @@ networks = get_all_networks_uuid()
 print("For a total of " + str(len(networks)) + " networks")
 print("---------------------------------------------------------")
 
-print("V2.11 limits migration in processing...")
+print("V2.11 limits migration (dry-run=" + str(dry_run) + ") in processing...")
+failCount = 0
+successCount = 0
 for network in tqdm(networks):
     variants = get_variants(network['uuid'])
     for variant in variants:
-        print("dry-run=" + str(dry_run) + " => Limits of network " + network['uuid'] + "/variantNum=" + str(variant['num']) + " will be migrated.")
         if not dry_run:
-            migrate_v211_limits(network['uuid'], variant['num'])
+            if migrate_v211_limits(network['uuid'], variant['num']):
+                successCount += 1
+            else:
+                failCount += 1
 print("End of V2.11.0 limits migration")
+print("Variant migration sucesses  : " + str(successCount))
+print("Variant migration failures  : " + str(failCount))
