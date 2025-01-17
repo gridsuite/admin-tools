@@ -70,7 +70,7 @@ for network in tqdm(networks):
                 # print only str(e) instead of the full traceback because we call this method from a simple for loop script
                 tqdm.write("network " + network['uuid'] + ", variantNum " + str(variant['num']) + " => migration failed: "+ str(e))
                 if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
-                    tqdm.write(f"Response body: {e.response.text}".replace('\r\n','').replace('\n',''))
+                    tqdm.write("Response body: " + repr(e.response.text)) # repr for cheap escaping
                 tqdm.write("") # emtpy newline between errors for legibility
 print("End of V2.11.0 limits migration")
 print("Variant migration sucesses  : " + str(successCount))
