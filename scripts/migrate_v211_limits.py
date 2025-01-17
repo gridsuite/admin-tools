@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
 
+import requests
 import argparse
 import constant
 import sys
@@ -61,10 +62,16 @@ for network in tqdm(networks):
     variants = get_variants(network['uuid'])
     for variant in variants:
         if not dry_run:
-            if migrate_v211_limits(network['uuid'], variant['num']):
+            try:
+                migrate_v211_limits(network['uuid'], variant['num'])
                 successCount += 1
-            else:
+            except Exception as e:
                 failCount += 1
+                # print only str(e) instead of the full traceback because we call this method from a simple for loop script
+                tqdm.write("network " + network['uuid'] + ", variantNum " + str(variant['num']) + " => migration failed: "+ str(e))
+                if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
+                    tqdm.write(f"Response body: {e.response.text}".replace('\r\n','').replace('\n',''))
+                tqdm.write("") # emtpy newline between errors for legibility
 print("End of V2.11.0 limits migration")
 print("Variant migration sucesses  : " + str(successCount))
 print("Variant migration failures  : " + str(failCount))
