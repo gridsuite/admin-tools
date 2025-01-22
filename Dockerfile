@@ -5,9 +5,4 @@ USER powsybl
 WORKDIR /home/powsybl
 COPY scripts/ ./
 
-RUN apk add --no-cache curl jq
-RUN pip3 install -r requirements.txt
-# We call a script here, but it's overwritten at job execution by the way
-# depending at which script should be applied
-# it's a dry-run call by default to avoid unexpected impact with this image
-CMD [ "python", "delete_indexed_equipments.py", "--dry-run" ]
+RUN apk add --no-cache curl jq && pip3 install -r requirements.txt
