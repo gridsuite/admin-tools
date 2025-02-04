@@ -59,7 +59,7 @@ successCount = 0
 for caseInfos in tqdm(cases):
     try:
         case = get_case(caseInfos['uuid'])
-        res = copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
+        copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
         successCount += 1
     except Exception as e:
         failCount += 1

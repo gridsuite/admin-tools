@@ -19,4 +19,5 @@ def get_case(caseUuid):
 
 def copy_to_s3_storage(caseUuid, caseName, case):
     files = {'file': (caseName, case)}
-    return requests.post(constant.COPY_CASE, files=files, params={'caseUuid': str(caseUuid)}).json()
+    response = requests.post(constant.COPY_CASE, files=files, params={'caseUuid': str(caseUuid)})
+    response.raise_for_status()
