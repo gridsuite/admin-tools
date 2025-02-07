@@ -14,10 +14,10 @@ import constant
 def get_all_cases():
     return requests.get(constant.GET_ALL_CASES).json()
 
-def get_case(caseUuid):
-    return requests.get(constant.GET_CASE.format(caseUuid = caseUuid)).content
+def get_case(case_uuid):
+    return requests.get(constant.GET_CASE.format(caseUuid = case_uuid)).content
 
-def copy_to_s3_storage(caseUuid, caseName, case):
-    files = {'file': (caseName, case)}
-    response = requests.post(constant.COPY_CASE, files=files, params={'caseUuid': str(caseUuid)})
+def copy_to_s3_storage(case_uuid, case_name, case):
+    files = {'file': (case_name, case)}
+    response = requests.post(constant.COPY_CASE, files=files, params={'caseUuid': str(case_uuid)})
     response.raise_for_status()
