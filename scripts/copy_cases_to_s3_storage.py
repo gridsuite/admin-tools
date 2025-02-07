@@ -54,21 +54,26 @@ print("For a total of " + str(len(cases)) + " cases")
 print("---------------------------------------------------------")
 
 print("Cases copy (dry-run=" + str(dry_run) + ") in processing...")
-failCount = 0
-successCount = 0
+fails_count = 0
+cases_migrated_count = 0
+already_migrated_count = 0
 for caseInfos in tqdm(cases):
     try:
         case = get_case(caseInfos['uuid'])
         copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
-        successCount += 1
+        cases_migrated_count += 1
     except Exception as e:
-        failCount += 1
-        # print only str(e) instead of the full traceback because we call this method from a simple for loop script
-        tqdm.write(
-            "Case " + caseInfos['uuid'] + " => copy failed: " + str(e))
-        if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
-            tqdm.write("Response body: " + repr(e.response.text))  # repr for cheap escaping
-        tqdm.write("")  # emtpy newline between errors for legibility
+        if e.response.status_code == 409:
+            already_migrated_count += 1
+        else:
+            fails_count += 1
+            # print only str(e) instead of the full traceback because we call this method from a simple for loop script
+            tqdm.write(
+                "Case " + caseInfos['uuid'] + " => copy failed: " + str(e))
+            if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
+                tqdm.write("Response body: " + repr(e.response.text))  # repr for cheap escaping
+            tqdm.write("")  # emtpy newline between errors for legibility
 print("End of cases copy to s3 storage")
-print("Case copy sucesses  : " + str(successCount))
-print("Case copy failures  : " + str(failCount))
+print("Case copy sucesses  : " + str(cases_migrated_count))
+print("Cases already migrated  : " + str(already_migrated_count))
+print("Case copy failures  : " + str(fails_count))
