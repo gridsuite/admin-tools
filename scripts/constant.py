@@ -40,7 +40,7 @@ ACTIONS_SERVER_HOSTNAME = "172.17.0.1:5022" if DEV else "actions-server"
 FILTER_SERVER_HOSTNAME = "172.17.0.1:5027" if DEV else "filter-server"
 EXPLORE_SERVER_HOSTNAME = "172.17.0.1:5029" if DEV else "explore-server"
 CASE_SERVER_HOSTNAME = "172.17.0.1:5000" if DEV else "case-server"
-S3_MIGRATION_CASE_SERVER_HOSTNAME = "172.17.0.1:5500" if DEV else "s3-migration-case-server"
+S3_MIGRATION_CASE_SERVER_HOSTNAME = "172.17.0.1:5500" if DEV else "s3-case-server"
 
 LOADFLOW_SERVER_HOSTNAME = "172.17.0.1:5008" if DEV else "loadflow-server"
 DYNAMIC_SIMULATION_SERVER_HOSTNAME = "172.17.0.1:5032" if DEV else "dynamic-simulation-server"
