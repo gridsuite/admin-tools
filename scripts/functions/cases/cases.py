@@ -12,7 +12,9 @@ import constant
 #
 
 def get_all_cases():
-    return requests.get(constant.GET_ALL_CASES).json()
+    response = requests.get(constant.GET_ALL_CASES)
+    response.raise_for_status()
+    return response.json()
 
 def get_case(case_uuid):
     return requests.get(constant.GET_CASE.format(caseUuid = case_uuid)).content
