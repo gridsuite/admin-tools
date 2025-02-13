@@ -63,7 +63,7 @@ for caseInfos in tqdm(cases):
         copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
         cases_migrated_count += 1
     except Exception as e:
-        if e.response.status_code == 409:
+        if isinstance(e, requests.exceptions.RequestException) and e.response is not None and e.response.status_code == 409:
             already_migrated_count += 1
         else:
             fails_count += 1
