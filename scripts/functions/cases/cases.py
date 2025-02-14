@@ -7,12 +7,21 @@
 
 import requests
 import constant
+import sys
 #
 # @author Etienne HOMER <etienne.homer at rte-france.com>
 #
 
 def get_all_cases():
-    return requests.get(constant.GET_ALL_CASES).json()
+    try:
+        response = requests.get(constant.GET_ALL_CASES)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print("Error on getting all cases => " + str(e))
+        if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
+            print("Response body: " + repr(e.response.text))
+        sys.exit(1)
 
 def get_case(case_uuid):
     return requests.get(constant.GET_CASE.format(caseUuid = case_uuid)).content
