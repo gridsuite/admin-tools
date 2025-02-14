@@ -49,14 +49,8 @@ print("This script will apply on plateform = " + plateformName )
 print("\n")
 print("===> case-server seems OK ! The script can proceed")
 print("\n")
-try:
-    cases = get_all_cases()
-except Exception as e:
-    print("Error on getting all cases => " + str(e))
-    if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
-        print("Response body: " + repr(e.response.text))
-    sys.exit()
 
+cases = get_all_cases()
 print("For a total of " + str(len(cases)) + " cases")
 print("---------------------------------------------------------")
 
