@@ -7,11 +7,9 @@
 
 import requests
 import argparse
-
 import constant
 import sys
 from tqdm import tqdm
-import time
 
 from functions.plateform.plateform import get_plateform_info
 from functions.plateform.plateform import check_server_status
