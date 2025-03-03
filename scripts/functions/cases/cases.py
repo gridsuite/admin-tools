@@ -26,7 +26,7 @@ def get_all_cases():
 def get_case(case_uuid):
     return requests.get(constant.GET_CASE.format(caseUuid = case_uuid)).content
 
-def  copy_to_s3_storage(case_uuid, case_name, case):
+def copy_to_s3_storage(case_uuid, case_name, case):
     files = {'file': (case_name, case)}
     response = requests.post(constant.S3_IMPORT_CASE, files=files, params={'caseUuid': str(case_uuid)})
     response.raise_for_status()

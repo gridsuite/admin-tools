@@ -65,11 +65,7 @@ for caseInfos in tqdm(cases):
         else:
             try:
                 case = get_case(caseInfos['uuid'])
-                print(caseInfos['uuid'] + "/" + caseInfos['name'] + " downloaded at " + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                 copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
-                print(caseInfos['uuid'] + "/" + caseInfos['name'] + "uploaded at " + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-                print("--------------------------------------------------------------------------------------")
-                print("\n")
                 cases_migrated_count += 1
             except Exception as e:
                 # print only str(e) instead of the full traceback because we call this method from a simple for loop script
