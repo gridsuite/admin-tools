@@ -71,10 +71,7 @@ for caseInfos in tqdm(cases):
                 # print only str(e) instead of the full traceback because we call this method from a simple for loop script
                 tqdm.write("Case " + caseInfos['uuid'] + " => copy failed: " + str(e))
                 if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
-                    if e.response.status_code == 409:
-                        already_migrated_count += 1
-                    else:
-                        fails_count += 1
+                    fails_count += 1
                     tqdm.write("Response body: " + repr(e.response.text))  # repr for cheap escaping
                 else:
                     fails_count += 1
