@@ -140,4 +140,5 @@ REINDEX_CASES_ELEMENTS = CASE_SERVER_URL + "/supervision/cases/reindex"
 # CASES
 GET_ALL_CASES = CASE_SERVER_URL + "/cases"
 GET_CASE = CASE_SERVER_URL + "/cases/{caseUuid}"
-COPY_CASE = S3_MIGRATION_CASE_SERVER_URL + "/migration/cases"
+S3_IMPORT_CASE = S3_MIGRATION_CASE_SERVER_URL + "/migration/cases"
+S3_EXISTS_CASE = S3_MIGRATION_CASE_SERVER_URL + "/cases/{caseUuid}/exists"
