@@ -7,17 +7,13 @@
 
 import argparse
 import constant
-import time
 import sys
-from tqdm import tqdm
 
-from functions.indexes.directoryElements import delete_indexed_elements
-from functions.indexes.directoryElements import reindex_elements
+from functions.indexes.directoryElements import reindex_elements, recreate_elements_index
 from functions.indexes.directoryElements import get_nb_indexed_elements
 from functions.indexes.directoryElements import get_elements_index_name
 from functions.indexes.elasticsearch import get_elasticsearch_host
 from functions.indexes.elasticsearch import check_status_elasticsearch
-from functions.indexes.elasticsearch import expunge_deletes
 from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
 
@@ -61,19 +57,14 @@ print("This plateform will execute queries on elasticsearch = " + elasticsearch_
 print("\n")
 print("===> Both elasticsearch and directory-server seem OK ! The script can proceed")
 print("\n")
-print("Number of indexed directory elements (name: " + elements_index_name + ") = " + get_nb_indexed_elements())
-print("And will execute on elasticsearch force merge expunge deletes to reclaim space.")
+print("Number of indexed directory elements before reindexation (name: " + elements_index_name + ") = " + get_nb_indexed_elements())
 print("---------------------------------------------------------")
 if not dry_run:
-    print("Directory indexed elements deletion processing...")
-    delete_indexed_elements()
-    print("Waiting 30 secondes before force merge expunge_deletes...")
-    time.sleep(30)    
-    expunge_deletes(elasticsearch_url, elements_index_name)
-    print("End of deletion")
-    print("Directory indexed elements reindexation processing...")
+    recreate_elements_index()
+    print("Directory elements reindexation processing...")
     reindex_elements()
     print("End of reindexation")
+    print("Number of indexed directory elements after reindexation (name: " + elements_index_name + ") = " + get_nb_indexed_elements())
 else:
     print("Nothing has been impacted (dry-run)")
 

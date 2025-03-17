@@ -34,6 +34,6 @@ def delete_indexed_equipments(networkUuid):
         print(f"Exception occurred while deleting indexed equipments for network UUID: {networkUuid}. Exception: {e}")
         return False
 
-def invalidate_nodes_builds(studyUuid):
-    return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = studyUuid))
+def invalidate_nodes_builds(study_uuid):
+    return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = study_uuid))
     
