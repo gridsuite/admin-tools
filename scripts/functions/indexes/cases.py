@@ -21,10 +21,13 @@ def get_elements_index_name():
         print(e)
         return ""
 
-def delete_indexed_elements():    
-    result = requests.delete(url = constant.DELETE_INDEXED_CASES_ELEMENTS)
-    if not result.ok :
-        print("An error occured : " + str(result.json()))
+def recreate_elements_index():
+    try:
+        result = requests.post(url = constant.RECREATE_CASES_ELEMENTS_INDEX)
+        result.raise_for_status()
+        print("Index recreated successfully.")
+    except Exception as e:
+        raise SystemExit(f"An error occurred while recreating the index: {e}")
 
 def reindex_elements():    
     result = requests.post(url = constant.REINDEX_CASES_ELEMENTS)
