@@ -28,5 +28,8 @@ def get_case(case_uuid):
 
 def copy_to_s3_storage(case_uuid, case_name, case):
     files = {'file': (case_name, case)}
-    response = requests.post(constant.COPY_CASE, files=files, params={'caseUuid': str(case_uuid)})
+    response = requests.post(constant.S3_IMPORT_CASE, files=files, params={'caseUuid': str(case_uuid)})
     response.raise_for_status()
+
+def exists_case_on_s3(case_uuid):
+    return requests.get(constant.S3_EXISTS_CASE.format(caseUuid = case_uuid)).text == 'true'
