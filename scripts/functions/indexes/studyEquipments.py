@@ -50,7 +50,7 @@ def recreate_study_indices():
     except Exception as e:
         raise SystemExit(f"An error occurred while recreating study indices: {e}")
 
-def reindex_study_and_equipments(studyUuid):
-    result = requests.post(url = constant.REINDEX_STUDY_AND_EQUIPMENTS.format(studyUuid = studyUuid))
+def reindex_study_and_equipments(study_uuid):
+    result = requests.post(url = constant.REINDEX_STUDY_AND_EQUIPMENTS.format(studyUuid = study_uuid))
     if not result.ok :
         print("An error occured : " + str(result.json()))
