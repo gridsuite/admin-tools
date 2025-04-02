@@ -7,6 +7,10 @@
 
 import requests
 import constant
+
+from scripts.functions.indexes.elasticsearch import prettyprint
+
+
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
@@ -32,5 +36,5 @@ def recreate_elements_index():
 def reindex_elements():    
     result = requests.post(url = constant.REINDEX_ELEMENTS)
     if not result.ok :
-        print("An error occured : " + str(result.json()))
-
+        print("An error occured : ")
+        prettyprint(result)

@@ -20,7 +20,7 @@ def prettyprint(result):
         # TODO this might not be a json format
         pretty = dumps(result.json(), indent=2)
         print(pretty)
-    except JSONDecodeError as jsonE:
+    except JSONDecodeError:
         print('Response could not be JSON serialized')
         print(result.text) # try to print text if not JSON serialized
 
