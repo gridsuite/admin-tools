@@ -8,21 +8,13 @@
 import requests
 import constant
 import socket
-from simplejson import JSONDecodeError
-from simplejson import dumps
+
+from ..utils import prettyprint
+
 
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
-
-def prettyprint(result):
-    try:
-        # TODO this might not be a json format
-        pretty = dumps(result.json(), indent=2)
-        print(pretty)
-    except JSONDecodeError:
-        print('Response could not be JSON serialized')
-        print(result.text) # try to print text if not JSON serialized
 
 def get_elasticsearch_host(serverHostName):
     # TODO use credentials because some server could have

@@ -8,7 +8,7 @@
 import requests
 import constant
 
-from scripts.functions.indexes.elasticsearch import prettyprint
+from ..utils import prettyprint
 
 
 #
