@@ -109,7 +109,7 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 
 # INDEXED EQUIPMENTS
 GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
-RECREATE_STUDY_INDICES = STUDY_SERVER_URL + "/supervision/studies/indices/recreate"
+RECREATE_STUDY_INDICES = STUDY_SERVER_URL + "/supervision/studies/indices"
 DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
 GET_STUDIES_INDEXED_STUDIES_COUNT = STUDY_SERVER_URL + "/supervision/studies/indexation-count"
@@ -131,14 +131,14 @@ GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folde
 # INDEXED ELEMENTS
 GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/elements/indexation-count"
 GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/elements/index-name"
-RECREATE_ELEMENTS_INDEX = DIRECTORY_SERVER_URL + "/supervision/elements/index/recreate"
+RECREATE_ELEMENTS_INDEX = DIRECTORY_SERVER_URL + "/supervision/elements/index"
 REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/reindex"
 
 
 # INDEXED ELEMENTS
 GET_CASES_ELEMENTS_COUNT = CASE_SERVER_URL + "/supervision/cases/indexation-count"
 GET_CASES_ELEMENTS_INDEX_NAME = CASE_SERVER_URL + "/supervision/cases/index-name"
-RECREATE_CASES_ELEMENTS_INDEX = CASE_SERVER_URL + "/supervision/cases/index/recreate"
+RECREATE_CASES_ELEMENTS_INDEX = CASE_SERVER_URL + "/supervision/cases/index"
 REINDEX_CASES_ELEMENTS = CASE_SERVER_URL + "/supervision/cases/reindex"
 
 # CASES

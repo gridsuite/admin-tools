@@ -7,6 +7,10 @@
 
 import requests
 import constant
+
+from ..utils import prettyprint
+
+
 #
 # @author Hugo Marcellin <hugo.marcelin at rte-france.com>
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
@@ -53,4 +57,5 @@ def recreate_study_indices():
 def reindex_study_and_equipments(study_uuid):
     result = requests.post(url = constant.REINDEX_STUDY_AND_EQUIPMENTS.format(studyUuid = study_uuid))
     if not result.ok :
-        print("An error occured : " + str(result.json()))
+        print("An error occured : ")
+        prettyprint(result)

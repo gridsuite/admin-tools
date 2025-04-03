@@ -7,6 +7,10 @@
 
 import requests
 import constant
+
+from ..utils import prettyprint
+
+
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
@@ -20,8 +24,8 @@ def check_server_status(serverHostName):
         result = requests.get(constant.GET_ACTUATOR_INFO.format(serverHostName = serverHostName))
 
         if not result.ok :
-            # TODO this might not be a json format
-            print("An error occured : " + str(result.json()))
+            print("An error occured : ")
+            prettyprint(result)
             return False
         status = result.json()
         print("-----------------------")
