@@ -109,14 +109,17 @@ VOLTAGE_INIT = "VOLTAGE_INITIALIZATION"
 
 # INDEXED EQUIPMENTS
 GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
-DELETE_STUDY_INDEXED_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/equipments/indexation"
+RECREATE_STUDY_INDICES = STUDY_SERVER_URL + "/supervision/studies/indices/recreate"
 DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
+GET_STUDIES_INDEXED_STUDIES_COUNT = STUDY_SERVER_URL + "/supervision/studies/indexation-count"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/equipments/indexation-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/indexation-count"
+GET_STUDIES_INDEXED_STUDIES_INDEX_NAME = STUDY_SERVER_URL + "/supervision/studies/index-name"
 GET_STUDIES_INDEXED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/equipments/index-name"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_INDEX_NAME = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/index-name"
 GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS = STUDY_SERVER_URL + "/supervision/orphan_indexed_network_uuids"
+REINDEX_STUDY_AND_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/reindex"
 
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
@@ -128,14 +131,14 @@ GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folde
 # INDEXED ELEMENTS
 GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/elements/indexation-count"
 GET_DIRECTORY_ELEMENTS_INDEX_NAME = DIRECTORY_SERVER_URL + "/supervision/elements/index-name"
-DELETE_INDEXED_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/indexation"
+RECREATE_ELEMENTS_INDEX = DIRECTORY_SERVER_URL + "/supervision/elements/index/recreate"
 REINDEX_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements/reindex"
 
 
 # INDEXED ELEMENTS
 GET_CASES_ELEMENTS_COUNT = CASE_SERVER_URL + "/supervision/cases/indexation-count"
 GET_CASES_ELEMENTS_INDEX_NAME = CASE_SERVER_URL + "/supervision/cases/index-name"
-DELETE_INDEXED_CASES_ELEMENTS = CASE_SERVER_URL + "/supervision/cases/indexation"
+RECREATE_CASES_ELEMENTS_INDEX = CASE_SERVER_URL + "/supervision/cases/index/recreate"
 REINDEX_CASES_ELEMENTS = CASE_SERVER_URL + "/supervision/cases/reindex"
 
 # CASES
