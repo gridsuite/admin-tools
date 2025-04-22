@@ -30,29 +30,31 @@ GRAFANA_PROVISIONING = "/provisioning"
 # TODO add command parameter to set this DEV
 DEV = False
 
+DEV_HOSTNAME = "172.17.0.1" # NOSONAR S1313 : this local IP is not excluded from this sonar issue
+
 # hostnames
-GRIDEXPLORE_HOSTNAME = "172.17.0.1:80" if DEV else "gridexplore-app"
-STUDY_SERVER_HOSTNAME = "172.17.0.1:5001" if DEV else "study-server"
+GRIDEXPLORE_HOSTNAME = DEV_HOSTNAME + ":80" if DEV else "gridexplore-app"
+STUDY_SERVER_HOSTNAME = DEV_HOSTNAME + ":5001" if DEV else "study-server"
 
-NETWORK_STORE_SERVER_HOSTNAME = "172.17.0.1:8080" if DEV else "network-store-server"
-DIRECTORY_SERVER_HOSTNAME = "172.17.0.1:5026" if DEV else "directory-server"
-ACTIONS_SERVER_HOSTNAME = "172.17.0.1:5022" if DEV else "actions-server"
-FILTER_SERVER_HOSTNAME = "172.17.0.1:5027" if DEV else "filter-server"
-EXPLORE_SERVER_HOSTNAME = "172.17.0.1:5029" if DEV else "explore-server"
-CASE_SERVER_HOSTNAME = "172.17.0.1:5000" if DEV else "case-server"
-MODIFICATION_SERVER_HOSTNAME = "172.17.0.1:5007" if DEV else "network-modification-server"
-S3_MIGRATION_CASE_SERVER_HOSTNAME = "172.17.0.1:5500" if DEV else "s3-case-server"
+NETWORK_STORE_SERVER_HOSTNAME = DEV_HOSTNAME + ":8080" if DEV else "network-store-server"
+DIRECTORY_SERVER_HOSTNAME = DEV_HOSTNAME + ":5026" if DEV else "directory-server"
+ACTIONS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5022" if DEV else "actions-server"
+FILTER_SERVER_HOSTNAME = DEV_HOSTNAME + ":5027" if DEV else "filter-server"
+EXPLORE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5029" if DEV else "explore-server"
+CASE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5000" if DEV else "case-server"
+MODIFICATION_SERVER_HOSTNAME = DEV_HOSTNAME + ":5007" if DEV else "network-modification-server"
+S3_MIGRATION_CASE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5500" if DEV else "s3-case-server"
 
-LOADFLOW_SERVER_HOSTNAME = "172.17.0.1:5008" if DEV else "loadflow-server"
-DYNAMIC_SIMULATION_SERVER_HOSTNAME = "172.17.0.1:5032" if DEV else "dynamic-simulation-server"
-SECURITY_ANALYSIS_SERVER_HOSTNAME = "172.17.0.1:5023" if DEV else "security-analysis-server"
-SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = "172.17.0.1:5030" if DEV else "sensitivity-analysis-server"
-SHORTCIRCUIT_SERVER_HOSTNAME = "172.17.0.1:5031" if DEV else "shortcircuit-server"
-VOLTAGE_INIT_SERVER_HOSTNAME = "172.17.0.1:5038" if DEV else "voltage-init-server"
+LOADFLOW_SERVER_HOSTNAME = DEV_HOSTNAME + ":5008" if DEV else "loadflow-server"
+DYNAMIC_SIMULATION_SERVER_HOSTNAME = DEV_HOSTNAME + ":5032" if DEV else "dynamic-simulation-server"
+SECURITY_ANALYSIS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5023" if DEV else "security-analysis-server"
+SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5030" if DEV else "sensitivity-analysis-server"
+SHORTCIRCUIT_SERVER_HOSTNAME = DEV_HOSTNAME + ":5031" if DEV else "shortcircuit-server"
+VOLTAGE_INIT_SERVER_HOSTNAME = DEV_HOSTNAME + ":5038" if DEV else "voltage-init-server"
 
-GRAFANA_HOSTNAME = "172.17.0.1:7000" if DEV else "grafana"
-DEV_ELASTICSEARCH_IP = "172.17.0.1"
-DEV_ELASTICSEARCH_URL = HTTP_PROTOCOL + "172.17.0.1:9200"
+GRAFANA_HOSTNAME = DEV_HOSTNAME + ":7000" if DEV else "grafana"
+DEV_ELASTICSEARCH_IP = DEV_HOSTNAME
+DEV_ELASTICSEARCH_URL = HTTP_PROTOCOL + DEV_HOSTNAME + ":9200"
 
 
 # URLs
