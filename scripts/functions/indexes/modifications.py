@@ -16,10 +16,10 @@ from ..utils import prettyprint
 #
 
 def get_nb_indexed_modifications():
-    return requests.get(constant.GET_MODIFICATIONS_ELEMENTS_COUNT).text
+    return requests.get(constant.GET_MODIFICATIONS_COUNT).text
 
 def get_nb_modifications_to_index():
-    return requests.get(constant.GET_MODIFICATIONS_ELEMENTS_TO_INDEX_COUNT).text
+    return requests.get(constant.GET_MODIFICATIONS_TO_INDEX_COUNT).text
 
 def get_modifications_index_name():
     try:

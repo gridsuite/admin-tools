@@ -144,8 +144,8 @@ RECREATE_CASES_ELEMENTS_INDEX = CASE_SERVER_URL + "/supervision/cases/index"
 REINDEX_CASES_ELEMENTS = CASE_SERVER_URL + "/supervision/cases/reindex"
 
 # INDEXED MODIFICATIONS
-GET_MODIFICATIONS_ELEMENTS_COUNT = MODIFICATION_SERVER_URL + "/supervision/network-modifications/indexation-count"
-GET_MODIFICATIONS_ELEMENTS_TO_INDEX_COUNT = MODIFICATION_SERVER_URL + "/supervision/network-modifications/to-reindex-count"
+GET_MODIFICATIONS_COUNT = MODIFICATION_SERVER_URL + "/supervision/network-modifications/indexation-count"
+GET_MODIFICATIONS_TO_INDEX_COUNT = MODIFICATION_SERVER_URL + "/supervision/network-modifications/to-reindex-count"
 GET_MODIFICATIONS_INDEX_NAME = MODIFICATION_SERVER_URL + "/supervision/network-modifications/index-name"
 RECREATE_MODIFICATIONS_INDEX = MODIFICATION_SERVER_URL + "/supervision/network-modifications/index"
 REINDEX_MODIFICATIONS = MODIFICATION_SERVER_URL + "/supervision/network-modifications/reindex"
