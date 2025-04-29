@@ -42,7 +42,7 @@ if constant.DEV:
     print("DEV=" + str(constant.DEV) + " -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 print("\n")
 
-# Check directory-server
+# Check network-modification-server
 if not check_server_status(constant.MODIFICATION_SERVER_HOSTNAME): sys.exit()
 print("\n")
 # Just getting an enlightening url opportunistically from here because it exists
