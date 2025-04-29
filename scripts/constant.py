@@ -150,7 +150,8 @@ GET_MODIFICATIONS_COUNT = MODIFICATION_SERVER_URL + "/supervision/network-modifi
 GET_MODIFICATIONS_TO_INDEX_COUNT = MODIFICATION_SERVER_URL + "/supervision/network-modifications/to-reindex-count"
 GET_MODIFICATIONS_INDEX_NAME = MODIFICATION_SERVER_URL + "/supervision/network-modifications/index-name"
 RECREATE_MODIFICATIONS_INDEX = MODIFICATION_SERVER_URL + "/supervision/network-modifications/index"
-REINDEX_MODIFICATIONS = MODIFICATION_SERVER_URL + "/supervision/network-modifications/reindex"
+REINDEX_MODIFICATIONS = MODIFICATION_SERVER_URL + "/supervision/network-modifications/reindex?networkUuid={networkUuid}"
+GET_MODIFICATIONS_NETWORK_UUIDS = MODIFICATION_SERVER_URL + "/supervision/network-modifications/network-uuids"
 
 # CASES
 GET_ALL_CASES = CASE_SERVER_URL + "/cases"

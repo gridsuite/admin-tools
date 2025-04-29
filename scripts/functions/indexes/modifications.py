@@ -36,8 +36,11 @@ def recreate_modifications_index():
     except Exception as e:
         raise SystemExit(f"An error occurred while recreating the index: {e}")
 
-def reindex_modifications():    
-    result = requests.post(url = constant.REINDEX_MODIFICATIONS)
+def reindex_modifications(networkUuid):
+    result = requests.post(url = constant.REINDEX_MODIFICATIONS.format(networkUuid = networkUuid))
     if not result.ok :
         print("An error occured : ")
         prettyprint(result)
+
+def get_modifications_network_uuids():
+    return requests.get(url = constant.GET_MODIFICATIONS_NETWORK_UUIDS).json()

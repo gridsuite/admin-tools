@@ -8,11 +8,13 @@
 import argparse
 import constant
 import sys
+from tqdm import tqdm
 
 from functions.indexes.modifications import get_modifications_index_name
 from functions.indexes.modifications import get_nb_indexed_modifications
 from functions.indexes.modifications import get_nb_modifications_to_index
 from functions.indexes.modifications import recreate_modifications_index
+from functions.indexes.modifications import get_modifications_network_uuids
 from functions.indexes.modifications import reindex_modifications
 from functions.indexes.elasticsearch import get_elasticsearch_host
 from functions.indexes.elasticsearch import check_status_elasticsearch
@@ -48,6 +50,7 @@ print("\n")
 plateformName = get_plateform_info()['redirect_uri']
 elasticsearch_ip, elasticsearch_url = get_elasticsearch_host(constant.MODIFICATION_SERVER_HOSTNAME)
 modifications_index_name = get_modifications_index_name()
+network_uuids = get_modifications_network_uuids()
 
 if not check_status_elasticsearch(elasticsearch_url) : sys.exit()
 print("\n")
@@ -61,11 +64,13 @@ print("===> Both elasticsearch and network-modification-server seem OK ! The scr
 print("\n")
 print("Number of indexed modifications before reindexation (name: " + modifications_index_name + ") = " + get_nb_indexed_modifications())
 print("Number of modifications to index = " + get_nb_modifications_to_index())
+print("Number of network uuids with indexed modifications : " + str(len(network_uuids)))
 print("---------------------------------------------------------")
 if not dry_run:
     recreate_modifications_index()
     print("Modifications reindexation processing...")
-    reindex_modifications()
+    for network_uuid in tqdm(network_uuids):
+        reindex_modifications(network_uuid)
     print("End of reindexation")
     print("Number of indexed modifications after reindexation (name: " + modifications_index_name + ") = " + get_nb_indexed_modifications())
 else:
