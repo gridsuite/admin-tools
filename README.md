@@ -106,3 +106,21 @@ Save it in **resources/grafana/alert-rules** directory
 
 ### Edit an existing alert-rule from a JSON file
 There is currently no script to update an existing alert-rule
+
+# Clean orphan elements
+This python script will send requests to gridsuite services configured in "constant.py" in order to clean orphan elements
+
+Developed with Python version 3.8.10
+
+## Script modes
+
+Two executions modes are available :
+- **exec** : this mode will actually remove orphan elements by executing DELETE requests to services
+- **test** (default) : this mode will not modify nor remove any element. It will only display which elements will be deleted if script is ran with "exec" mode
+
+## Execution
+
+Command line to run script with "exec" mode :
+<pre>
+    python clean_oprhan_elements.py --mode=exec
+</pre>
