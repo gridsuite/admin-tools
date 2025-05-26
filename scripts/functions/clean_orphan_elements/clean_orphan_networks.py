@@ -1,8 +1,8 @@
 import requests
-import constant
+from scripts import constant
 
 def get_network_uuid_from_study(study):
-    return study["networkUuid"]
+    return study["rootNetworkUuids"]
 
 
 def get_network_uuid_from_network(network):
@@ -22,12 +22,13 @@ def delete_orphan_network(dry_run):
     # DELETING ORPHAN NETWORKS IN NETWORK STORE SERVER
     print("/// Orphan networks deletion ///")
     # GET EXISTING NETWORKS AMONG EXISTING STUDIES
-    print("Getting existing networks from existing studies")
-    get_studies_response = requests.get(constant.GET_STUDIES)
+    print("Getting used networks from existing studies: " + constant.GET_SUPERVISION_STUDIES)
+    get_studies_response = requests.get(constant.GET_SUPERVISION_STUDIES)
 
     get_studies_response_json = get_studies_response.json()
+    # turn get_studies_response_json into a network uuids list :
     get_studies_response_json_network_uuid = map(get_network_uuid_from_study, get_studies_response_json)
-    existing_networks_uuid = list(get_studies_response_json_network_uuid)
+    network_uuids_used_in_studies = [element for sub_list in list(get_studies_response_json_network_uuid) for element in sub_list]
 
     print("Done")
     # GET NETWORKS SAVED IN NETWORK STORE SERVER
@@ -43,7 +44,7 @@ def delete_orphan_network(dry_run):
     print("Computing orphan networks")
     orphan_networks = []
     for network_uuid in all_networks_uuid:
-        if network_uuid not in existing_networks_uuid:
+        if network_uuid not in network_uuids_used_in_studies:
             orphan_networks.append(network_uuid)
 
     print("Done")

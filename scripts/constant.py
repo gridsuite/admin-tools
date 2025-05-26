@@ -28,7 +28,7 @@ GRAFANA_API = "/api"
 GRAFANA_PROVISIONING = "/provisioning"
 
 # TODO add command parameter to set this DEV
-DEV = False
+DEV = True
 
 DEV_HOSTNAME = "172.17.0.1" # NOSONAR S1313 : this local IP is not excluded from this sonar issue
 
@@ -93,6 +93,7 @@ MIGRATE_V214_TAP_CHANGER_STEPS = NETWORK_STORE_SERVER_URL + "/migration/v214tapC
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 
 GET_DIRECTORY_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements"
+GET_SUPERVISION_STUDIES = STUDY_SERVER_URL + "/supervision/studies"
 
 GET_CONTINGENCY_LISTS = ACTIONS_SERVER_URL + "/contingency-lists"
 DELETE_CONTINGENCY_LISTS = ACTIONS_SERVER_URL + "/contingency-lists"
