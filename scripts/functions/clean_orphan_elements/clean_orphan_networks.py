@@ -32,7 +32,7 @@ def delete_orphan_network(dry_run):
 
     print("Done")
     # GET NETWORKS SAVED IN NETWORK STORE SERVER
-    print("Getting networks from network store server : " + str(constant.GET_NETWORKS))
+    print("Getting networks from network store server : " + constant.GET_NETWORKS)
     get_networks_response = requests.get(constant.GET_NETWORKS)
 
     get_networks_response_json = get_networks_response.json()

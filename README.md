@@ -111,7 +111,7 @@ There is currently no script to update an existing alert-rule
 This python script will send requests to gridsuite services configured in "constant.py" in order to clean orphan elements.
 Cleans : 
  - orphan networks
- - orphan contingency lists =>OK but should be tested cauiously
+ - orphan contingency lists
  - orphan filters =>OK but should be tested cautiously
  - orphan cases => TODO
  - orphan studies => TODO => beaucoup dans ma bdd
