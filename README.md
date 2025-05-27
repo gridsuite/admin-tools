@@ -108,19 +108,25 @@ Save it in **resources/grafana/alert-rules** directory
 There is currently no script to update an existing alert-rule
 
 # Clean orphan elements
-This python script will send requests to gridsuite services configured in "constant.py" in order to clean orphan elements
+This python script will send requests to gridsuite services configured in "constant.py" in order to clean orphan elements.
+Cleans : 
+ - orphan networks
+ - orphan contingency lists =>OK but should be tested cauiously
+ - orphan filters =>OK but should be tested cautiously
+ - orphan cases => TODO
+ - orphan studies => TODO => beaucoup dans ma bdd
 
-Developed with Python version 3.8.10
+Developed with Python version 3.10.12
 
-## Script modes
+## Script modes and Execution
 
-Two executions modes are available :
-- **exec** : this mode will actually remove orphan elements by executing DELETE requests to services
-- **test** (default) : this mode will not modify nor remove any element. It will only display which elements will be deleted if script is ran with "exec" mode
-
-## Execution
-
-Command line to run script with "exec" mode :
+Command line to run script using the standard mode (ie will actually remove orphan elements by executing DELETE requests to services) :
 <pre>
-    python clean_oprhan_elements.py --mode=exec
+    python3 scripts/clean_orphan_elements.py
+</pre>
+
+Has a test --dry-run mode :
+| --dry-run  | this test mode will not modify nor remove any element. It will only display which elements will be deleted if the script is ran in standard mode
+<pre>
+    python3 scripts/clean_orphan_elements.py --dry-run
 </pre>

@@ -19,8 +19,8 @@ else:
 
 print("\n\n")
 
-delete_orphan_network(dry_run)
+# delete_orphan_network(dry_run)
 
 delete_orphan_contingency_lists(dry_run)
 
-delete_orphan_filters(dry_run)
+# delete_orphan_filters(dry_run)
