@@ -112,8 +112,8 @@ This python script will send requests to gridsuite services configured in "const
 Cleans : 
  - orphan networks
  - orphan contingency lists
- - orphan filters =>OK but should be tested cautiously
- - orphan cases => TODO
+ - orphan filters
+ - orphan cases
  - orphan studies => TODO => beaucoup dans ma bdd
 
 Developed with Python version 3.10.12

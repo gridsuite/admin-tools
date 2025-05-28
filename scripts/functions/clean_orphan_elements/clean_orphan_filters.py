@@ -19,10 +19,9 @@ def get_element_id(element):
     return element["id"]
 
 
+# DELETING ORPHAN FILTERS FROM FILTER SERVER
 def delete_orphan_filters(dry_run):
-    # DELETING ORPHAN FILTERS IN FILTER SERVER
     print("/// Orphan filters deletion ///")
-    # GET EXISTING FILTERS FROM DIRECTORY SERVER
     print("Getting existing filters from directory-server")
     get_directory_filters_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "FILTER"})
     get_directory_filters_response_json = get_directory_filters_response.json()
