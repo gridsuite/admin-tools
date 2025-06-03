@@ -23,38 +23,33 @@ def get_element_id(element):
 def delete_orphan_filters(dry_run):
     print("/// Orphan filters deletion ///")
     print("Getting existing filters from directory-server")
-    get_directory_filters_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "FILTER"})
-    get_directory_filters_response_json = get_directory_filters_response.json()
-    get_directory_filters_response_json_uuid = map(get_directory_element_uuid, get_directory_filters_response_json)
-    existing_filters_uuid = list(get_directory_filters_response_json_uuid)
-
+    directory_filters_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "FILTER"})
+    directory_filters_response_json = directory_filters_response.json()
+    directory_filters_uuids_map = map(get_directory_element_uuid, directory_filters_response_json)
+    existing_filters_uuids = list(directory_filters_uuids_map)
     print("Done")
 
     # GET CONTINGENCY LISTS FROM ACTIONS SERVER
     print("Getting all filters from filter-server")
-    get_actions_filters_response = requests.get(constant.GET_FILTERS)
-    get_actions_filters_json = get_actions_filters_response.json()
-    get_actions_filters_uuid = map(get_element_id, get_actions_filters_json)
-    all_filters_uuid = list(get_actions_filters_uuid)
-
+    actions_filters_response = requests.get(constant.GET_FILTERS)
+    actions_filters_json = actions_filters_response.json()
+    actions_filters_uuids = map(get_element_id, actions_filters_json)
+    all_filters_uuid = list(actions_filters_uuids)
     print("Done")
 
     # GET ORPHANS CONTINGENCY LISTS - CONTINGENCY LISTS IN ACTIONS SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
     print("Computing orphan filters")
     orphan_filters = []
     for element_uuid in all_filters_uuid:
-        if element_uuid not in existing_filters_uuid:
+        if element_uuid not in existing_filters_uuids:
             orphan_filters.append(element_uuid)
-
     print("Done")
 
     # DELETING OPRHANS
     print("Deleting the following orphan filters : ")
     for orphan_cl in orphan_filters:
         print(" - ", orphan_cl)
-
     delete_filters(orphan_filters, dry_run)
-
     print("Done")
 
     print("\n\n")

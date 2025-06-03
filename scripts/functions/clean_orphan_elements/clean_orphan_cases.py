@@ -17,37 +17,36 @@ def delete_cases(case_uuids, dry_run):
     else:
         for orphan in case_uuids:
             answer = requests.delete(constant.DELETE_CASES + "/" + orphan)
-            if (answer.status_code != 200):
+            if answer.status_code != 200:
                 print("Error: " + str(answer.content))
 
 def delete_orphan_cases(dry_run):
-    # DELETING ORPHAN CASES (where ??)
     print("/// Orphan cases deletion ///")
     print("Getting existing cases from directory-server")
-    get_directory_cases_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "CASE"})
-    get_directory_cases_response_json = get_directory_cases_response.json()
-    get_directory_cases_response_json_uuid = map(get_directory_element_uuid, get_directory_cases_response_json)
-    directory_cases_uuids = list(get_directory_cases_response_json_uuid)
+    directory_cases_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "CASE"})
+    directory_cases_response_json = directory_cases_response.json()
+    directory_cases_uuids_map = map(get_directory_element_uuid, directory_cases_response_json)
+    directory_cases_uuids = list(directory_cases_uuids_map)
 
     print("Adds cases referenced by studies: " + constant.GET_SUPERVISION_STUDIES)
-    get_studies_response = requests.get(constant.GET_SUPERVISION_STUDIES)
-    get_studies_response_json = get_studies_response.json()
-    # turn get_studies_response_json into a case uuids list :
-    get_studies_response_json_cases_uuids = map(get_case_uuids_from_study, get_studies_response_json)
-    case_uuids_used_in_studies = [element for sub_list in list(get_studies_response_json_cases_uuids) for element in sub_list]
+    studies_cases_response = requests.get(constant.GET_SUPERVISION_STUDIES)
+    studies_cases_response_json = studies_cases_response.json()
+    # turn studies_cases_response_json into a case uuids list :
+    studies_cases_uuids = map(get_case_uuids_from_study, studies_cases_response_json)
+    case_uuids_used_in_studies = [element for sub_list in list(studies_cases_uuids) for element in sub_list]
     # concatenates both referenced case uuids list and remove duplicates
     referenced_case_uuids = list(set(directory_cases_uuids + case_uuids_used_in_studies))
     print("Done")
 
     # GET CASES SAVED IN CASE SERVER
     print("Getting cases from case server : " + constant.GET_CASES)
-    get_cases_response = requests.get(constant.GET_CASES)
-    get_cases_response_json = get_cases_response.json()
-    get_cases_response_json_uuid = map(get_uuid, get_cases_response_json)
-    all_cases_uuids = list(get_cases_response_json_uuid)
+    cases_response = requests.get(constant.GET_CASES)
+    cases_response_json = cases_response.json()
+    cases_uuids = map(get_uuid, cases_response_json)
+    all_cases_uuids = list(cases_uuids)
     print("Done")
 
-    # GET ORPHANS CASES - NETWORKS IN CASE SERVER WHICH ARE NOT KNOWN IN STUDY SERVER NOR IN DIRECTORY SERVER
+    # GET ORPHANS CASES - CASES IN CASE SERVER WHICH ARE NOT KNOWN IN STUDY SERVER NOR IN DIRECTORY SERVER
     print("Computing orphan cases")
     orphan_cases = []
     for case_uuid in all_cases_uuids:
@@ -60,7 +59,6 @@ def delete_orphan_cases(dry_run):
     for orphan in orphan_cases:
         print(" - ", orphan)
     delete_cases(orphan_cases, dry_run)
-
     print("Done")
 
     print("\n\n")
