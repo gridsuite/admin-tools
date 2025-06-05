@@ -31,6 +31,6 @@ def get_cases_empty_metadata():
     print(response.json())
     return response.json()
 
-def migrate_cases_updateMetadata(case_uuid):
+def migrate_cases_update_metadata(case_uuid):
     response = requests.put(constant.MIGRATE_CASE_UPDATE_METADATA.format(uuid=case_uuid))
     response.raise_for_status()

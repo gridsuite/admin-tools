@@ -15,6 +15,7 @@ from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
 from functions.networks.networks import get_cases_empty_metadata
 from functions.networks.networks import migrate_cases_updateMetadata
+from scripts.functions.networks.networks import migrate_cases_update_metadata
 
 parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to update cases metadata by filling missing information')
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any update request", action='store_true')
@@ -53,7 +54,7 @@ successCount = 0
 for caseUuid in tqdm(casesUuid):
     if not dry_run:
         try:
-            migrate_cases_updateMetadata(caseUuid)
+            migrate_cases_update_metadata(caseUuid)
             successCount += 1
         except Exception as e:
             failCount += 1
