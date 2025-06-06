@@ -99,6 +99,8 @@ DELETE_CASES = CASE_SERVER_URL + "/cases"
 
 GET_DIRECTORY_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements"
 GET_SUPERVISION_STUDIES = STUDY_SERVER_URL + "/supervision/studies"
+GET_ROOT_NETWORKS = STUDY_SERVER_URL + "/supervision/root_networks"
+DELETE_ROOT_NETWORKS = STUDY_SERVER_URL + "/supervision/root_networks"
 
 GET_CONTINGENCY_LISTS = ACTIONS_SERVER_URL + "/contingency-lists"
 DELETE_CONTINGENCY_LISTS = ACTIONS_SERVER_URL + "/contingency-lists"

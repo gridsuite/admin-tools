@@ -17,7 +17,6 @@ def get_network_uuids_from_studies(studies):
 def get_network_uuid_from_network(network):
     return network["uuid"]
 
-
 def delete_networks(network_uuids, dry_run):
     if dry_run:
         for orphan_n in network_uuids:

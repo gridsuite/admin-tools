@@ -4,7 +4,8 @@ from functions.clean_orphan_elements.clean_orphan_contingency_lists import delet
 from functions.clean_orphan_elements.clean_orphan_filters import delete_orphan_filters
 from functions.clean_orphan_elements.clean_orphan_cases import delete_orphan_cases
 from functions.clean_orphan_elements.clean_orphan_studies import delete_orphan_studies
-from functions.clean_orphan_elements.clean_orphan_networks import delete_orphan_network
+from functions.clean_orphan_elements.clean_orphan_networks import delete_orphan_networks
+from functions.clean_orphan_elements.clean_orphan_root_networks import delete_orphan_root_networks
 
 parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to remove orphan elements', )
 
@@ -25,7 +26,9 @@ delete_orphan_cases(dry_run)
 
 delete_orphan_studies(dry_run)
 
-delete_orphan_network(dry_run)
+delete_orphan_root_networks(dry_run)
+
+delete_orphan_networks(dry_run)
 
 delete_orphan_contingency_lists(dry_run)
 
