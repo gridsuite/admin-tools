@@ -22,13 +22,13 @@ def delete_cases(case_uuids, dry_run):
 
 def delete_orphan_cases(dry_run):
     print("/// Orphan cases deletion ///")
-    print("Getting existing cases from directory-server")
+    print("Getting existing cases from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
     directory_cases_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "CASE"})
     directory_cases_response_json = directory_cases_response.json()
     directory_cases_uuids_map = map(get_directory_element_uuid, directory_cases_response_json)
     directory_cases_uuids = list(directory_cases_uuids_map)
 
-    print("Adds cases referenced by studies: " + constant.GET_SUPERVISION_STUDIES)
+    print("Adding cases referenced by studies: " + constant.GET_SUPERVISION_STUDIES)
     studies_cases_response = requests.get(constant.GET_SUPERVISION_STUDIES)
     studies_cases_response_json = studies_cases_response.json()
     # turn studies_cases_response_json into a case uuids list :
@@ -55,7 +55,7 @@ def delete_orphan_cases(dry_run):
     print("Done")
 
     # DELETING ORPHANS
-    print("Deleting the following orphan cases : ")
+    print("Deleting the following " + str(len(orphan_cases)) + " orphan cases : ")
     for orphan in orphan_cases:
         print(" - ", orphan)
     delete_cases(orphan_cases, dry_run)

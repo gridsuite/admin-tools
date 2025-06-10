@@ -52,7 +52,7 @@ def delete_orphan_networks(dry_run):
     print("Done")
 
     # DELETING ORPHANS
-    print("Deleting the following orphan networks : ")
+    print("Deleting the following " + str(len(orphan_networks)) + " orphan networks : ")
     for orphan_n in orphan_networks:
         print(" - ", orphan_n)
     delete_networks(orphan_networks, dry_run)

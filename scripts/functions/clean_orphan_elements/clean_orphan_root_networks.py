@@ -27,10 +27,9 @@ def delete_root_networks(root_network_uuids, dry_run):
 def delete_orphan_root_networks(dry_run):
     print("/// Orphan root networks deletion ///")
 
-    print("Getting all root networks from study-server")
+    print("Getting all root networks from study-server: " + constant.GET_ROOT_NETWORKS)
     root_networks_response_from_study_server = requests.get(constant.GET_ROOT_NETWORKS)
     root_networks_response_from_study_server_json = root_networks_response_from_study_server.json()
-    print("root_networks_response_from_study_server_json : " + str(root_networks_response_from_study_server_json))
     all_root_networks_uuids = list(root_networks_response_from_study_server_json)
     print("Done")
 
@@ -49,7 +48,7 @@ def delete_orphan_root_networks(dry_run):
     print("Done")
 
     # DELETING ORPHANS
-    print("Deleting the following orphan root networks : ")
+    print("Deleting the following " + str(len(orphan_root_networks)) + " orphan root networks : ")
     for orphan_n in orphan_root_networks:
         print(" - ", orphan_n)
     delete_root_networks(orphan_root_networks, dry_run)

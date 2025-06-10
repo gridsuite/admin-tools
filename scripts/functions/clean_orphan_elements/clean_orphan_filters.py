@@ -22,7 +22,7 @@ def get_element_id(element):
 # DELETING ORPHAN FILTERS FROM FILTER SERVER
 def delete_orphan_filters(dry_run):
     print("/// Orphan filters deletion ///")
-    print("Getting existing filters from directory-server")
+    print("Getting existing filters from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
     directory_filters_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "FILTER"})
     directory_filters_response_json = directory_filters_response.json()
     directory_filters_uuids_map = map(get_directory_element_uuid, directory_filters_response_json)
@@ -30,7 +30,7 @@ def delete_orphan_filters(dry_run):
     print("Done")
 
     # GET CONTINGENCY LISTS FROM ACTIONS SERVER
-    print("Getting all filters from filter-server")
+    print("Getting all filters from filter-server: " + constant.GET_FILTERS)
     actions_filters_response = requests.get(constant.GET_FILTERS)
     actions_filters_json = actions_filters_response.json()
     actions_filters_uuids = map(get_element_id, actions_filters_json)
@@ -46,7 +46,7 @@ def delete_orphan_filters(dry_run):
     print("Done")
 
     # DELETING OPRHANS
-    print("Deleting the following orphan filters : ")
+    print("Deleting the following " + str(len(orphan_filters)) + " orphan filters : ")
     for orphan_cl in orphan_filters:
         print(" - ", orphan_cl)
     delete_filters(orphan_filters, dry_run)

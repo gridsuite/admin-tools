@@ -51,7 +51,7 @@ def delete_orphan_contingency_lists(dry_run):
     print("Done")
 
     # DELETING OPRHANS
-    print("Deleting the following orphan contingency lists : ")
+    print("Deleting the following " + str(len(orphan_contingency_lists)) + " orphan contingency lists : ")
     for orphan_cl in orphan_contingency_lists:
         print(" - ", orphan_cl)
 

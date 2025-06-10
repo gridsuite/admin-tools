@@ -19,13 +19,13 @@ def delete_studies(studies_uuids, dry_run):
 
 def delete_orphan_studies(dry_run):
     print("/// Orphan studies deletion ///")
-    print("Getting existing studies from directory-server")
+    print("Getting existing studies from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
     directory_studies_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "STUDY"})
     directory_studies_json = directory_studies_response.json()
     directory_studies_uuids_map = map(get_directory_element_uuid, directory_studies_json)
     directory_studies_uuids = list(directory_studies_uuids_map)
 
-    print("Getting all studies from study-server")
+    print("Getting all studies from study-server: " + constant.GET_STUDIES)
     studies_response_from_study_server = requests.get(constant.GET_STUDIES)
     studies_response_from_study_server_json = studies_response_from_study_server.json()
     studies_uuids_from_study_server_map = map(get_element_id, studies_response_from_study_server_json)
@@ -40,7 +40,7 @@ def delete_orphan_studies(dry_run):
             orphan_studies.append(study_uuid)
     print("Done")
 
-    print("Deleting the following orphan studies : ")
+    print("Deleting the following " + str(len(orphan_studies)) + " orphan studies : ")
     for orphan in orphan_studies:
         print(" - ", orphan)
     delete_studies(orphan_studies, dry_run)
