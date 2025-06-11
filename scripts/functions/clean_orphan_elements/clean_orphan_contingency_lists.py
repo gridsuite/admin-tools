@@ -23,29 +23,25 @@ def delete_orphan_contingency_lists(dry_run):
     print("/// Orphan actions deletion ///")
     # GET EXISTING ACTIONS FROM DIRECTORY SERVER
     print("Getting existing contingency lists from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
-    get_directory_contingency_lists_response = requests.get(constant.GET_DIRECTORY_ELEMENTS,
+    directory_contingency_lists_response = requests.get(constant.GET_DIRECTORY_ELEMENTS,
                                                             params={"elementType": "CONTINGENCY_LIST"})
-    get_directory_contingency_lists_response_json = get_directory_contingency_lists_response.json()
-    get_directory_contingency_lists_response_json_uuid = map(get_directory_element_uuid,
-                                                             get_directory_contingency_lists_response_json)
-    contingency_lists_uuids_in_directoryserver = list(get_directory_contingency_lists_response_json_uuid)
-
+    directory_contingency_lists_response_json = directory_contingency_lists_response.json()
+    directory_contingency_lists_uuids = list(map(get_directory_element_uuid, directory_contingency_lists_response_json))
     print("Done")
 
     # GET CONTINGENCY LISTS FROM ACTIONS SERVER
     print("Getting all contingency lists from actions-server: " + constant.GET_CONTINGENCY_LISTS)
-    get_actions_contingency_lists_response = requests.get(constant.GET_CONTINGENCY_LISTS)
-    get_actions_contingency_lists_json = get_actions_contingency_lists_response.json()
-    get_actions_contingency_lists_uuid = map(get_actions_element_uuid, get_actions_contingency_lists_json)
-    all_contingency_lists_uuid = list(get_actions_contingency_lists_uuid)
-
+    actions_contingency_lists_response = requests.get(constant.GET_CONTINGENCY_LISTS)
+    actions_contingency_lists_json = actions_contingency_lists_response.json()
+    actions_contingency_lists_uuids = map(get_actions_element_uuid, actions_contingency_lists_json)
+    all_contingency_lists_uuid = list(actions_contingency_lists_uuids)
     print("Done")
 
     # GET ORPHANS CONTINGENCY LISTS - CONTINGENCY LISTS IN ACTIONS SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
     print("Computing orphan contingency lists")
     orphan_contingency_lists = []
     for element_uuid in all_contingency_lists_uuid:
-        if element_uuid not in contingency_lists_uuids_in_directoryserver:
+        if element_uuid not in directory_contingency_lists_uuids:
             orphan_contingency_lists.append(element_uuid)
 
     print("Done")

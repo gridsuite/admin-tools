@@ -39,7 +39,7 @@ def delete_orphan_cases(dry_run):
     print("Done")
 
     # GET CASES SAVED IN CASE SERVER
-    print("Getting cases from case server : " + constant.GET_CASES)
+    print("Getting cases from case server: " + constant.GET_CASES)
     cases_response = requests.get(constant.GET_CASES)
     cases_response_json = cases_response.json()
     cases_uuids = map(get_uuid, cases_response_json)

@@ -39,8 +39,7 @@ def delete_orphan_networks(dry_run):
     print("Getting networks from network store server : " + constant.GET_NETWORKS)
     get_networks_response = requests.get(constant.GET_NETWORKS)
     get_networks_response_json = get_networks_response.json()
-    get_networks_response_json_uuid = map(get_network_uuid_from_network, get_networks_response_json)
-    all_networks_uuids = list(get_networks_response_json_uuid)
+    all_networks_uuids = list(map(get_network_uuid, get_networks_response_json))
     print("Done")
 
     # GET ORPHANS NETWORKS - NETWORKS IN NETWORK STORE SERVER WHICH ARE NOT KNOWN IN STUDY SERVER

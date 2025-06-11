@@ -26,16 +26,16 @@ def delete_orphan_studies(dry_run):
     directory_studies_uuids = list(directory_studies_uuids_map)
 
     print("Getting all studies from study-server: " + constant.GET_STUDIES)
-    studies_response_from_study_server = requests.get(constant.GET_STUDIES)
-    studies_response_from_study_server_json = studies_response_from_study_server.json()
-    studies_uuids_from_study_server_map = map(get_element_id, studies_response_from_study_server_json)
-    studies_uuids_from_study_server = list(studies_uuids_from_study_server_map)
+    studies_response = requests.get(constant.GET_STUDIES)
+    studies_response_json = studies_response.json()
+    studies_uuids_map = map(get_element_id, studies_response_json)
+    all_studies_uuids = list(studies_uuids_map)
     print("Done")
 
     # GET ORPHANS STUDIES - STUDIES IN STUDY SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
     print("Computing orphan studies")
     orphan_studies= []
-    for study_uuid in studies_uuids_from_study_server:
+    for study_uuid in all_studies_uuids:
         if study_uuid not in directory_studies_uuids:
             orphan_studies.append(study_uuid)
     print("Done")
