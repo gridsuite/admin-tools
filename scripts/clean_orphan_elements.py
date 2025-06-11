@@ -9,7 +9,7 @@ from functions.clean_orphan_elements.clean_orphan_root_networks import delete_or
 
 parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to remove orphan elements', )
 
-parser.add_argument("--dry-run", help="test mode (default) will not execute any modification request",
+parser.add_argument("--dry-run", help="test mode : will not execute any deletion request",
                     action="store_true")
 
 args = parser.parse_args()

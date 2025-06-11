@@ -114,7 +114,8 @@ Cleans :
  - orphan contingency lists
  - orphan filters
  - orphan cases
- - orphan studies => TODO => beaucoup dans ma bdd
+ - orphan studies
+ - orphan root networks
 
 Developed with Python version 3.10.12
 
