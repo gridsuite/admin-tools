@@ -65,7 +65,8 @@ for caseInfos in tqdm(cases):
         else:
             try:
                 case = get_case(caseInfos['uuid'])
-                copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
+                if not dry_run:
+                    copy_to_s3_storage(caseInfos['uuid'], caseInfos['name'], case);
                 cases_migrated_count += 1
             except Exception as e:
                 # print only str(e) instead of the full traceback because we call this method from a simple for loop script
