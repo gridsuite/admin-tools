@@ -33,3 +33,13 @@ def copy_to_s3_storage(case_uuid, case_name, case):
 
 def exists_case_on_s3(case_uuid):
     return requests.get(constant.S3_EXISTS_CASE.format(caseUuid = case_uuid)).text == 'true'
+
+def get_cases_with_empty_metadata():
+    response = requests.get(constant.GET_CASES_EMPTY_METADATA)
+    response.raise_for_status()
+    print(response.json())
+    return response.json()
+
+def complete_cases_metadata(case_uuid):
+    response = requests.put(constant.MIGRATE_CASE_UPDATE_METADATA.format(uuid=case_uuid))
+    response.raise_for_status()

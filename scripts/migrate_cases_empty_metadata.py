@@ -13,9 +13,8 @@ from tqdm import tqdm
 
 from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
-from functions.networks.networks import get_cases_empty_metadata
-from functions.networks.networks import migrate_cases_updateMetadata
-from scripts.functions.networks.networks import migrate_cases_update_metadata
+from scripts.functions.cases.cases import get_cases_with_empty_metadata
+from scripts.functions.cases.cases import complete_cases_metadata
 
 parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to update cases metadata by filling missing information')
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any update request", action='store_true')
@@ -41,20 +40,20 @@ print("This script will apply on plateform = " + plateformName )
 print("\n")
 print("===> powsybl-case-server seems OK ! The script can proceed")
 print("\n")
-casesUuid = get_cases_empty_metadata()
+casesUuids = get_cases_with_empty_metadata()
 print("table content : ")
-print(str(casesUuid))
-## print("For a total of " + str(len(casesUuid)) + " casesUuid")
+print(str(casesUuids))
+print("For a total of " + str(len(casesUuids)) + " casesUuids ")
 print("---------------------------------------------------------")
 
 print("cases metadata update migration (dry-run=" + str(dry_run) + ") in processing...")
 failCount = 0
 successCount = 0
 
-for caseUuid in tqdm(casesUuid):
+for caseUuid in tqdm(casesUuids):
     if not dry_run:
         try:
-            migrate_cases_update_metadata(caseUuid)
+            complete_cases_metadata(caseUuid)
             successCount += 1
         except Exception as e:
             failCount += 1
