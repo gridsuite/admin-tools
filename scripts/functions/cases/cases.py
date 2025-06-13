@@ -35,7 +35,7 @@ def exists_case_on_s3(case_uuid):
     return requests.get(constant.S3_EXISTS_CASE.format(caseUuid = case_uuid)).text == 'true'
 
 def get_cases_with_empty_metadata():
-    response = requests.get(constant.GET_CASES_EMPTY_METADATA)
+    response = requests.get(constant.GET_CASES_WITH_EMPTY_METADATA)
     response.raise_for_status()
     print(response.json())
     return response.json()
