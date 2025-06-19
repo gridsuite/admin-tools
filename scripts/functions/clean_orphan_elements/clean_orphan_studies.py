@@ -1,5 +1,5 @@
 import requests
-from scripts import constant
+import constant
 
 def get_directory_element_uuid(element):
     return element["elementUuid"]

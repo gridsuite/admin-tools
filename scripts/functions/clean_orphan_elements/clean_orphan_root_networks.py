@@ -1,5 +1,5 @@
 import requests
-from scripts import constant
+import constant
 
 def get_network_infos_from_study(study):
     return study["rootNetworkInfos"]
@@ -10,7 +10,7 @@ def get_root_network_uuids_from_studies(studies):
     root_network_infos_list = [element for sub_list in list(root_network_infos) for element in sub_list]
     root_network_uuids = []
     for root_network_info in root_network_infos_list:
-        root_network_uuids.append(root_network_info['id'])
+        root_network_uuids.append(get_element_id(root_network_info))
     return root_network_uuids
 
 def get_element_id(element):

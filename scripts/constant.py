@@ -94,8 +94,8 @@ MIGRATE_V214_TAP_CHANGER_STEPS = NETWORK_STORE_SERVER_URL + "/migration/v214tapC
 
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 
-GET_ROOT_NETWORKS = STUDY_SERVER_URL + "/supervision/root_networks"
-DELETE_ROOT_NETWORKS = STUDY_SERVER_URL + "/supervision/root_networks"
+GET_ROOT_NETWORKS = STUDY_SERVER_URL + "/supervision/root-networks"
+DELETE_ROOT_NETWORKS = STUDY_SERVER_URL + "/supervision/root-networks"
 
 GET_DIRECTORY_ELEMENTS = DIRECTORY_SERVER_URL + "/supervision/elements"
 GET_SUPERVISION_STUDIES = STUDY_SERVER_URL + "/supervision/studies"

@@ -1,5 +1,5 @@
 import requests
-from scripts import constant
+import constant
 
 def get_network_infos_from_study(study):
     return study["rootNetworkInfos"]
@@ -14,7 +14,7 @@ def get_network_uuids_from_studies(studies):
     return network_uuids
 
 
-def get_network_uuid_from_network(network):
+def get_network_uuid(network):
     return network["uuid"]
 
 def delete_networks(network_uuids, dry_run):
