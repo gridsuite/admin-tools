@@ -1,6 +1,6 @@
 import constant
 import requests
-
+from clean_orphan_root_networks import get_element_id
 
 def get_directory_element_uuid(element):
     return element["elementUuid"]
@@ -13,11 +13,6 @@ def delete_filters(filter_uuids, dry_run):
     else:
         for orphan_f in filter_uuids:
             requests.delete(constant.DELETE_FILTERS + "/" + orphan_f)
-
-
-def get_element_id(element):
-    return element["id"]
-
 
 # DELETING ORPHAN FILTERS FROM FILTER SERVER
 def delete_orphan_filters(dry_run):

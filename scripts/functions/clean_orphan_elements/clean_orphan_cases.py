@@ -33,7 +33,7 @@ def delete_orphan_cases(dry_run):
     studies_cases_response_json = studies_cases_response.json()
     # turn studies_cases_response_json into a case uuids list :
     studies_cases_uuids = map(get_case_uuids_from_study, studies_cases_response_json)
-    case_uuids_used_in_studies = [element for sub_list in list(studies_cases_uuids) for element in sub_list]
+    case_uuids_used_in_studies = [element for sub_list in studies_cases_uuids for element in sub_list]
     # concatenates both referenced case uuids list and remove duplicates
     referenced_case_uuids = list(set(directory_cases_uuids + case_uuids_used_in_studies))
     print("Done")

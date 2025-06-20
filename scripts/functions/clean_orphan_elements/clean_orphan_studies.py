@@ -1,11 +1,9 @@
 import requests
 import constant
+from clean_orphan_root_networks import get_element_id
 
 def get_directory_element_uuid(element):
     return element["elementUuid"]
-
-def get_element_id(element):
-    return element["id"]
 
 def delete_studies(studies_uuids, dry_run):
     if dry_run:

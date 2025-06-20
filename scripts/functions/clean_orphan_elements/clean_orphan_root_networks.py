@@ -7,7 +7,7 @@ def get_network_infos_from_study(study):
 # turn studies_response_json into a network uuids list
 def get_root_network_uuids_from_studies(studies):
     root_network_infos = map(get_network_infos_from_study, studies)
-    root_network_infos_list = [element for sub_list in list(root_network_infos) for element in sub_list]
+    root_network_infos_list = [element for sub_list in root_network_infos for element in sub_list]
     root_network_uuids = []
     for root_network_info in root_network_infos_list:
         root_network_uuids.append(get_element_id(root_network_info))
