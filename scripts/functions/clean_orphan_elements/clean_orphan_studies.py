@@ -1,6 +1,6 @@
 import requests
 import constant
-from clean_orphan_root_networks import get_element_id
+from functions.clean_orphan_elements.clean_orphan_root_networks import get_element_id
 
 def get_directory_element_uuid(element):
     return element["elementUuid"]
