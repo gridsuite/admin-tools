@@ -16,11 +16,17 @@ def delete_filters(filter_uuids, dry_run):
 # DELETING ORPHAN FILTERS FROM FILTER SERVER
 def delete_orphan_filters(dry_run):
     print("/// Orphan filters deletion ///")
-    print("Getting existing filters from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
+    print("Getting the filters referenced in directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
     directory_filters_response = requests.get(constant.GET_DIRECTORY_ELEMENTS, params={"elementType": "FILTER"})
     directory_filters_response_json = directory_filters_response.json()
     directory_filters_uuids_map = map(get_directory_element_uuid, directory_filters_response_json)
     directory_filters_uuids = list(directory_filters_uuids_map)
+    # adds filters referenced by mapping-server
+    print("Getting the filters referenced in dynamic-mapping: " + constant.GET_DYNAMIC_MAPPING_FILTERS)
+    dyn_mapping_filters_response = requests.get(constant.GET_DYNAMIC_MAPPING_FILTERS)
+    dyn_mapping_filters_response_json = dyn_mapping_filters_response.json()
+    print("Concatenates all the filters referenced outside of filter server")
+    referenced_filters_uuids = directory_filters_uuids + dyn_mapping_filters_response_json
     print("Done")
 
     # GET ALL EXISTING FILTERS FROM FILTER-SERVER
@@ -32,10 +38,10 @@ def delete_orphan_filters(dry_run):
     print("Done")
 
     # GET ORPHAN FILTERS - FILTERS FROM FILTER-SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
-    print("Computing orphan filters")
+    print("Computing orphan filters (in filter-server but not referenced anywhere else)")
     orphan_filters = []
     for element_uuid in all_filters_uuids:
-        if element_uuid not in directory_filters_uuids:
+        if element_uuid not in referenced_filters_uuids:
             orphan_filters.append(element_uuid)
     print("Done")
 
