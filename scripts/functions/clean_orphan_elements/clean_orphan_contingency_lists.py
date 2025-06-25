@@ -22,7 +22,7 @@ def delete_orphan_contingency_lists(dry_run):
     # DELETING ORPHAN ACTIONS IN ACTIONS SERVER
     print("/// Orphan actions deletion ///")
     # GET EXISTING ACTIONS FROM DIRECTORY SERVER
-    print("Getting existing contingency lists from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
+    print("Getting contingency lists from directory-server: " + constant.GET_DIRECTORY_ELEMENTS)
     directory_contingency_lists_response = requests.get(constant.GET_DIRECTORY_ELEMENTS,
                                                             params={"elementType": "CONTINGENCY_LIST"})
     directory_contingency_lists_response_json = directory_contingency_lists_response.json()
@@ -33,8 +33,7 @@ def delete_orphan_contingency_lists(dry_run):
     print("Getting all contingency lists from actions-server: " + constant.GET_CONTINGENCY_LISTS)
     actions_contingency_lists_response = requests.get(constant.GET_CONTINGENCY_LISTS)
     actions_contingency_lists_json = actions_contingency_lists_response.json()
-    actions_contingency_lists_uuids = map(get_actions_element_uuid, actions_contingency_lists_json)
-    all_contingency_lists_uuid = list(actions_contingency_lists_uuids)
+    all_contingency_lists_uuid = list(map(get_actions_element_uuid, actions_contingency_lists_json))
     print("Done")
 
     # GET ORPHANS CONTINGENCY LISTS - CONTINGENCY LISTS IN ACTIONS SERVER WHICH ARE NOT KNOWN IN DIRECTORY SERVER
