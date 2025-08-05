@@ -93,6 +93,7 @@ GET_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 GET_NETWORK = NETWORK_STORE_SERVER_URL + "/networks/{networkId}"
 MIGRATE_V211_LIMITS = NETWORK_STORE_SERVER_URL + "/migration/v211limits/{networkId}/{variantNum}"
 MIGRATE_V214_TAP_CHANGER_STEPS = NETWORK_STORE_SERVER_URL + "/migration/v214tapChangeSteps/{networkId}/{variantNum}"
+MIGRATE_V221_LIMITS = NETWORK_STORE_SERVER_URL + "/migration/v221limits/{networkId}/{variantNum}"
 
 DELETE_NETWORKS = NETWORK_STORE_SERVER_URL + "/networks"
 
