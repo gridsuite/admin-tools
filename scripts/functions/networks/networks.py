@@ -24,3 +24,7 @@ def migrate_v211_limits(network_id, variant_num):
 def migrate_v214_tapchangersteps(network_id, variant_num):
     response = requests.put(constant.MIGRATE_V214_TAP_CHANGER_STEPS.format(networkId=network_id, variantNum=variant_num))
     response.raise_for_status()
+
+def migrate_v221_limits(network_id, variant_num):
+        response = requests.put(constant.MIGRATE_V221_LIMITS.format(networkId = network_id, variantNum = variant_num))
+        response.raise_for_status()
