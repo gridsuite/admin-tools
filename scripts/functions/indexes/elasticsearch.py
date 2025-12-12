@@ -24,11 +24,7 @@ def get_elasticsearch_host(serverHostName):
         if constant.DEV :
             return constant.DEV_ELASTICSEARCH_IP, constant.DEV_ELASTICSEARCH_URL 
         else:
-            auth = __get_authentification()
-            if auth is not None:
-                elasticsearch_host = requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName), auth=auth).text
-            else :
-                elasticsearch_host = requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName=serverHostName)).text
+            elasticsearch_host = requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName), auth=__get_authentification()).text
             # TODO don't parse here, instead have the server return structured information
             elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
             # TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for example
@@ -50,11 +46,7 @@ def __get_authentification():
 
 def check_status_elasticsearch(url):
     try:
-        auth = __get_authentification()
-        if auth is not None:
-            result = requests.get(url + '/', auth=auth)
-        else:
-            result = requests.get(url + '/')
+        result = requests.get(url + '/', auth=__get_authentification())
         if not result.ok :
             print("An error occured : ")
             prettyprint(result)
@@ -73,11 +65,7 @@ def check_status_elasticsearch(url):
 def request_elasticsearch(method, url):
     try:
         print(method + " " + url)
-        auth = __get_authentification()
-        if auth is not None:
-            result = requests.request(method, url, auth=auth)
-        else:
-            result = requests.request(method, url)
+        result = requests.request(method, url, auth=__get_authentification())
         if not result.ok :
             print("An error occured : ")
             prettyprint(result)
@@ -92,8 +80,4 @@ def request_elasticsearch(method, url):
 
 def expunge_deletes(elasticsearchHost, indexName):
     print("ES Force merge : " + constant.ES_FORCE_MERGE.format(elasticsearchHost = elasticsearchHost, indexName = indexName) + "?only_expunge_deletes=true")
-    auth = __get_authentification()
-    if auth is not None:
-        requests.post(url = constant.ES_FORCE_MERGE.format(elasticsearchHost = elasticsearchHost, indexName = indexName), params={'only_expunge_deletes': 'true'}, auth=auth)
-    else:
-        requests.post(url=constant.ES_FORCE_MERGE.format(elasticsearchHost=elasticsearchHost, indexName=indexName), params={'only_expunge_deletes': 'true'})
+    requests.post(url = constant.ES_FORCE_MERGE.format(elasticsearchHost = elasticsearchHost, indexName = indexName), params={'only_expunge_deletes': 'true'}, auth=__get_authentification())
