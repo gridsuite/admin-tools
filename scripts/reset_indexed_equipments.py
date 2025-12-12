@@ -53,6 +53,7 @@ studies_index_name = get_studies_index_name()
 equipments_index_name = get_equipments_index_name()
 tombstoned_equipments_index_name = get_tombstoned_equipments_index_name()
 
+if not check_status_elasticsearch(elasticsearch_url) : sys.exit()
 print("\n")
 
 print("---------------------------------------------------------")
