@@ -7,7 +7,7 @@
 
 import argparse
 
-from functions.grafana.create_folder import create_folder
+from functions.grafana.folders import create_folder
 
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>

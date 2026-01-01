@@ -138,8 +138,10 @@ REINDEX_STUDY_AND_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUu
 
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
-# GRAFANA ENDPOINTS
-GRAFANA_FOLDER = GRAFANA_URL + "/folders"
+# GRAFANA
+GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
+GRAFANA_FOLDER_URL = GRAFANA_URL + "/folders"
+GRAFANA_DASHBOARDS_URL = GRAFANA_URL + "/dashboards"
 GRAFANA_ALERT_RULES = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/alert-rules"
 GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folder/{folderUid}/rule-groups/{ruleGroupId}"
 
