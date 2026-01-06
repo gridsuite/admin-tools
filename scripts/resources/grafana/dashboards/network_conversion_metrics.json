@@ -1,24 +1,4 @@
 {
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.2.2"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -1392,7 +1372,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "Network conversions",
-  "uid": "PUjAm8dPh",
+  "uid": "2c531ef9-4d4a-41d7-bf7e-4291c9cbd799",
   "version": 1,
   "weekStart": ""
 }

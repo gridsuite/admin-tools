@@ -921,7 +921,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Kubernetes resource monitoring",
-  "uid": "k8s-resource-monitoring",
+  "uid": "8675c4a8-fb48-4ca2-858b-51ecf324a5ae",
   "version": 2,
   "weekStart": ""
 }

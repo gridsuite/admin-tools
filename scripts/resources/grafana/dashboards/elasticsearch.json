@@ -1,25 +1,4 @@
 {
-  "__inputs": [],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.2.2"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -6409,6 +6388,6 @@
   },
   "timezone": "browser",
   "title": "Elasticsearch",
-  "uid": "4yyL6dBMk",
+  "uid": "63154fe6-305a-45a1-a2f3-3b97e3c6fd00",
   "version": 14
 }

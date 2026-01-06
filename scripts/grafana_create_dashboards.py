@@ -35,7 +35,7 @@ if args.all:
     parent_folder_uuid = None
     for path, _, files in os.walk(GRAFANA_DASHBOARDS_DIR):
         parent_folder_uuid = root_folder_uuid if parent_folder_uuid is None else create_folder(os.path.basename(path), parent_folder_uuid)
-        for file in files:
+        for file in tqdm(files):
             create_dashbord(os.path.join(path, file), parent_folder_uuid)
 else:
     for file in tqdm(files):

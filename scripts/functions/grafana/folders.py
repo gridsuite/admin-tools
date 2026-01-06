@@ -29,7 +29,7 @@ def create_folder(folder_name, parent_folder_uid = ''):
 def __create_folder(json_data):
     result_content = ''
     try:
-        result = requests.post(constant.GRAFANA_FOLDER_URL, json=json_data)
+        result = requests.post(constant.GRAFANA_FOLDER_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result_content = result.content
         result.raise_for_status()
         print("Folder successfully (re)created : %s" % json_data['title'])
@@ -43,7 +43,7 @@ def __create_folder(json_data):
 def get_folder(folder_uuid):
     result_content = ''
     try:
-        result = requests.get(get_folder_url(folder_uuid))
+        result = requests.get(get_folder_url(folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result_content = result.content
         result.raise_for_status()
         return result.json()
@@ -53,7 +53,7 @@ def get_folder(folder_uuid):
 def delete_folder(folder_uuid):
     result_content = ''
     try:
-        result = requests.delete(get_folder_url(folder_uuid))
+        result = requests.delete(get_folder_url(folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result_content = result.content
         result.raise_for_status()
         print("Folder successfully deleted : %s" % folder_uuid)
