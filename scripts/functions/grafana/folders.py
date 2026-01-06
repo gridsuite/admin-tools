@@ -6,7 +6,9 @@
 #
 
 import requests
+
 import constant
+
 
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
@@ -29,6 +31,7 @@ def create_folder(folder_name, parent_folder_uid = ''):
 def __create_folder(json_data):
     result_content = ''
     try:
+        print("Create folder : %s - %s" % (json_data['title'], json_data['parentUid']))
         result = requests.post(constant.GRAFANA_FOLDER_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result_content = result.content
         result.raise_for_status()
