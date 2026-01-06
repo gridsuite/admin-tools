@@ -6,6 +6,8 @@
 #
 
 import requests
+from requests import RequestException
+
 import constant
 from pathlib import Path
 import json
@@ -19,13 +21,12 @@ def create_dashbord(dashbord_file_path, parent_folder_uid = ""):
     print("Importing dashboard : " + dashbord_file_path)
     file_content = Path(dashbord_file_path).read_text()
     final_content = '{"dashboard": %s, "overwrite": true, "inputs": [], "folderUid": "%s"}' % (file_content, parent_folder_uid)
-    result_content = ''
+    result = None
     try:
         result = requests.post(DASHBOARD_CREATE_URL, json = json.loads(final_content), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
-        result_content = result.content
         result.raise_for_status()
         print("Dashboard imported successfuly: %s" % dashbord_file_path)
-    except Exception as e:
-        raise SystemExit(e, result_content)
+    except RequestException as e:
+        raise SystemExit(e, result.content)
 
     

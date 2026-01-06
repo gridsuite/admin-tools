@@ -6,6 +6,7 @@
 #
 
 import requests
+from requests import RequestException
 
 import constant
 
@@ -15,53 +16,48 @@ import constant
 #
 
 def get_folders():
-    result_content = ''
+    result = None
     try:
         result = requests.get(constant.GRAFANA_FOLDER_URL, {'parentUid' : 'e6eb2338-0ab9-45e4-ba3b-8df649ddd4c3'})
-        result_content = result.json()
-        # grafana errors are details in request content
         result.raise_for_status()
-        return result_content
-    except Exception as e:
-        raise SystemExit(e, result_content)
+        return result.json()
+    except RequestException as e:
+        raise SystemExit(e, result.content)
 
 def create_folder(folder_name, parent_folder_uid = ''):
     return __create_folder({'title': folder_name, 'parentUid' : parent_folder_uid})
 
 def __create_folder(json_data):
-    result_content = ''
+    result = None
     try:
-        print("Create folder : %s - %s" % (json_data['title'], json_data['parentUid']))
+        print("Create folder : %s" % json_data['title'])
         result = requests.post(constant.GRAFANA_FOLDER_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
-        result_content = result.content
         result.raise_for_status()
         print("Folder successfully (re)created : %s" % json_data['title'])
         return result.json()['uid']
-    except Exception as e:
+    except RequestException as e:
         if result.status_code == requests.codes.conflict:
             print("Folder already exist : %s" % json_data['title'])
         else:
-            raise SystemExit(e, result_content)
+            raise SystemExit(e, result.content)
 
 def get_folder(folder_uuid):
-    result_content = ''
+    result = None
     try:
         result = requests.get(get_folder_url(folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
-        result_content = result.content
         result.raise_for_status()
         return result.json()
-    except Exception as e:
-        raise SystemExit(e, result_content)
+    except RequestException as e:
+        raise SystemExit(e, result.content)
 
 def delete_folder(folder_uuid):
-    result_content = ''
+    result = None
     try:
         result = requests.delete(get_folder_url(folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
-        result_content = result.content
         result.raise_for_status()
         print("Folder successfully deleted : %s" % folder_uuid)
-    except Exception as e:
-        raise SystemExit(e, result_content)
+    except RequestException as e:
+        raise SystemExit(e, result.content)
 
 def reset_folder(folder_uuid):
     folder_json = get_folder(folder_uuid)
