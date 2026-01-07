@@ -119,7 +119,7 @@
   "execErrState": "Error",
   "for": "5m",
   "annotations": {
-    "__dashboardUid__": "rYdddlPWk",
+    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
     "__panelId__": "269",
     "summary": "Triggered when Postgres is down"
   },
