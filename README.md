@@ -63,9 +63,31 @@ python3 scripts/ES_requests.py -m GET -u /_cat/indices?v
 
 ## Grafana scripts
 All post requests are sent with the header "X-Disable-Provenance" set to "true". Without it, all created entities would be read-only.
+
+### Import existing dashboards JSON
+First, we need to create a folder.
+Create a folder from the Grafana GUI or execute this command :
+```py
+python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
+```
+
+This command should return a json with a field "uid" which will be {{FOLDER_UID}} for the next command
+
+Then we can create dashboards in the previously created folder.
+
+To import all dashboards present in **resources/grafana/dashboards**, execute this command :
+```py
+python3 scripts/grafana_create_dashboards.py -a -p {{FOLDER_UID}}
+```
+
+To import a single dashboard or multiple dashboards from files, execute this command :
+```py
+python3 scripts/grafana_create_dashboards.py -f {{PATH_TO_DASHBOARD_FILE_1}} [... -f {{PATH_TO_DASHBOARD_FILE_N}}] -p {{FOLDER_UID}}
+```
+
 ### Import existing alert-rules JSON
 First, we need to create a folder.
-Execute this command :
+Create a folder from the Grafana GUI or execute this command :
 ```py
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 ```

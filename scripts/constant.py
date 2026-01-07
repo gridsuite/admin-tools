@@ -139,6 +139,8 @@ REINDEX_STUDY_AND_EQUIPMENTS = STUDY_SERVER_URL + "/supervision/studies/{studyUu
 ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 
 # GRAFANA
+GRAFANA_COOKIES={'Cookie' : ''}
+GRAFANA_HEADERS={'X-Disable-Provenance': 'true'}
 GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
 GRAFANA_FOLDER_URL = GRAFANA_URL + "/folders"
 GRAFANA_DASHBOARDS_URL = GRAFANA_URL + "/dashboards"
