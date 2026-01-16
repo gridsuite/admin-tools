@@ -1,15 +1,15 @@
 {
-  "orgID": 1,
+  "uid": "88a0eee6-be36-4fb3-ba8c-d95223ea6b58",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "Disk space used (ElasticSearch, Postgres)",
-  "condition": "C",
+  "title": "Postgres status",
+  "condition": "B",
   "data": [
     {
-      "refId": "A",
+      "refId": "C",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "{{DATASOURCE_UID}}",
@@ -19,24 +19,21 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "(node_filesystem_size_bytes - node_filesystem_avail_bytes)/node_filesystem_size_bytes",
-        "format": "time_series",
+        "expr": "up{service=\"postgres\", endpoint=\"metrics\"} OR on() vector(0)",
         "instant": false,
         "interval": "",
-        "intervalFactor": 1,
         "intervalMs": 15000,
-        "legendFormat": "{{mountpoint}}",
+        "legendFormat": "postgres",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "A",
-        "step": 240
+        "refId": "C"
       }
     },
     {
-      "refId": "B",
+      "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 0,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -46,6 +43,50 @@
             "evaluator": {
               "params": [],
               "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "C",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "reducer": "last",
+        "refId": "A",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "B",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 0,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1
+              ],
+              "type": "lt"
             },
             "operator": {
               "type": "and"
@@ -69,51 +110,7 @@
         "expression": "A",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
-        "reducer": "last",
         "refId": "B",
-        "type": "reduce"
-      }
-    },
-    {
-      "refId": "C",
-      "queryType": "",
-      "relativeTimeRange": {
-        "from": 86400,
-        "to": 0
-      },
-      "datasourceUid": "__expr__",
-      "model": {
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                0.8
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "C"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "datasource": {
-          "type": "__expr__",
-          "uid": "__expr__"
-        },
-        "expression": "B",
-        "intervalMs": 1000,
-        "maxDataPoints": 43200,
-        "refId": "C",
         "type": "threshold"
       }
     }
@@ -123,13 +120,8 @@
   "for": "5m",
   "annotations": {
     "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
-    "__panelId__": "156",
-    "description": "",
-    "runbook_url": "",
-    "summary": "Triggered when the disk space left for Postgres and ElasticSearch is less than threshold"
-  },
-  "labels": {
-    "": ""
+    "__panelId__": "269",
+    "summary": "Triggered when Postgres is down"
   },
   "isPaused": false
 }

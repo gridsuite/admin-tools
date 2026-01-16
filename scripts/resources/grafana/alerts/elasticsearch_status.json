@@ -1,12 +1,12 @@
 {
-  "orgID": 1,
+  "uid": "5fbdb37c-dee2-4f02-a910-549416307795",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "Pods container restarts rate",
+  "title": "ElasticSearch status",
   "condition": "C",
   "data": [
     {
-      "refId": "A",
+      "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
         "from": 10800,
@@ -19,18 +19,18 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "increase(kube_pod_container_status_restarts_total{pod!~\".*cronjob.*\"}[1h])",
+        "expr": "up{service=\"elasticsearch\", endpoint=\"metrics\"} OR on() vector(0)",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
-        "legendFormat": "{{pod}}",
+        "legendFormat": "elasticsearch",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "A"
+        "refId": "B"
       }
     },
     {
-      "refId": "B",
+      "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
         "from": 0,
@@ -49,7 +49,7 @@
             },
             "query": {
               "params": [
-                "B"
+                "A"
               ]
             },
             "reducer": {
@@ -63,11 +63,11 @@
           "type": "__expr__",
           "uid": "__expr__"
         },
-        "expression": "A",
+        "expression": "B",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
         "reducer": "last",
-        "refId": "B",
+        "refId": "A",
         "type": "reduce"
       }
     },
@@ -84,9 +84,9 @@
           {
             "evaluator": {
               "params": [
-                5
+                1
               ],
-              "type": "gt"
+              "type": "lt"
             },
             "operator": {
               "type": "and"
@@ -107,7 +107,7 @@
           "type": "__expr__",
           "uid": "__expr__"
         },
-        "expression": "B",
+        "expression": "A",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
         "refId": "C",
@@ -119,9 +119,9 @@
   "execErrState": "Error",
   "for": "5m",
   "annotations": {
-    "__dashboardUid__": "a24365d3-fb9c-407b-99d6-5b0b14de5adc",
-    "__panelId__": "51",
-    "summary": "Triggered when a pod has an important restart rate (typically a crash loop)"
+    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
+    "__panelId__": "268",
+    "summary": "Triggered when ElasticSearch is down"
   },
   "isPaused": false
 }

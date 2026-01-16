@@ -14,24 +14,22 @@ import constant
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
 #
+GRAFANA_FOLDERS_URL = constant.GRAFANA_URL + "/folders"
+GRAFANA_FOLDER_URL = GRAFANA_FOLDERS_URL + "/{folderUuid}"
 
-def get_folders():
-    result = None
-    try:
-        result = requests.get(constant.GRAFANA_FOLDER_URL, {'parentUid' : 'e6eb2338-0ab9-45e4-ba3b-8df649ddd4c3'})
-        result.raise_for_status()
-        return result.json()
-    except RequestException as e:
-        raise SystemExit(e, result.content)
+FOLDER_BASE_UID= "_ec52bf07-f55c-4f2c"
 
-def create_folder(folder_name, parent_folder_uid = ''):
-    return __create_folder({'title': folder_name, 'parentUid' : parent_folder_uid})
+def create_folder(folder_name, parent_folder_uid = '', recreate = False):
+    folder_uid = folder_name + FOLDER_BASE_UID
+    if recreate:
+        delete_folder(folder_uid)
+    return __create_folder({'uid': folder_uid, 'title': folder_name, 'parentUid' : parent_folder_uid})
 
 def __create_folder(json_data):
     result = None
     try:
         print("Create folder : %s" % json_data['title'])
-        result = requests.post(constant.GRAFANA_FOLDER_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
+        result = requests.post(GRAFANA_FOLDERS_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result.raise_for_status()
         print("Folder successfully (re)created : %s" % json_data['title'])
         return result.json()['uid']
@@ -44,18 +42,22 @@ def __create_folder(json_data):
 def get_folder(folder_uuid):
     result = None
     try:
-        result = requests.get(get_folder_url(folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
+        result = requests.get(GRAFANA_FOLDER_URL.format(folderUuid=folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result.raise_for_status()
         return result.json()
     except RequestException as e:
         raise SystemExit(e, result.content)
 
-def delete_folder(folder_uuid):
+def delete_folder(folder_uid):
     result = None
     try:
-        result = requests.delete(get_folder_url(folder_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
+        result = requests.get(GRAFANA_FOLDER_URL.format(folderUuid=folder_uid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
+        if result.status_code == requests.codes.not_found:
+            return
         result.raise_for_status()
-        print("Folder successfully deleted : %s" % folder_uuid)
+        result = requests.delete(GRAFANA_FOLDER_URL.format(folderUuid=folder_uid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
+        result.raise_for_status()
+        print("Folder successfully deleted : %s" % folder_uid)
     except RequestException as e:
         raise SystemExit(e, result.content)
 
@@ -63,6 +65,3 @@ def reset_folder(folder_uuid):
     folder_json = get_folder(folder_uuid)
     delete_folder(folder_uuid)
     __create_folder(folder_json)
-
-def get_folder_url(folder_uuid):
-    return constant.GRAFANA_FOLDER_URL + '/' + folder_uuid

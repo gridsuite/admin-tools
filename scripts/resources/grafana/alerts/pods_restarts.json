@@ -1,8 +1,8 @@
 {
-  "orgID": 1,
+  "uid": "83bb202d-90eb-45d4-8a7e-5ec67848b8cc",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "Pods not ready",
+  "title": "Pods container restarts rate",
   "condition": "C",
   "data": [
     {
@@ -19,11 +19,11 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "sum((kube_replicaset_spec_replicas - kube_replicaset_status_ready_replicas) and kube_replicaset_spec_replicas>0)",
+        "expr": "increase(kube_pod_container_status_restarts_total{pod!~\".*cronjob.*\"}[1h])",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
-        "legendFormat": "__auto",
+        "legendFormat": "{{pod}}",
         "maxDataPoints": 43200,
         "range": true,
         "refId": "A"
@@ -33,7 +33,7 @@
       "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 10800,
+        "from": 0,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -75,7 +75,7 @@
       "refId": "C",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 10800,
+        "from": 0,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -84,7 +84,7 @@
           {
             "evaluator": {
               "params": [
-                0
+                5
               ],
               "type": "gt"
             },
@@ -117,11 +117,11 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "15m",
+  "for": "5m",
   "annotations": {
     "__dashboardUid__": "a24365d3-fb9c-407b-99d6-5b0b14de5adc",
-    "__panelId__": "49",
-    "summary": "Triggered when pods are not ready"
+    "__panelId__": "51",
+    "summary": "Triggered when a pod has an important restart rate (typically a crash loop)"
   },
   "isPaused": false
 }

@@ -8,38 +8,39 @@
 import argparse
 import os
 
+from click import UUID
 from tqdm import tqdm
 
-from constant import GRAFANA_DASHBOARDS_DIR
-from functions.grafana.dashboards import create_dashbord
+from functions.grafana.dashboards import create_dashboard
 from functions.grafana.folders import reset_folder, create_folder
 
 #
 # @author Slimane Amar <slimane.amar at rte-france.com>
 #
+GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
 
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create or update dashboards into one folder')
 group = parser.add_mutually_exclusive_group()
 group.add_argument("-a", "--all", help="create all dashboards", action="store_true")
 group.add_argument("-f", "--file", help="path of the dashboard to create", action='append')
-parser.add_argument("-p", "--parent_folder_uuid", help="uuid of parent folder", required=True)
+parser.add_argument("-p", "--parent_folder_uid", help="uid of parent folder", required=True)
 
 args = parser.parse_args()
 files = args.file
-root_folder_uuid = args.parent_folder_uuid
+root_folder_uid = args.parent_folder_uid
 
 print("Grafana dashboards creation")
 
 if args.all:
-    reset_folder(root_folder_uuid)
-    folders_uids = { GRAFANA_DASHBOARDS_DIR : root_folder_uuid }
-    parent_folder_uuid = None
+    reset_folder(root_folder_uid)
+    folders_uids = { GRAFANA_DASHBOARDS_DIR : root_folder_uid }
+    parent_folder_uid = None
     for path, subdirs, files in os.walk(GRAFANA_DASHBOARDS_DIR):
-        parent_folder_uuid = folders_uids.get(path)
+        parent_folder_uid = folders_uids.get(path)
         for subdir in subdirs:
-            folders_uids[os.path.join(path, subdir)] = create_folder(subdir, parent_folder_uuid)
-        for file in tqdm(files):
-            create_dashbord(os.path.join(path, file), parent_folder_uuid)
+            folders_uids[os.path.join(path, subdir)] = create_folder(subdir, parent_folder_uid, recreate=True)
+        for file in files:
+            create_dashboard(os.path.join(path, file), parent_folder_uid)
 else:
-    for file in tqdm(files):
-        create_dashbord(file, root_folder_uuid)
+    for file in files:
+        create_dashboard(file, root_folder_uid)

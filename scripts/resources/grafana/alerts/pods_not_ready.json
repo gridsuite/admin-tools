@@ -1,12 +1,12 @@
 {
-  "orgID": 1,
+  "uid": "41c0e683-bcb2-4f58-9228-80295e8c8c12",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "ElasticSearch status",
+  "title": "Pods not ready",
   "condition": "C",
   "data": [
     {
-      "refId": "B",
+      "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
         "from": 10800,
@@ -19,21 +19,21 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "up{service=\"elasticsearch\", endpoint=\"metrics\"} OR on() vector(0)",
+        "expr": "sum((kube_replicaset_spec_replicas - kube_replicaset_status_ready_replicas) and kube_replicaset_spec_replicas>0)",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
-        "legendFormat": "elasticsearch",
+        "legendFormat": "__auto",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "B"
+        "refId": "A"
       }
     },
     {
-      "refId": "A",
+      "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 0,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -49,7 +49,7 @@
             },
             "query": {
               "params": [
-                "A"
+                "B"
               ]
             },
             "reducer": {
@@ -63,11 +63,11 @@
           "type": "__expr__",
           "uid": "__expr__"
         },
-        "expression": "B",
+        "expression": "A",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
         "reducer": "last",
-        "refId": "A",
+        "refId": "B",
         "type": "reduce"
       }
     },
@@ -75,7 +75,7 @@
       "refId": "C",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 0,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -84,9 +84,9 @@
           {
             "evaluator": {
               "params": [
-                1
+                0
               ],
-              "type": "lt"
+              "type": "gt"
             },
             "operator": {
               "type": "and"
@@ -107,7 +107,7 @@
           "type": "__expr__",
           "uid": "__expr__"
         },
-        "expression": "A",
+        "expression": "B",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
         "refId": "C",
@@ -117,11 +117,11 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "5m",
+  "for": "15m",
   "annotations": {
-    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
-    "__panelId__": "268",
-    "summary": "Triggered when ElasticSearch is down"
+    "__dashboardUid__": "a24365d3-fb9c-407b-99d6-5b0b14de5adc",
+    "__panelId__": "49",
+    "summary": "Triggered when pods are not ready"
   },
   "isPaused": false
 }

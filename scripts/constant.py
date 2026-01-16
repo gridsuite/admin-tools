@@ -23,12 +23,10 @@ DELETE_ORPHAN_NETWORKS_SQL = "delete_orphan_networks.sql"
 HTTP_PROTOCOL = "http://"
 API_VERSION = "/v1"
 
-GRAFANA_API_VERSION = "/v1"
 GRAFANA_API = "/api"
-GRAFANA_PROVISIONING = "/provisioning"
 
 # TODO add command parameter to set this DEV
-DEV = False
+DEV = True
 
 DEV_HOSTNAME = "172.17.0.1" # NOSONAR S1313 : this local IP is not excluded from this sonar issue
 
@@ -141,11 +139,6 @@ ES_FORCE_MERGE = "{elasticsearchHost}/{indexName}/_forcemerge"
 # GRAFANA
 GRAFANA_COOKIES={'Cookie' : ''}
 GRAFANA_HEADERS={'X-Disable-Provenance': 'true'}
-GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
-GRAFANA_FOLDER_URL = GRAFANA_URL + "/folders"
-GRAFANA_DASHBOARDS_URL = GRAFANA_URL + "/dashboards"
-GRAFANA_ALERT_RULES = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/alert-rules"
-GRAFANA_RULE_GROUPS = GRAFANA_URL + API_VERSION + GRAFANA_PROVISIONING + "/folder/{folderUid}/rule-groups/{ruleGroupId}"
 
 # INDEXED ELEMENTS
 GET_DIRECTORY_ELEMENTS_COUNT = DIRECTORY_SERVER_URL + "/supervision/elements/indexation-count"
