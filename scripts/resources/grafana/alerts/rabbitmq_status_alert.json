@@ -1,15 +1,15 @@
 {
-  "orgID": 1,
+  "uid": "e07230b5-d538-4dbd-9e38-9ff1860f113f",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "Disk space used (ElasticSearch, Postgres)",
+  "title": "RabbitMQ status",
   "condition": "C",
   "data": [
     {
       "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "{{DATASOURCE_UID}}",
@@ -19,24 +19,21 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "(node_filesystem_size_bytes - node_filesystem_avail_bytes)/node_filesystem_size_bytes",
-        "format": "time_series",
+        "expr": "up{service=\"rabbitmq\", endpoint=\"metrics\"} OR on() vector(0)",
         "instant": false,
         "interval": "",
-        "intervalFactor": 1,
         "intervalMs": 15000,
-        "legendFormat": "{{mountpoint}}",
+        "legendFormat": "rabbitmq",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "A",
-        "step": 240
+        "refId": "A"
       }
     },
     {
       "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 0,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -78,7 +75,7 @@
       "refId": "C",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 0,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -87,9 +84,9 @@
           {
             "evaluator": {
               "params": [
-                0.8
+                1
               ],
-              "type": "gt"
+              "type": "lt"
             },
             "operator": {
               "type": "and"
@@ -122,14 +119,12 @@
   "execErrState": "Error",
   "for": "5m",
   "annotations": {
-    "__dashboardUid__": "rYdddlPWk",
-    "__panelId__": "156",
-    "description": "",
-    "runbook_url": "",
-    "summary": "Triggered when the disk space left for Postgres and ElasticSearch is less than threshold"
+    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
+    "__panelId__": "267",
+    "summary": "Triggered when RabbitMQ is down"
   },
-  "labels": {
-    "": ""
-  },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

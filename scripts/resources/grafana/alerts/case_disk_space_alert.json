@@ -1,15 +1,15 @@
 {
-  "orgID": 1,
+  "uid": "3508546a-cee7-4e5e-ad92-d906075e7fbd",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "Postgres status",
-  "condition": "B",
+  "title": "Disk space used (Case)",
+  "condition": "C",
   "data": [
     {
-      "refId": "C",
+      "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 10800,
+        "from": 86400,
         "to": 0
       },
       "datasourceUid": "{{DATASOURCE_UID}}",
@@ -19,21 +19,24 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "up{service=\"postgres\", endpoint=\"metrics\"} OR on() vector(0)",
+        "expr": "1-kubelet_volume_stats_available_bytes{service=\"$service\"}/kubelet_volume_stats_capacity_bytes{service=\"$service\"}",
+        "format": "time_series",
         "instant": false,
         "interval": "",
+        "intervalFactor": 1,
         "intervalMs": 15000,
-        "legendFormat": "postgres",
+        "legendFormat": "{{mountpoint}}",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "C"
+        "refId": "A",
+        "step": 240
       }
     },
     {
-      "refId": "A",
+      "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 0,
+        "from": 86400,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -43,50 +46,6 @@
             "evaluator": {
               "params": [],
               "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "datasource": {
-          "type": "__expr__",
-          "uid": "__expr__"
-        },
-        "expression": "C",
-        "intervalMs": 1000,
-        "maxDataPoints": 43200,
-        "reducer": "last",
-        "refId": "A",
-        "type": "reduce"
-      }
-    },
-    {
-      "refId": "B",
-      "queryType": "",
-      "relativeTimeRange": {
-        "from": 0,
-        "to": 0
-      },
-      "datasourceUid": "__expr__",
-      "model": {
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "lt"
             },
             "operator": {
               "type": "and"
@@ -110,7 +69,51 @@
         "expression": "A",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
+        "reducer": "last",
         "refId": "B",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "C",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 86400,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0.8
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "C"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "B",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "refId": "C",
         "type": "threshold"
       }
     }
@@ -119,9 +122,17 @@
   "execErrState": "Error",
   "for": "5m",
   "annotations": {
-    "__dashboardUid__": "rYdddlPWk",
-    "__panelId__": "269",
-    "summary": "Triggered when Postgres is down"
+    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
+    "__panelId__": "156",
+    "description": "",
+    "runbook_url": "",
+    "summary": "Triggered when the disk space left for Case storage volume is less than threshold"
   },
-  "isPaused": false
+  "labels": {
+    "": ""
+  },
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }
