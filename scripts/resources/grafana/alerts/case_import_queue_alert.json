@@ -2,7 +2,7 @@
   "uid": "dd71e1ac-8968-477f-bc20-834c7a0fe5a7",
   "ruleGroup": "alert_eval_group_10s",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "Case import queues threshold",
+  "title": "Case import queue threshold",
   "condition": "Is over the threshold",
   "data": [
     {

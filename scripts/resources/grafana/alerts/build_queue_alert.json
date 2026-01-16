@@ -2,7 +2,7 @@
   "uid": "45c6fa5f-0fe4-4995-be93-248327e3a609",
   "ruleGroup": "alert_eval_group_1m",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "Build queues threshold",
+  "title": "Build queue threshold",
   "condition": "Is over the threshold",
   "data": [
     {
