@@ -123,5 +123,8 @@
     "__panelId__": "50",
     "summary": "Triggered when a pod is OOMKilled by Kubernetes"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

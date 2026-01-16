@@ -84,5 +84,8 @@
     "description": "The rule checks regularly if the \"case imoort\" ready queues have more than X messages",
     "summary": "If this alert is triggered TEST, there is probably an issue with the network conversion server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to import case"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

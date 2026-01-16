@@ -77,12 +77,15 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "30s",
+  "for": "1m",
   "annotations": {
     "__dashboardUid__": "03e6a6c7-df9f-425a-96d2-a89534c28231",
     "__panelId__": "14",
     "description": "The rule checks regularly if the \"run computation\" ready queues have more than X messages",
     "summary": "If this alert is triggered TEST, there is probably an issue with the calculation server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to run calculations"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

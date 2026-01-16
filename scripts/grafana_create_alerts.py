@@ -33,6 +33,7 @@ print("Grafana alert rules creation")
 if args.all:
     for path, _, files in os.walk(GRAFANA_ALERTS_DIR):
         for file in files:
+            print("")
             create_alert_rule(os.path.join(path, file), root_folder_uid, datasource_uid, overwrite=True)
 else:
     for file in files:

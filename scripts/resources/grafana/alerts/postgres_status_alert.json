@@ -123,5 +123,8 @@
     "__panelId__": "269",
     "summary": "Triggered when Postgres is down"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

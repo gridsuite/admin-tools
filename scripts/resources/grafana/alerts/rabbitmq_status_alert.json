@@ -123,5 +123,8 @@
     "__panelId__": "267",
     "summary": "Triggered when RabbitMQ is down"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

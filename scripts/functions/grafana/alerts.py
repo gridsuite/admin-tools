@@ -74,6 +74,10 @@ def __update_interval_alert_group(parent_folder_uid, rule_group_id, rule_group_i
 def delete_alert_rule(alert_rule_uuid):
     result = None
     try:
+        result = requests.get(GRAFANA_ALERT_RULE_URL.format(alertRuleUuid=alert_rule_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
+        if result.status_code == requests.codes.not_found:
+            return
+        result.raise_for_status()
         result = requests.delete(GRAFANA_ALERT_RULE_URL.format(alertRuleUuid=alert_rule_uuid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result.raise_for_status()
         print("Alert rule successfully deleted : %s" % alert_rule_uuid)

@@ -123,5 +123,8 @@
     "__panelId__": "268",
     "summary": "Triggered when ElasticSearch is down"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

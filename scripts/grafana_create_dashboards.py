@@ -29,15 +29,17 @@ root_folder_uid = args.parent_folder_uid
 print("Grafana dashboards creation")
 
 if args.all:
-    reset_folder(root_folder_uid)
     folders_uids = { GRAFANA_DASHBOARDS_DIR : root_folder_uid }
     parent_folder_uid = None
     for path, subdirs, files in os.walk(GRAFANA_DASHBOARDS_DIR):
         parent_folder_uid = folders_uids.get(path)
         for subdir in subdirs:
+            print("")
             folders_uids[os.path.join(path, subdir)] = create_folder(subdir, parent_folder_uid, recreate=True)
         for file in files:
+            print("")
             create_dashboard(os.path.join(path, file), parent_folder_uid)
 else:
     for file in files:
+        print("")
         create_dashboard(file, root_folder_uid)

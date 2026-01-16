@@ -51,8 +51,9 @@ def get_folder(folder_uuid):
 def delete_folder(folder_uid):
     result = None
     try:
+        print("Delete folder : %s" % folder_uid)
         result = requests.get(GRAFANA_FOLDER_URL.format(folderUuid=folder_uid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
-        if result.status_code == requests.codes.not_found:
+        if result.status_code == requests.codes.not_found or result.status_code == requests.codes.forbidden:
             return
         result.raise_for_status()
         result = requests.delete(GRAFANA_FOLDER_URL.format(folderUuid=folder_uid), headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)

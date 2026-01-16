@@ -123,5 +123,8 @@
     "__panelId__": "51",
     "summary": "Triggered when a pod has an important restart rate (typically a crash loop)"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }
