@@ -8,11 +8,7 @@
 import argparse
 import os
 
-from requests import RequestException
-from tqdm import tqdm
-
 from functions.grafana.alerts import create_alert_rule
-from functions.grafana.folders import reset_folder
 
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>

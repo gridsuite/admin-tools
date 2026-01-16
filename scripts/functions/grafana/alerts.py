@@ -23,7 +23,7 @@ GRAFANA_RULE_GROUPS_URL = GRAFANA_PROVISIONING_URL + "/folder/{folderUid}/rule-g
 FOLDER_UID_PLACEHOLDER = "{{FOLDER_UID}}"
 DATASOURCE_UID_PLACEHOLDER = "{{DATASOURCE_UID}}"
 
-EVALUATION_GROUP_INTERVALS_IN_SECONDS = dict(alert_eval_group_10s=10, alert_eval_group_30s=30, alert_eval_group_1m=60, alert_eval_group_5m=300)
+EVALUATION_GROUP_INTERVALS_IN_SECONDS = {'alert_eval_group_10s': 10, 'alert_eval_group_30s': 30, 'alert_eval_group_1m': 60, 'alert_eval_group_5m': 300}
 
 
 def create_alert_rule(alert_rule_json_path, parent_folder_uid, datasource_uid, overwrite=False):
@@ -53,7 +53,7 @@ def __create_alert_rule(parent_folder_uid, alert_rule_json_path, alert_rule_json
 def __get_evaluation_group_interval(get_rule_group_id):
     rule_group_interval = EVALUATION_GROUP_INTERVALS_IN_SECONDS.get(get_rule_group_id)
     if rule_group_interval is None:
-        error_message = "Unknown rule group name : %s" % get_rule_group_id + "\nRule group valid names : %s" % [k for k in EVALUATION_GROUP_INTERVALS_IN_SECONDS]
+        error_message = "Unknown rule group name : %s" % get_rule_group_id + "\nRule group valid names : %s" % list(EVALUATION_GROUP_INTERVALS_IN_SECONDS)
         raise SystemExit(error_message)
     return rule_group_interval
 

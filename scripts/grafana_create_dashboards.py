@@ -8,9 +8,6 @@
 import argparse
 import os
 
-from click import UUID
-from tqdm import tqdm
-
 from functions.grafana.dashboards import create_dashboard
 from functions.grafana.folders import reset_folder, create_folder
 
