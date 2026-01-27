@@ -1,8 +1,8 @@
 {
-  "orgID": 1,
+  "uid": "99ee871a-695c-4d94-8290-d1aafbcdc7ed",
+  "ruleGroup": "alert_eval_group_1m",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "caseImportRuleGroup",
-  "title": "CheckReadyQueues",
+  "title": "Computation queues threshold",
   "condition": "Is over the threshold",
   "data": [
     {
@@ -14,7 +14,7 @@
         "datasource": { "type": "prometheus", "uid": "{{DATASOURCE_UID}}" },
         "disableTextWrap": false,
         "editorMode": "builder",
-        "expr": "rabbitmq_detailed_queue_messages_ready{queue=\"case.import.start.importGroup\"}",
+        "expr": "rabbitmq_detailed_queue_messages_ready{queue=~\".*.run.*\"}",
         "fullMetaSearch": false,
         "includeNullMetadata": true,
         "instant": false,
@@ -77,12 +77,15 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "30s",
+  "for": "1m",
   "annotations": {
-    "__dashboardUid__": "PUjAm8dPh",
-    "__panelId__": "16",
-    "description": "The rule checks regularly if the \"case imoort\" ready queues have more than X messages",
-    "summary": "If this alert is triggered TEST, there is probably an issue with the network conversion server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to import case"
+    "__dashboardUid__": "03e6a6c7-df9f-425a-96d2-a89534c28231",
+    "__panelId__": "14",
+    "description": "The rule checks regularly if the \"run computation\" ready queues have more than X messages",
+    "summary": "If this alert is triggered, there is probably an issue with the calculation server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to run calculations"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

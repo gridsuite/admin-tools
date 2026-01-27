@@ -1,8 +1,8 @@
 {
-  "orgID": 1,
+  "uid": "15312203-b753-4533-8c1a-a975ed8e8278",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
-  "title": "Disk space used (Case)",
+  "title": "Disk space used (ElasticSearch, Postgres)",
   "condition": "C",
   "data": [
     {
@@ -19,7 +19,7 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "1-kubelet_volume_stats_available_bytes{service=\"$service\"}/kubelet_volume_stats_capacity_bytes{service=\"$service\"}",
+        "expr": "(node_filesystem_size_bytes - node_filesystem_avail_bytes)/node_filesystem_size_bytes",
         "format": "time_series",
         "instant": false,
         "interval": "",
@@ -122,14 +122,17 @@
   "execErrState": "Error",
   "for": "5m",
   "annotations": {
-    "__dashboardUid__": "rYdddlPWk",
+    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
     "__panelId__": "156",
     "description": "",
     "runbook_url": "",
-    "summary": "Triggered when the disk space left for Case storage volume is less than threshold"
+    "summary": "Triggered when the disk space left for Postgres and ElasticSearch is less than threshold"
   },
   "labels": {
     "": ""
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

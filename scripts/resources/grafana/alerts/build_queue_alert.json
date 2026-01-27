@@ -1,8 +1,8 @@
 {
-  "orgID": 1,
+  "uid": "45c6fa5f-0fe4-4995-be93-248327e3a609",
+  "ruleGroup": "alert_eval_group_1m",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "buildRuleGroup",
-  "title": "CheckReadyQueues",
+  "title": "Build queue threshold",
   "condition": "Is over the threshold",
   "data": [
     {
@@ -77,12 +77,15 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "30s",
+  "for": "1m",
   "annotations": {
     "__dashboardUid__": "e6035e2e-2575-44a7-9afb-c6e35b961199",
     "__panelId__": "6",
     "description": "The rule checks regularly if the \"build\" ready queues have more than X messages",
-    "summary": "If this alert is triggered TEST, there is probably an issue with the network modification server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to build node"
+    "summary": "If this alert is triggered, there is probably an issue with the network modification server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to build node"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }

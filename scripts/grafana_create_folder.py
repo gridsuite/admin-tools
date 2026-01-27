@@ -7,17 +7,17 @@
 
 import argparse
 
-from functions.grafana.create_folder import create_folder
+from functions.grafana.folders import create_folder
 
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
 #
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create folder', )
-parser.add_argument("foldername", help="name of the folder to create")
+parser.add_argument("folder_name", help="name of the folder to create")
 
 args = parser.parse_args()
-folder_name_to_create = args.foldername
+folder_name_to_create = args.folder_name
 
-print("Grafana folder creation script")
+print("Grafana folder creation")
 
 create_folder(folder_name_to_create)

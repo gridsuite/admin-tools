@@ -6,25 +6,35 @@
 #
 
 import argparse
+import os
 
-from functions.grafana.create_alert import create_alert_rule
+from functions.grafana.alerts import create_alert_rule
 
 #
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
+# @author Slimane Amar <slimane.amar at rte-france.com>
 #
+GRAFANA_ALERTS_DIR = 'resources/grafana/alerts'
+
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create alert-rules into one folder - rule-groups are automatically created if not already existing')
-parser.add_argument("-f", "--file", help="path of the alert rule to create", required=True, action='append')
-parser.add_argument("-p", "--parent_folder_uuid", help="uuid of parent folder", required=True)
-parser.add_argument("-d", "--datasource_uuid", help="uuid of datasource", required=True)
-parser.add_argument("-i", "--interval", help="(seconds) - after successfuly creating the alert-rule, its rule-group interval (newly created or not) will be updated with this value. Newly created rule-group will have an interval set to Grafana default value (60s) if left empty")
+group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument("-a", "--all", help="create all alert rules", action="store_true")
+group.add_argument("-f", "--file", help="path of the alert rule to create", action='append')
+parser.add_argument("-p", "--parent_folder_uid", help="uid of parent folder", required=True)
+parser.add_argument("-d", "--datasource_uid", help="uid of datasource", required=True)
 
 args = parser.parse_args()
 files = args.file
-parent_folder_uuid = args.parent_folder_uuid
-datasource_uuid = args.datasource_uuid
-rule_group_interval = args.interval
+root_folder_uid = args.parent_folder_uid
+datasource_uid = args.datasource_uid
 
-print("Grafana alert rule creation script")
+print("Grafana alert rules creation")
 
-for file in files:
-    create_alert_rule(file, parent_folder_uuid, datasource_uuid, rule_group_interval)
+if args.all:
+    for path, _, files in os.walk(GRAFANA_ALERTS_DIR):
+        for file in files:
+            print("")
+            create_alert_rule(os.path.join(path, file), root_folder_uid, datasource_uid, overwrite=True)
+else:
+    for file in files:
+        create_alert_rule(file, root_folder_uid, datasource_uid)

@@ -1,7 +1,7 @@
 {
-  "orgID": 1,
+  "uid": "41c0e683-bcb2-4f58-9228-80295e8c8c12",
+  "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "ruleGroup": "30sEval",
   "title": "Pods not ready",
   "condition": "C",
   "data": [
@@ -123,5 +123,8 @@
     "__panelId__": "49",
     "summary": "Triggered when pods are not ready"
   },
-  "isPaused": false
+  "isPaused": false,
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
 }
