@@ -17,7 +17,7 @@ from functions.grafana.folders import reset_folder, create_folder
 GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
 
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create or update dashboards into one folder')
-group = parser.add_mutually_exclusive_group()
+group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-a", "--all", help="create all dashboards", action="store_true")
 group.add_argument("-f", "--file", help="path of the dashboard to create", action='append')
 parser.add_argument("-p", "--parent_folder_uid", help="uid of parent folder", required=True)

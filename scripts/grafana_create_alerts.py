@@ -17,7 +17,7 @@ from functions.grafana.alerts import create_alert_rule
 GRAFANA_ALERTS_DIR = 'resources/grafana/alerts'
 
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create alert-rules into one folder - rule-groups are automatically created if not already existing')
-group = parser.add_mutually_exclusive_group()
+group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-a", "--all", help="create all alert rules", action="store_true")
 group.add_argument("-f", "--file", help="path of the alert rule to create", action='append')
 parser.add_argument("-p", "--parent_folder_uid", help="uid of parent folder", required=True)

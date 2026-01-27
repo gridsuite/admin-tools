@@ -17,7 +17,7 @@ import constant
 GRAFANA_FOLDERS_URL = constant.GRAFANA_URL + "/folders"
 GRAFANA_FOLDER_URL = GRAFANA_FOLDERS_URL + "/{folderUuid}"
 
-FOLDER_BASE_UID= "_ec52bf07-f55c-4f2c"
+FOLDER_BASE_UID = "_ec52bf07-f55c-4f2c"
 
 def create_folder(folder_name, parent_folder_uid = '', recreate = False):
     folder_uid = folder_name + FOLDER_BASE_UID
