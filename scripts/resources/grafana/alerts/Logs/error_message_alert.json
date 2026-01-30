@@ -1,8 +1,8 @@
 {
-  "uid": "59a4564c-64fd-4220-93d4-37e0949b26c2",
+  "uid": "99f9d0f9-ec17-4136-9db2-f0ef65a5f0bc",
   "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "OOM Killed events (pods)",
+  "title": "Error logs",
   "condition": "C",
   "data": [
     {
@@ -19,7 +19,7 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "(kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason=\"OOMKilled\"}[10m]) == 1",
+        "expr": "(count_over_time({pod=~\".+\"} |= `ERROR` [5m])) > 1",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
@@ -119,9 +119,9 @@
   "execErrState": "Error",
   "for": "5m",
   "annotations": {
-    "__dashboardUid__": "a24365d3-fb9c-407b-99d6-5b0b14de5adc",
-    "__panelId__": "50",
-    "summary": "Triggered when a pod is OOMKilled by Kubernetes"
+    "__dashboardUid__": "b98e62e3-2421-43ae-adfc-bbe66bd82f16",
+    "__panelId__": "1",
+    "summary": "Triggered when an error log is present"
   },
   "isPaused": false,
   "notification_settings": {
