@@ -123,6 +123,9 @@
     "summary": "Triggered when JVM OutOfMemory log is present"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }

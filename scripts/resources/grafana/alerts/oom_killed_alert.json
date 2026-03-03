@@ -124,6 +124,9 @@
     "summary": "Triggered when a pod is OOMKilled by Kubernetes"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }

@@ -124,6 +124,9 @@
     "summary": "Triggered when pods are not ready"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }

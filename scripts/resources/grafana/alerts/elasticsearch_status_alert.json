@@ -124,6 +124,9 @@
     "summary": "Triggered when ElasticSearch is down"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }
