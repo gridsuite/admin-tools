@@ -1,6 +1,6 @@
 {
   "uid": "99f9d0f9-ec17-4136-9db2-f0ef65a5f0bc",
-  "ruleGroup": "alert_eval_group_30s",
+  "ruleGroup": "alert_eval_group_5m",
   "folderUID": "{{FOLDER_UID}}",
   "title": "Error logs",
   "condition": "C",
@@ -117,7 +117,6 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "5m",
   "annotations": {
     "__dashboardUid__": "b98e62e3-2421-43ae-adfc-bbe66bd82f16",
     "__panelId__": "1",

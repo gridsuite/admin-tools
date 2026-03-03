@@ -1,6 +1,6 @@
 {
   "uid": "6a120fc7-862f-4cf5-b268-e260661928bd",
-  "ruleGroup": "alert_eval_group_30s",
+  "ruleGroup": "alert_eval_group_5m",
   "folderUID": "{{FOLDER_UID}}",
   "title": "OOM JVM logs",
   "condition": "C",
@@ -117,7 +117,6 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "5m",
   "annotations": {
     "__dashboardUid__": "b98e62e3-2421-43ae-adfc-bbe66bd82f16",
     "__panelId__": "2",
