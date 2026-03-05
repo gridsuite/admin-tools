@@ -115,6 +115,17 @@ python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 This command should return a json with a field "uid" which will be {{FOLDER_UID}} for the next command
 
 Then we can create alert-rules in the previously created folder.
+
+To import all alerts present in resources/grafana/alerts (logs for Loki and metrics for Prometheus):
+
+Execute these commands :
+```py
+python3 scripts/grafana_create_alerts.py -l -d {{DATASOURCE_LOKI_UID}} -p {{FOLDER_UID}}
+python3 scripts/grafana_create_alerts.py -m -d {{DATASOURCE_PROMETHEUS_UID}} -p {{FOLDER_UID}}
+```
+
+To import a single alert or multiple alerts from files, execute this command :
+
 Execute this command :
 ```py
 python3 scripts/grafana_create_alerts.py -f {{PATH_TO_ALERT_RULES_1}} -f {{PATH_TO_ALERT_RULES_2}} -d {{DATASOURCE_UID}} -p {{FOLDER_UID}}
