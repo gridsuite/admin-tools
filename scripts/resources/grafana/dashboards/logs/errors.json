@@ -107,7 +107,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum by (pod) (count_over_time({pod=~\".+\"} |= `ERROR` [5m]))",
+          "expr": "sum by (pod) (count_over_time({pod=~\".+\"} |~ `.+ ERROR .+` [5m]))",
           "legendFormat": "{{pod}}",
           "queryType": "range",
           "refId": "A"
@@ -217,7 +217,26 @@
   "schemaVersion": 40,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Loki",
+          "value": "Loki"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "loki",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",

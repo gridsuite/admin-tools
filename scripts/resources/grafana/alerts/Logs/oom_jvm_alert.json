@@ -19,7 +19,7 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "(count_over_time({pod=~\".+\"} |= `OutOfMemory` [5m])) > 1",
+        "expr": "count_over_time({pod=~\".+\"} |= `OutOfMemory` [5m])",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
