@@ -14,7 +14,7 @@
         "datasource": { "type": "prometheus", "uid": "{{DATASOURCE_UID}}" },
         "disableTextWrap": false,
         "editorMode": "builder",
-        "expr": "rabbitmq_detailed_queue_messages_ready{queue=\"build.run.buildGroup\"}",
+        "expr": "rabbitmq_detailed_queue_messages_ready{queue=~\".*build.run.buildGroup\"}",
         "fullMetaSearch": false,
         "includeNullMetadata": true,
         "instant": false,

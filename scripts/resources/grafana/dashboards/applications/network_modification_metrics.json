@@ -122,7 +122,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "app_network_modification_apply_seconds_max{error=\"none\"}",
+          "expr": "sum  by (modification_type) (app_network_modification_apply_seconds_max{error=\"none\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,

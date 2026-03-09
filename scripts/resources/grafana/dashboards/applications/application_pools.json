@@ -112,7 +112,7 @@
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -129,7 +129,7 @@
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -228,7 +228,7 @@
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -244,7 +244,7 @@
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -343,7 +343,7 @@
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -360,7 +360,7 @@
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -460,7 +460,7 @@
           "includeNullMetadata": true,
           "instant": false,
           "interval": "",
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -478,7 +478,7 @@
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "{{type}}",
+          "legendFormat": "{{pod}}-{{type}}",
           "range": true,
           "refId": "B",
           "useBackend": false
