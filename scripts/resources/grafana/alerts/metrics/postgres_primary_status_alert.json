@@ -1,5 +1,5 @@
 {
-  "uid": "88a0eee6-be36-4fb3-ba8c-d95223ea6b58",
+  "uid": "77e99cd8-3ce1-4922-9ed9-c2a21e049046",
   "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
   "title": "Postgres Primary status",

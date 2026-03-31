@@ -15,7 +15,7 @@
       "datasourceUid": "{{DATASOURCE_UID}}",
       "model": {
         "datasource": {
-          "type": "prometheus",
+          "type": "loki",
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",

@@ -113,7 +113,7 @@
           "refId": "A"
         }
       ],
-      "title": "Errors  count",
+      "title": "Errors count",
       "type": "timeseries"
     },
     {
