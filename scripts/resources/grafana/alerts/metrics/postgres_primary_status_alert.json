@@ -1,0 +1,133 @@
+{
+  "uid": "88a0eee6-be36-4fb3-ba8c-d95223ea6b58",
+  "ruleGroup": "alert_eval_group_30s",
+  "folderUID": "{{FOLDER_UID}}",
+  "title": "Postgres Primary status",
+  "condition": "B",
+  "data": [
+    {
+      "refId": "C",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 10800,
+        "to": 0
+      },
+      "datasourceUid": "{{DATASOURCE_UID}}",
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "{{DATASOURCE_UID}}"
+        },
+        "editorMode": "code",
+        "expr": "up{service=\"postgres\", endpoint=\"metrics\"} OR on() vector(0)",
+        "instant": false,
+        "interval": "",
+        "intervalMs": 15000,
+        "legendFormat": "Postgresql Primary",
+        "maxDataPoints": 43200,
+        "range": true,
+        "refId": "C"
+      }
+    },
+    {
+      "refId": "A",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 0,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "C",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "reducer": "last",
+        "refId": "A",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "B",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 0,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "eq"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "B"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "A",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "refId": "B",
+        "type": "threshold"
+      }
+    }
+  ],
+  "noDataState": "NoData",
+  "execErrState": "Error",
+  "for": "5m",
+  "annotations": {
+    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
+    "__panelId__": "269",
+    "summary": "Triggered when number of primary postgresql nodes is different than 1"
+  },
+  "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
+}
