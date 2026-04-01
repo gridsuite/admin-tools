@@ -1,8 +1,8 @@
 {
-  "uid": "45c6fa5f-0fe4-4995-be93-248327e3a609",
+  "uid": "dd71e1ac-8968-477f-bc20-834c7a0fe5a7",
   "ruleGroup": "alert_eval_group_1m",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "Build queue threshold",
+  "title": "Case import queue threshold",
   "condition": "Is over the threshold",
   "data": [
     {
@@ -14,7 +14,7 @@
         "datasource": { "type": "prometheus", "uid": "{{DATASOURCE_UID}}" },
         "disableTextWrap": false,
         "editorMode": "builder",
-        "expr": "rabbitmq_detailed_queue_messages_ready{queue=\"build.run.buildGroup\"}",
+        "expr": "rabbitmq_detailed_queue_messages_ready{queue=~\".*case.import.start.importGroup\"}",
         "fullMetaSearch": false,
         "includeNullMetadata": true,
         "instant": false,
@@ -77,14 +77,17 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "1m",
+  "for": "30s",
   "annotations": {
-    "__dashboardUid__": "e6035e2e-2575-44a7-9afb-c6e35b961199",
-    "__panelId__": "6",
-    "description": "The rule checks regularly if the \"build\" ready queues have more than X messages",
-    "summary": "If this alert is triggered, there is probably an issue with the network modification server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to build node"
+    "__dashboardUid__": "2c531ef9-4d4a-41d7-bf7e-4291c9cbd799",
+    "__panelId__": "16",
+    "description": "The rule checks regularly if the \"case import\" ready queues have more than X messages",
+    "summary": "If this alert is triggered, there is probably an issue with the network conversion server\n- low dimensioning, the queue is now emptied fast enough\n- server crash, the queue is not emptied anymore\nIt leads to longer response time for users trying to import case"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }

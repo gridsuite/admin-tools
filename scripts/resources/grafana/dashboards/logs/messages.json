@@ -162,7 +162,7 @@
           "refId": "A"
         }
       ],
-      "title": "Logs",
+      "title": "Messages",
       "type": "logs"
     }
   ],
@@ -252,7 +252,7 @@
     ]
   },
   "timezone": "",
-  "title": "Logs",
+  "title": "Messages",
   "uid": "63824acd-34cd-41f5-9449-5e8571274d63",
   "version": 17,
   "weekStart": ""

@@ -1,15 +1,15 @@
 {
-  "uid": "5fbdb37c-dee2-4f02-a910-549416307795",
+  "uid": "3508546a-cee7-4e5e-ad92-d906075e7fbd",
   "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "ElasticSearch status",
+  "title": "Disk space used (Case)",
   "condition": "C",
   "data": [
     {
-      "refId": "B",
+      "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 10800,
+        "from": 86400,
         "to": 0
       },
       "datasourceUid": "{{DATASOURCE_UID}}",
@@ -19,21 +19,24 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "up{service=\"elasticsearch\", endpoint=\"metrics\"} OR on() vector(0)",
+        "expr": "1-kubelet_volume_stats_available_bytes{service=\"$service\"}/kubelet_volume_stats_capacity_bytes{service=\"$service\"}",
+        "format": "time_series",
         "instant": false,
         "interval": "",
+        "intervalFactor": 1,
         "intervalMs": 15000,
-        "legendFormat": "elasticsearch",
+        "legendFormat": "{{mountpoint}}",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "B"
+        "refId": "A",
+        "step": 240
       }
     },
     {
-      "refId": "A",
+      "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 0,
+        "from": 86400,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -49,7 +52,7 @@
             },
             "query": {
               "params": [
-                "A"
+                "B"
               ]
             },
             "reducer": {
@@ -63,11 +66,11 @@
           "type": "__expr__",
           "uid": "__expr__"
         },
-        "expression": "B",
+        "expression": "A",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
         "reducer": "last",
-        "refId": "A",
+        "refId": "B",
         "type": "reduce"
       }
     },
@@ -75,7 +78,7 @@
       "refId": "C",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 0,
+        "from": 86400,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -84,9 +87,9 @@
           {
             "evaluator": {
               "params": [
-                1
+                0.8
               ],
-              "type": "lt"
+              "type": "gt"
             },
             "operator": {
               "type": "and"
@@ -107,7 +110,7 @@
           "type": "__expr__",
           "uid": "__expr__"
         },
-        "expression": "A",
+        "expression": "B",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
         "refId": "C",
@@ -120,10 +123,18 @@
   "for": "5m",
   "annotations": {
     "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
-    "__panelId__": "268",
-    "summary": "Triggered when ElasticSearch is down"
+    "__panelId__": "156",
+    "description": "",
+    "runbook_url": "",
+    "summary": "Triggered when the disk space left for Case storage volume is less than threshold"
+  },
+  "labels": {
+    "": ""
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }

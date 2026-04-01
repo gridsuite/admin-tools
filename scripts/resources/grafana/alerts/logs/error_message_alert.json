@@ -1,39 +1,39 @@
 {
-  "uid": "88a0eee6-be36-4fb3-ba8c-d95223ea6b58",
-  "ruleGroup": "alert_eval_group_30s",
+  "uid": "99f9d0f9-ec17-4136-9db2-f0ef65a5f0bc",
+  "ruleGroup": "alert_eval_group_5m",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "Postgres status",
-  "condition": "B",
+  "title": "Error logs",
+  "condition": "C",
   "data": [
     {
-      "refId": "C",
+      "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 10800,
+        "from": 1800,
         "to": 0
       },
       "datasourceUid": "{{DATASOURCE_UID}}",
       "model": {
         "datasource": {
-          "type": "prometheus",
+          "type": "loki",
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "up{service=\"postgres\", endpoint=\"metrics\"} OR on() vector(0)",
+        "expr": "count_over_time({pod=~\".+\"} |~ `.+ ERROR .+` [5m])",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
-        "legendFormat": "postgres",
+        "legendFormat": "{{pod}}",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "C"
+        "refId": "A"
       }
     },
     {
-      "refId": "A",
+      "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 0,
+        "from": 1800,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -43,50 +43,6 @@
             "evaluator": {
               "params": [],
               "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "datasource": {
-          "type": "__expr__",
-          "uid": "__expr__"
-        },
-        "expression": "C",
-        "intervalMs": 1000,
-        "maxDataPoints": 43200,
-        "reducer": "last",
-        "refId": "A",
-        "type": "reduce"
-      }
-    },
-    {
-      "refId": "B",
-      "queryType": "",
-      "relativeTimeRange": {
-        "from": 0,
-        "to": 0
-      },
-      "datasourceUid": "__expr__",
-      "model": {
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "lt"
             },
             "operator": {
               "type": "and"
@@ -110,20 +66,66 @@
         "expression": "A",
         "intervalMs": 1000,
         "maxDataPoints": 43200,
+        "reducer": "last",
         "refId": "B",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "C",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 1800,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "C"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "B",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "refId": "C",
         "type": "threshold"
       }
     }
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "5m",
   "annotations": {
-    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
-    "__panelId__": "269",
-    "summary": "Triggered when Postgres is down"
+    "__dashboardUid__": "b98e62e3-2421-43ae-adfc-bbe66bd82f16",
+    "__panelId__": "1",
+    "summary": "Triggered when an error log is present"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }

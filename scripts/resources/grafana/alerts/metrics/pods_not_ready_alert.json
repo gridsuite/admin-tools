@@ -1,15 +1,15 @@
 {
-  "uid": "15312203-b753-4533-8c1a-a975ed8e8278",
+  "uid": "41c0e683-bcb2-4f58-9228-80295e8c8c12",
   "ruleGroup": "alert_eval_group_30s",
   "folderUID": "{{FOLDER_UID}}",
-  "title": "Disk space used (ElasticSearch, Postgres)",
+  "title": "Pods not ready",
   "condition": "C",
   "data": [
     {
       "refId": "A",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "{{DATASOURCE_UID}}",
@@ -19,24 +19,21 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-        "expr": "(node_filesystem_size_bytes - node_filesystem_avail_bytes)/node_filesystem_size_bytes",
-        "format": "time_series",
+        "expr": "sum((kube_replicaset_spec_replicas - kube_replicaset_status_ready_replicas) and kube_replicaset_spec_replicas>0)",
         "instant": false,
         "interval": "",
-        "intervalFactor": 1,
         "intervalMs": 15000,
-        "legendFormat": "{{mountpoint}}",
+        "legendFormat": "__auto",
         "maxDataPoints": 43200,
         "range": true,
-        "refId": "A",
-        "step": 240
+        "refId": "A"
       }
     },
     {
       "refId": "B",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -78,7 +75,7 @@
       "refId": "C",
       "queryType": "",
       "relativeTimeRange": {
-        "from": 86400,
+        "from": 10800,
         "to": 0
       },
       "datasourceUid": "__expr__",
@@ -87,7 +84,7 @@
           {
             "evaluator": {
               "params": [
-                0.8
+                0
               ],
               "type": "gt"
             },
@@ -120,18 +117,16 @@
   ],
   "noDataState": "NoData",
   "execErrState": "Error",
-  "for": "5m",
+  "for": "15m",
   "annotations": {
-    "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
-    "__panelId__": "156",
-    "description": "",
-    "runbook_url": "",
-    "summary": "Triggered when the disk space left for Postgres and ElasticSearch is less than threshold"
-  },
-  "labels": {
-    "": ""
+    "__dashboardUid__": "a24365d3-fb9c-407b-99d6-5b0b14de5adc",
+    "__panelId__": "49",
+    "summary": "Triggered when pods are not ready"
   },
   "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
   "notification_settings": {
     "receiver": "grafana-default-email"
   }
