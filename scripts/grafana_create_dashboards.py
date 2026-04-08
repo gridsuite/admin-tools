@@ -14,7 +14,7 @@ from functions.grafana.folders import reset_folder, create_folder
 #
 # @author Slimane Amar <slimane.amar at rte-france.com>
 #
-GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
+GRAFANA_DASHBOARDS_DIR = 'scripts/resources/grafana/dashboards'
 
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create or update dashboards into one folder')
 group = parser.add_mutually_exclusive_group(required=True)
