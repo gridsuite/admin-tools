@@ -23,8 +23,8 @@ def delete_orphan_studies(dry_run):
     directory_studies_uuids_map = map(get_directory_element_uuid, directory_studies_json)
     directory_studies_uuids = list(directory_studies_uuids_map)
 
-    print("Getting all studies from study-server: " + constant.GET_STUDIES)
-    studies_response = requests.get(constant.GET_STUDIES)
+    print("Getting all studies from study-server: " + constant.GET_SUPERVISION_STUDIES)
+    studies_response = requests.get(constant.GET_SUPERVISION_STUDIES)
     studies_response_json = studies_response.json()
     studies_uuids_map = map(get_element_id, studies_response_json)
     all_studies_uuids = list(studies_uuids_map)
