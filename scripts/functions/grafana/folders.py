@@ -23,7 +23,7 @@ def create_folder(folder_name, parent_folder_uid = '', recreate = False):
     folder_uid = folder_name + FOLDER_BASE_UID
     if recreate:
         delete_folder(folder_uid)
-    return __create_folder({'uid': folder_uid, 'title': folder_name, 'parentUid' : parent_folder_uid})
+    __create_folder({'uid': folder_uid, 'title': folder_name, 'parentUid' : parent_folder_uid})
 
 def __create_folder(json_data):
     result = None
@@ -31,8 +31,7 @@ def __create_folder(json_data):
         print("Create folder : %s" % json_data['title'])
         result = requests.post(GRAFANA_FOLDERS_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result.raise_for_status()
-        print("Folder successfully (re)created : %s" % json_data['title'])
-        return result.json()['uid']
+        print("Folder successfully (re)created with uid : %s" % result.json()['uid'])
     except RequestException as e:
         if result.status_code == requests.codes.conflict:
             print("Folder already exist : %s" % json_data['title'])

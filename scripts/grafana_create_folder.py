@@ -20,4 +20,4 @@ folder_name_to_create = args.folder_name
 
 print("Grafana folder creation")
 
-print(create_folder(folder_name_to_create))
+create_folder(folder_name_to_create)
