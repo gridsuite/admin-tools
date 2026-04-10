@@ -72,7 +72,7 @@ Create a folder from the Grafana GUI or execute this command :
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 ```
 
-This command should return a json with a field "uid" which will be {{FOLDER_UID}} for the next command
+This command should return an "uid" which will be {{FOLDER_UID}} for the next command
 
 Then we can create dashboards in the previously created folder.
 
@@ -98,7 +98,9 @@ curl localhost:7000/api/dashboards/uid/{{DASHBOARD_UID}} > new_dashboard.json
 Edit "new_dashboard.json" file, then :
 - replace "uid" value by a new value corresponding to a UUID (you can use https://www.uuidgenerator.net/)
 - remove all those properties :
-    - "id"
+    - the root "id" (you can set it to null)
+    - "meta"
+    - "dashboard" (the content of the "dashboard" field will become the whole JSON)
 
 *Note: check **resources/grafana/dashboards/users-metrics.json** for a working template file*
 
@@ -112,7 +114,7 @@ Create a folder from the Grafana GUI or execute this command :
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 ```
 
-This command should return a json with a field "uid" which will be {{FOLDER_UID}} for the next command
+This command should return an "uid" which will be {{FOLDER_UID}} for the next command
 
 Then we can create alert-rules in the previously created folder.
 
