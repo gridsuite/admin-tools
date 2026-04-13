@@ -13,7 +13,7 @@ import constant
 
 
 def get_all_studies_uuid():
-    return requests.get(constant.GET_STUDIES).json()
+    return requests.get(constant.GET_SUPERVISION_STUDIES).json()
 
 def get_all_orphan_indexed_equipments_network_uuids():
     return requests.get(constant.GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS).json()
