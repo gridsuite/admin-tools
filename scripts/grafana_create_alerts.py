@@ -14,7 +14,7 @@ from functions.grafana.alerts import create_alert_rule
 # @author Kevin Le Saulnier <kevin.lesaulnier at rte-france.com>
 # @author Slimane Amar <slimane.amar at rte-france.com>
 #
-GRAFANA_ALERTS_DIR = 'resources/grafana/alerts/'
+GRAFANA_ALERTS_DIR = 'scripts/resources/grafana/alerts/'
 GRAFANA_LOGS_ALERTS_DIR = GRAFANA_ALERTS_DIR + 'logs'
 GRAFANA_METRICS_ALERTS_DIR = GRAFANA_ALERTS_DIR + 'metrics'
 

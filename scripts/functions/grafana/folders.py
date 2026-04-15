@@ -31,8 +31,9 @@ def __create_folder(json_data):
         print("Create folder : %s" % json_data['title'])
         result = requests.post(GRAFANA_FOLDERS_URL, json=json_data, headers=constant.GRAFANA_HEADERS, cookies=constant.GRAFANA_COOKIES)
         result.raise_for_status()
-        print("Folder successfully (re)created : %s" % json_data['title'])
-        return result.json()['uid']
+        folder_uid = result.json()['uid']
+        print("Folder successfully (re)created with uid : %s" % folder_uid)
+        return folder_uid
     except RequestException as e:
         if result.status_code == requests.codes.conflict:
             print("Folder already exist : %s" % json_data['title'])
