@@ -26,7 +26,7 @@ API_VERSION = "/v1"
 GRAFANA_API = "/api"
 
 # TODO add command parameter to set this DEV
-DEV = True
+DEV = False
 
 DEV_HOSTNAME = "172.17.0.1" # NOSONAR S1313 : this local IP is not excluded from this sonar issue
 
