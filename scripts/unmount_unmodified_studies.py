@@ -11,7 +11,7 @@ import constant
 from functions.studies.studies import unmount_study
 
 #
-# Invalidates node builds and delete initial variant network for all studies that have not been modified since a given duration.
+# Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration.
 #
 # Usage:
 #   python unmount_unmodified_studies.py <duration> [--dry-run] [--batch-size <n>]
