@@ -14,16 +14,16 @@ from functions.studies.studies import unmount_study
 # Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration.
 #
 # Usage:
-#   python unmount_unmodified_studies.py <duration> [--dry-run] [--batch-size <n>]
+#   python unmount_unmodified_studies.py <duration> [--dry-run] [--limit <n>]
 #
 # Arguments:
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
 #   --dry-run             Optional flag to only list affected studies without performing any invalidation
-#   --batch-size <n>      Optional maximum number of studies to process per execution
+#   --limit <n>      Optional maximum number of studies to process per execution
 #
 # Example:
-#   python unmount_unmodified_studies.py P365D
-#   python unmount_unmodified_studies.py P365D --batch-size 10 --dry-run
+#   python unmount_unmodified_studies.py P365D --dry-run
+#   python unmount_unmodified_studies.py P365D --limit 10 --dry-run
 #
 
 #
@@ -77,25 +77,25 @@ def unmount_unmodified_studies(duration, dry_run=False, batch_size=None):
 
 
 if len(sys.argv) < 2:
-    print("Usage: python unmount_unmodified_studies.py <duration> [--dry-run] [--batch-size <n>]")
-    print("Example: python unmount_unmodified_studies.py P365D --batch-size 10 --dry-run")
+    print("Usage: python unmount_unmodified_studies.py <duration> [--dry-run] [--limit <n>]")
+    print("Example: python unmount_unmodified_studies.py P365D --limit 10 --dry-run")
     sys.exit(1)
 
 duration_arg = sys.argv[1]
 dry_run_arg = "--dry-run" in sys.argv
 
 batch_size_arg = None
-if "--batch-size" in sys.argv:
-    batch_size_index = sys.argv.index("--batch-size")
+if "--limit" in sys.argv:
+    batch_size_index = sys.argv.index("--limit")
     if batch_size_index + 1 >= len(sys.argv):
-        print("Error: --batch-size requires a numeric value.")
+        print("Error: --limit requires a numeric value.")
         sys.exit(1)
     try:
         batch_size_arg = int(sys.argv[batch_size_index + 1])
         if batch_size_arg <= 0:
             raise ValueError
     except ValueError:
-        print("Error: --batch-size must be a positive integer.")
+        print("Error: --limit must be a positive integer.")
         sys.exit(1)
 
 unmount_unmodified_studies(duration_arg, dry_run=dry_run_arg, batch_size=batch_size_arg)
