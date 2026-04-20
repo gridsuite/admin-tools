@@ -78,6 +78,7 @@
   "for": "1m",
   "annotations": {
     "__dashboardUid__": "2087dc11-d4bc-442b-b456-20a10e11445b",
+    "__panelId__": "269",
     "description": "This alert check that there is at least one PostgreSQL standby server running.",
     "summary": "All postgresql standby instances are down."
   },
