@@ -49,7 +49,7 @@ def unmount_unmodified_studies(duration, dry_run=False, batch_size=None):
         print(f"Batch size limit applied: processing {batch_size} out of {len(studies)} studies.")
         studies = studies[:batch_size]
 
-    print(f"Studies to process:")
+    print("Selected studies:")
     for study in studies:
         print(f"  - {study['elementUuid']} | {study['elementName']} | last modified: {study['lastModificationDate']}")
 
