@@ -19,7 +19,7 @@ from functions.studies.studies import unmount_study
 # Arguments:
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
 #   --dry-run             Optional flag to only list affected studies without performing any invalidation
-#   --limit <n>      Optional maximum number of studies to process per execution
+#   --limit <n>      Optional maximum number of studies to process
 #
 # Example:
 #   python unmount_unmodified_studies.py P365D --dry-run
@@ -35,7 +35,7 @@ def get_unmodified_studies(duration):
     response.raise_for_status()
     return response.json()
 
-def unmount_unmodified_studies(duration, dry_run=False, batch_size=None):
+def unmount_unmodified_studies(duration, dry_run=False, limit=None):
     print(f"Fetching studies not modified since {duration}...")
     studies = get_unmodified_studies(duration)
 
@@ -45,9 +45,9 @@ def unmount_unmodified_studies(duration, dry_run=False, batch_size=None):
 
     print(f"Found {len(studies)} unmodified study/studies.")
 
-    if batch_size is not None and batch_size < len(studies):
-        print(f"Batch size limit applied: processing {batch_size} out of {len(studies)} studies.")
-        studies = studies[:batch_size]
+    if limit is not None and limit < len(studies):
+        print(f"Limit applied: processing {limit} out of {len(studies)} studies.")
+        studies = studies[:limit]
 
     print("Selected studies:")
     for study in studies:
@@ -76,7 +76,7 @@ def unmount_unmodified_studies(duration, dry_run=False, batch_size=None):
     print(f"\nDone. {success_count} succeeded, {failure_count} failed.")
 
 
-if len(sys.argv) < 2:
+if len(sys.argv) < 1:
     print("Usage: python unmount_unmodified_studies.py <duration> [--dry-run] [--limit <n>]")
     print("Example: python unmount_unmodified_studies.py P365D --limit 10 --dry-run")
     sys.exit(1)
@@ -84,18 +84,18 @@ if len(sys.argv) < 2:
 duration_arg = sys.argv[1]
 dry_run_arg = "--dry-run" in sys.argv
 
-batch_size_arg = None
+limit_arg = None
 if "--limit" in sys.argv:
-    batch_size_index = sys.argv.index("--limit")
-    if batch_size_index + 1 >= len(sys.argv):
+    limit_index = sys.argv.index("--limit")
+    if limit_index + 1 >= len(sys.argv):
         print("Error: --limit requires a numeric value.")
         sys.exit(1)
     try:
-        batch_size_arg = int(sys.argv[batch_size_index + 1])
-        if batch_size_arg <= 0:
+        limit_arg = int(sys.argv[limit_index + 1])
+        if limit_arg <= 0:
             raise ValueError
     except ValueError:
         print("Error: --limit must be a positive integer.")
         sys.exit(1)
 
-unmount_unmodified_studies(duration_arg, dry_run=dry_run_arg, batch_size=batch_size_arg)
+unmount_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg)
