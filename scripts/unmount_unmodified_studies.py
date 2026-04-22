@@ -9,6 +9,7 @@ import sys
 import requests
 import constant
 from functions.studies.studies import unmount_study
+from tqdm import tqdm
 
 #
 # Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration.
@@ -36,6 +37,9 @@ def get_unmodified_studies(duration):
     return response.json()
 
 def unmount_unmodified_studies(duration, dry_run=False, limit=None):
+    if constant.DEV:
+        print(f"\nDEV={str(constant.DEV)} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
+
     print(f"Fetching studies not modified since {duration}...")
     studies = get_unmodified_studies(duration)
 
@@ -57,26 +61,26 @@ def unmount_unmodified_studies(duration, dry_run=False, limit=None):
         print("\nDry run mode: no study will be unmounted.")
         return
 
-    if constant.DEV:
-        print(f"\nDEV={str(constant.DEV)} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
-
     print("\nUnmounting studies...")
     success_count = 0
     failure_count = 0
-    for study in studies:
-        study_uuid = study["elementUuid"]
-        result = unmount_study(study_uuid)
-        if result.status_code == 200:
-            print(f"  OK - {study_uuid}")
+    for study in tqdm(studies):
+        try:
+            study_uuid = study["elementUuid"]
+            result = unmount_study(study_uuid)
+            result.raise_for_status()
             success_count += 1
-        else:
-            print(f"  FAILED - {study_uuid} (status: {result.status_code})")
+        except Exception as e:
             failure_count += 1
+            tqdm.write(f"  FAILED - {study_uuid} (error: {str(e)})")
+            if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
+                tqdm.write("Response body: " + repr(e.response.text)) # repr for cheap escaping
+            tqdm.write("") # emtpy newline between errors for legibility
 
     print(f"\nDone. {success_count} succeeded, {failure_count} failed.")
 
 
-if len(sys.argv) < 1:
+if len(sys.argv) < 2:
     print("Usage: python unmount_unmodified_studies.py <duration> [--dry-run] [--limit <n>]")
     print("Example: python unmount_unmodified_studies.py P365D --limit 10 --dry-run")
     sys.exit(1)
