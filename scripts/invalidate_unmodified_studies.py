@@ -8,14 +8,14 @@
 import sys
 import requests
 import constant
-from functions.studies.studies import unmount_study
+from functions.studies.studies import invalidate_study
 from tqdm import tqdm
 
 #
 # Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration.
 #
 # Usage:
-#   python unmount_unmodified_studies.py <duration> [--dry-run] [--limit <n>]
+#   python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>]
 #
 # Arguments:
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
@@ -23,8 +23,8 @@ from tqdm import tqdm
 #   --limit <n>      Optional maximum number of studies to process
 #
 # Example:
-#   python unmount_unmodified_studies.py P365D --dry-run
-#   python unmount_unmodified_studies.py P365D --limit 10 --dry-run
+#   python invalidate_unmodified_studies.py P365D --dry-run
+#   python invalidate_unmodified_studies.py P365D --limit 10 --dry-run
 #
 
 #
@@ -36,7 +36,7 @@ def get_unmodified_studies(duration):
     response.raise_for_status()
     return response.json()
 
-def unmount_unmodified_studies(duration, dry_run=False, limit=None):
+def invalidate_unmodified_studies(duration, dry_run=False, limit=None):
     if constant.DEV:
         print(f"\nDEV={str(constant.DEV)} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 
@@ -58,7 +58,7 @@ def unmount_unmodified_studies(duration, dry_run=False, limit=None):
         print(f"  - {study['elementUuid']} | {study['elementName']} | last modified: {study['lastModificationDate']}")
 
     if dry_run:
-        print("\nDry run mode: no study will be unmounted.")
+        print("\nDry run mode: no study will be invalidated.")
         return
 
     print("\nUnmounting studies...")
@@ -67,7 +67,7 @@ def unmount_unmodified_studies(duration, dry_run=False, limit=None):
     for study in tqdm(studies):
         try:
             study_uuid = study["elementUuid"]
-            result = unmount_study(study_uuid)
+            result = invalidate_study(study_uuid)
             result.raise_for_status()
             success_count += 1
         except Exception as e:
@@ -81,8 +81,8 @@ def unmount_unmodified_studies(duration, dry_run=False, limit=None):
 
 
 if len(sys.argv) < 2:
-    print("Usage: python unmount_unmodified_studies.py <duration> [--dry-run] [--limit <n>]")
-    print("Example: python unmount_unmodified_studies.py P365D --limit 10 --dry-run")
+    print("Usage: python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>]")
+    print("Example: python invalidate_unmodified_studies.py P365D --limit 10 --dry-run")
     sys.exit(1)
 
 duration_arg = sys.argv[1]
@@ -102,4 +102,4 @@ if "--limit" in sys.argv:
         print("Error: --limit must be a positive integer.")
         sys.exit(1)
 
-unmount_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg)
+invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg)

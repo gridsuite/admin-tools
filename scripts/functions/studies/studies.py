@@ -37,6 +37,6 @@ def delete_indexed_equipments(networkUuid):
 def invalidate_nodes_builds(study_uuid):
     return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = study_uuid))
 
-def unmount_study(study_uuid):
-    return requests.delete(constant.UNMOUNT_STUDY.format(studyUuid = study_uuid))
+def invalidate_study(study_uuid):
+    return requests.delete(constant.INVALIDATE_STUDY.format(studyUuid = study_uuid))
     
