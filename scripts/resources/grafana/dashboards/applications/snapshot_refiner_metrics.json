@@ -51,7 +51,7 @@
           "refId": "A"
         }
       ],
-      "title": "State estimation orchestrator reports",
+      "title": "Snapshot refiner metrics",
       "type": "row"
     },
     {
@@ -142,7 +142,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": true,
-          "expr": "stateestimation_orchestrator_input_case_import_seconds_max",
+          "expr": "snapshot_refiner_network_load_seconds_max",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -160,7 +160,7 @@
           "visible": true
         }
       ],
-      "title": "Import input file in case-server",
+      "title": "Load network",
       "type": "timeseries"
     },
     {
@@ -251,7 +251,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": true,
-          "expr": "stateestimation_orchestrator_create_network_seconds_max",
+          "expr": "snapshot_refiner_stateestimation_run_seconds_max",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -269,7 +269,7 @@
           "visible": true
         }
       ],
-      "title": "Create network",
+      "title": "State estimation",
       "type": "timeseries"
     },
     {
@@ -360,7 +360,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": true,
-          "expr": "stateestimation_orchestrator_stateestimation_run_seconds_max",
+          "expr": "snapshot_refiner_loadflow_run_seconds_max",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -378,7 +378,7 @@
           "visible": true
         }
       ],
-      "title": "State estimation",
+      "title": "Loadflow",
       "type": "timeseries"
     },
     {
@@ -469,7 +469,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": true,
-          "expr": "stateestimation_orchestrator_loadflow_run_seconds_max",
+          "expr": "snapshot_refiner_network_modification_apply_seconds_max",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -487,7 +487,7 @@
           "visible": true
         }
       ],
-      "title": "Loadflow",
+      "title": "Network modification apply",
       "type": "timeseries"
     },
     {
@@ -578,225 +578,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": true,
-          "expr": "stateestimation_orchestrator_network_export_seconds_max",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "interval": "",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 0,
-          "visible": true
-        }
-      ],
-      "title": "Export network to output file",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 8
-      },
-      "id": 7,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": true,
-          "expr": "stateestimation_orchestrator_output_case_import_seconds_max",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "interval": "",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 0,
-          "visible": true
-        }
-      ],
-      "title": "Store output file in case-server",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
-        "y": 16
-      },
-      "id": 8,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": true,
-          "expr": "(stateestimation_orchestrator_total_time_seconds_max + stateestimation_orchestrator_input_case_import_seconds_max)",
+          "expr": "snapshot_refiner_total_time_seconds_max",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -845,8 +627,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "State estimation orchestrator",
-  "uid": "b7014f1e-2445-94b5-9bca-d4e55b981289",
-  "version": 2,
+  "title": "Snapshot refiner",
+  "uid": "a9f23c4d-1b56-47e8-8dc1-e3f66a092345",
+  "version": 1,
   "weekStart": ""
 }
