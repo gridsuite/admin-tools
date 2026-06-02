@@ -22,17 +22,54 @@ from tqdm import tqdm
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
 #   --dry-run             Optional flag to only list affected studies without performing any invalidation
 #   --limit <n>           Optional maximum number of studies to process
-#   --delay <seconds>     Optional delay in seconds between each study invalidation request (e.g. 1, 2, 60, 120)
+#   --delay <seconds>     Optional delay in seconds between each study invalidation request (e.g. 0.5, 1, 2)
 #
 # Example:
 #   python invalidate_unmodified_studies.py P365D --dry-run
 #   python invalidate_unmodified_studies.py P365D --limit 10 --dry-run
-#   python invalidate_unmodified_studies.py P365D --limit 10 --delay 2
+#   python invalidate_unmodified_studies.py P365D --limit 10 --delay 1.5
 #
 
 #
 # @author Hugo Marcellin <hugo.marcellin_externe at rte-france.com>
 #
+
+if len(sys.argv) < 2:
+    print("Usage: python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]")
+    print("Example: python invalidate_unmodified_studies.py P365D --limit 10 --delay 1.5 --dry-run")
+    sys.exit(1)
+
+duration_arg = sys.argv[1]
+dry_run_arg = "--dry-run" in sys.argv
+
+limit_arg = None
+if "--limit" in sys.argv:
+    limit_index = sys.argv.index("--limit")
+    if limit_index + 1 >= len(sys.argv):
+        print("Error: --limit requires a numeric value.")
+        sys.exit(1)
+    try:
+        limit_arg = int(sys.argv[limit_index + 1])
+        if limit_arg <= 0:
+            raise ValueError
+    except ValueError:
+        print("Error: --limit must be a positive integer.")
+        sys.exit(1)
+
+delay_arg = None
+if "--delay" in sys.argv:
+    delay_index = sys.argv.index("--delay")
+    if delay_index + 1 >= len(sys.argv):
+        print("Error: --delay requires a numeric value.")
+        sys.exit(1)
+    try:
+        delay_arg = float(sys.argv[delay_index + 1])
+        if delay_arg < 0:
+            raise ValueError
+    except ValueError:
+        print("Error: --delay must be a non-negative number.")
+        sys.exit(1)
+
 
 def get_unmodified_studies(duration):
     response = requests.get(constant.GET_UNMODIFIED_DIRECTORY_ELEMENTS, params={"elementType": "STUDY", "duration": duration})
@@ -70,9 +107,7 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
     print("\nUnmounting studies...")
     success_count = 0
     failure_count = 0
-    for i, study in enumerate(tqdm(studies)):
-        if delay is not None and i > 0:
-            time.sleep(delay)
+    for study in tqdm(studies):
         try:
             study_uuid = study["elementUuid"]
             result = invalidate_study(study_uuid)
@@ -84,44 +119,10 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
             if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
                 tqdm.write("Response body: " + repr(e.response.text)) # repr for cheap escaping
             tqdm.write("") # empty newline between errors for legibility
+        finally:
+            if delay is not None:
+                time.sleep(delay)
 
     print(f"\nDone. {success_count} succeeded, {failure_count} failed.")
-
-
-if len(sys.argv) < 2:
-    print("Usage: python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]")
-    print("Example: python invalidate_unmodified_studies.py P365D --limit 10 --delay 2 --dry-run")
-    sys.exit(1)
-
-duration_arg = sys.argv[1]
-dry_run_arg = "--dry-run" in sys.argv
-
-limit_arg = None
-if "--limit" in sys.argv:
-    limit_index = sys.argv.index("--limit")
-    if limit_index + 1 >= len(sys.argv):
-        print("Error: --limit requires a numeric value.")
-        sys.exit(1)
-    try:
-        limit_arg = int(sys.argv[limit_index + 1])
-        if limit_arg <= 0:
-            raise ValueError
-    except ValueError:
-        print("Error: --limit must be a positive integer.")
-        sys.exit(1)
-
-delay_arg = None
-if "--delay" in sys.argv:
-    delay_index = sys.argv.index("--delay")
-    if delay_index + 1 >= len(sys.argv):
-        print("Error: --delay requires a numeric value.")
-        sys.exit(1)
-    try:
-        delay_arg = float(sys.argv[delay_index + 1])
-        if delay_arg < 0:
-            raise ValueError
-    except ValueError:
-        print("Error: --delay must be a non-negative number.")
-        sys.exit(1)
 
 invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg, delay=delay_arg)
