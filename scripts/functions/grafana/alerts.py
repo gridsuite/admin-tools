@@ -27,6 +27,7 @@ EVALUATION_GROUP_INTERVALS_IN_SECONDS = {'alert_eval_group_10s': 10, 'alert_eval
 
 
 def create_alert_rule(alert_rule_json_path, parent_folder_uid, datasource_uid, overwrite=False):
+    print("Importing alert rule " + alert_rule_json_path)
     file_content = Path(alert_rule_json_path).read_text()
     file_content = file_content.replace(FOLDER_UID_PLACEHOLDER, parent_folder_uid)
     file_content = file_content.replace(DATASOURCE_UID_PLACEHOLDER, datasource_uid)
@@ -36,7 +37,6 @@ def create_alert_rule(alert_rule_json_path, parent_folder_uid, datasource_uid, o
     __create_alert_rule(parent_folder_uid, alert_rule_json_path, alert_rule_json)
 
 def __create_alert_rule(parent_folder_uid, alert_rule_json_path, alert_rule_json):
-    print("Importing alert rule " + alert_rule_json_path)
     result = None
     try:
         rule_group_id = alert_rule_json["ruleGroup"]
