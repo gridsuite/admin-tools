@@ -6,6 +6,7 @@
 #
 
 import sys
+import time
 import requests
 import constant
 from functions.studies.studies import invalidate_study
@@ -15,16 +16,18 @@ from tqdm import tqdm
 # Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration.
 #
 # Usage:
-#   python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>]
+#   python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]
 #
 # Arguments:
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
 #   --dry-run             Optional flag to only list affected studies without performing any invalidation
-#   --limit <n>      Optional maximum number of studies to process
+#   --limit <n>           Optional maximum number of studies to process
+#   --delay <seconds>     Optional delay in seconds between each study invalidation request (e.g. 1, 2, 60, 120)
 #
 # Example:
 #   python invalidate_unmodified_studies.py P365D --dry-run
 #   python invalidate_unmodified_studies.py P365D --limit 10 --dry-run
+#   python invalidate_unmodified_studies.py P365D --limit 10 --delay 2
 #
 
 #
@@ -36,7 +39,7 @@ def get_unmodified_studies(duration):
     response.raise_for_status()
     return response.json()
 
-def invalidate_unmodified_studies(duration, dry_run=False, limit=None):
+def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=None):
     if constant.DEV:
         print(f"\nDEV={str(constant.DEV)} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 
@@ -61,10 +64,15 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None):
         print("\nDry run mode: no study will be invalidated.")
         return
 
+    if delay is not None:
+        print(f"\nDelay between requests: {delay}s")
+
     print("\nUnmounting studies...")
     success_count = 0
     failure_count = 0
-    for study in tqdm(studies):
+    for i, study in enumerate(tqdm(studies)):
+        if delay is not None and i > 0:
+            time.sleep(delay)
         try:
             study_uuid = study["elementUuid"]
             result = invalidate_study(study_uuid)
@@ -75,14 +83,14 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None):
             tqdm.write(f"  FAILED - {study_uuid} (error: {str(e)})")
             if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
                 tqdm.write("Response body: " + repr(e.response.text)) # repr for cheap escaping
-            tqdm.write("") # emtpy newline between errors for legibility
+            tqdm.write("") # empty newline between errors for legibility
 
     print(f"\nDone. {success_count} succeeded, {failure_count} failed.")
 
 
 if len(sys.argv) < 2:
-    print("Usage: python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>]")
-    print("Example: python invalidate_unmodified_studies.py P365D --limit 10 --dry-run")
+    print("Usage: python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]")
+    print("Example: python invalidate_unmodified_studies.py P365D --limit 10 --delay 2 --dry-run")
     sys.exit(1)
 
 duration_arg = sys.argv[1]
@@ -102,4 +110,18 @@ if "--limit" in sys.argv:
         print("Error: --limit must be a positive integer.")
         sys.exit(1)
 
-invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg)
+delay_arg = None
+if "--delay" in sys.argv:
+    delay_index = sys.argv.index("--delay")
+    if delay_index + 1 >= len(sys.argv):
+        print("Error: --delay requires a numeric value.")
+        sys.exit(1)
+    try:
+        delay_arg = float(sys.argv[delay_index + 1])
+        if delay_arg < 0:
+            raise ValueError
+    except ValueError:
+        print("Error: --delay must be a non-negative number.")
+        sys.exit(1)
+
+invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg, delay=delay_arg)
