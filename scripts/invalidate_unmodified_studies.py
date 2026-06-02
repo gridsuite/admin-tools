@@ -22,12 +22,12 @@ from tqdm import tqdm
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
 #   --dry-run             Optional flag to only list affected studies without performing any invalidation
 #   --limit <n>           Optional maximum number of studies to process
-#   --delay <seconds>     Optional delay in seconds between each study invalidation request (e.g. 0.5, 1, 2)
+#   --delay <seconds>     Optional delay in seconds between each study invalidation request (e.g. 1, 2, 60, 120)
 #
 # Example:
 #   python invalidate_unmodified_studies.py P365D --dry-run
 #   python invalidate_unmodified_studies.py P365D --limit 10 --dry-run
-#   python invalidate_unmodified_studies.py P365D --limit 10 --delay 1.5
+#   python invalidate_unmodified_studies.py P365D --limit 10 --delay 2
 #
 
 #
