@@ -19,7 +19,7 @@
           "uid": "{{DATASOURCE_UID}}"
         },
         "editorMode": "code",
-	"expr": "sum by(pod)(count_over_time({app=\"gridsuite\", pod!~\"apps-metadata-server-.*\", pod=~\".*-server-.*\"}| regexp `^(?P<outer_ts>[^ ]+) (?P<stream>[^ ]+) (P|F) (?P<timestamp>[^ ]+)\\s+(?P<level>WARN|DEBUG|INFO|ERROR|TRACE) (?P<pid>\\d+)\\s+---\\s+\\[(?P<server_name>[^\\]]+)\\]\\s+\\[(?P<thread>[^\\]]+)\\]\\s+\\[(?P<trace_id>[^\\]]+)\\]\\s+(?P<class>[^ ]+)\\s+:(?<message>\\s+.*$)` | level= `ERROR` [5m]))",
+	"expr": "sum by(pod)(count_over_time({app=\"gridsuite\", pod!~\"apps-metadata-server-.*\", pod=~\".*-server-.*\"}| regexp `^(?P<outer_ts>[^ ]+) (?P<stream>[^ ]+) (P|F) (?P<timestamp>[^ ]+)\\s+(?P<level>WARN|DEBUG|INFO|ERROR|TRACE) (?P<pid>\\d+)\\s+---\\s+\\[(?P<server_name>[^\\]]+)\\]\\s+\\[(?P<thread>[^\\]]+)\\]\\s+\\[(?P<trace_id>[^\\]]+)\\]\\s+(?P<logger>[^ ]+)\\s+:(?<message>\\s+.*$)` | level= `ERROR` [5m]))",
         "instant": false,
         "interval": "",
         "intervalMs": 15000,
