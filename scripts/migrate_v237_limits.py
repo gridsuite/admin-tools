@@ -55,7 +55,7 @@ networks = get_all_networks_uuid()
 print("For a total of " + str(len(networks)) + " networks")
 print("---------------------------------------------------------")
 
-print("V2.11 limits migration (dry-run=" + str(dry_run) + ") in processing...")
+print("V2.37 limits migration (dry-run=" + str(dry_run) + ") in processing...")
 failCount = 0
 successCount = 0
 for network in tqdm(networks):
