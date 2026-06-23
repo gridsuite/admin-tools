@@ -26,7 +26,7 @@ API_VERSION = "/v1"
 GRAFANA_API = "/api"
 
 # TODO add command parameter to set this DEV
-DEV = False
+DEV = True
 
 DEV_HOSTNAME = "172.17.0.1" # NOSONAR S1313 : this local IP is not excluded from this sonar issue
 
@@ -160,6 +160,7 @@ GET_MODIFICATIONS_INDEX_NAME = MODIFICATION_SERVER_URL + "/supervision/network-m
 RECREATE_MODIFICATIONS_INDEX = MODIFICATION_SERVER_URL + "/supervision/network-modifications/index"
 REINDEX_MODIFICATIONS = MODIFICATION_SERVER_URL + "/supervision/network-modifications/reindex?networkUuid={networkUuid}"
 GET_MODIFICATIONS_NETWORK_UUIDS = MODIFICATION_SERVER_URL + "/supervision/network-modifications/network-uuids"
+PUT_COMPOSITES = MODIFICATION_SERVER_URL + "/network-composite-modifications/{uuid}"
 
 # CASES
 GET_ALL_CASES = CASE_SERVER_URL + "/supervision/cases"
