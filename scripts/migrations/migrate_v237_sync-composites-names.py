@@ -12,7 +12,7 @@ directory_composites_response = requests.get(
 if 200 == directory_composites_response.status_code:
     print("Success")
 else:
-    print("Failed : {directory_composites_response.status_code} - {directory_composites_response.reason}")
+    print(f"Failed : {directory_composites_response.status_code} - {directory_composites_response.reason}")
     directory_composites_response.raise_for_status()
 
 directory_composites_response_json = directory_composites_response.json()
@@ -30,4 +30,4 @@ for uuid, name in directory_composites_pairs:
     if 200 == response.status_code:
         print("Success")
     else:
-        print("Failed : {response.status_code} - {response.reason}")
+        print(f"Failed : {response.status_code} - {response.reason}")
