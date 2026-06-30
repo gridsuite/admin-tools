@@ -7,6 +7,7 @@
 
 import argparse
 import os
+import constant
 
 from functions.grafana.alerts import create_alert_rule
 
@@ -15,9 +16,9 @@ from functions.grafana.alerts import create_alert_rule
 # @author Slimane Amar <slimane.amar at rte-france.com>
 #
 
-if constant.DEV
+if constant.DEV:
     GRAFANA_ALERTS_DIR = 'scripts/resources/grafana/alerts/'
-else
+else:
     GRAFANA_ALERTS_DIR = 'resources/grafana/alerts/'
 
 GRAFANA_LOGS_ALERTS_DIR = GRAFANA_ALERTS_DIR + 'logs'

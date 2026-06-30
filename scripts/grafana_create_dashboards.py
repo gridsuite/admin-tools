@@ -16,9 +16,9 @@ from functions.grafana.folders import reset_folder, create_folder
 # @author Slimane Amar <slimane.amar at rte-france.com>
 #
 
-if constant.DEV
+if constant.DEV:
     GRAFANA_DASHBOARDS_DIR = 'scripts/resources/grafana/dashboards'
-else
+else:
     GRAFANA_DASHBOARDS_DIR = 'resources/grafana/dashboards'
 
 parser = argparse.ArgumentParser(description='Send requests to the grafana to create or update dashboards into one folder')
