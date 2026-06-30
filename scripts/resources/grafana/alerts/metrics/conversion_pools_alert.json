@@ -19,7 +19,7 @@
                     "uid": "{{DATASOURCE_UID}}"
                 },
                 "editorMode": "code",
-                "expr": "app_conversion_tasks_pool_pending",
+                "expr": "sum(app_conversion_tasks_pool_pending)",
                 "instant": false,
                 "interval": "",
                 "intervalMs": 15000,
@@ -121,7 +121,7 @@
     "annotations": {
         "__dashboardUid__": "e2110356-ad2f-4ab4-939b-8a3e2f312453",
         "__panelId__": "5",
-        "description": "The rule checks that the network conversion in-memory task pool has no requests waiting (pending) for at least 5 minutes.",
+        "description": "The rule checks if the network conversion in-memory task pool has requests waiting (pending) for at least 5 minutes.",
         "summary": "If this alert is triggered, requests have been pending in the network conversion pool for more than 5 minutes\n- the pool is saturated: tasks arrive faster than they are processed\n- low dimensioning or a slow/stuck worker holding the pool\nIt leads to longer response time for users"
     },
     "isPaused": false,
