@@ -1,5 +1,8 @@
 import argparse
+import sys
 import requests
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import constant
 
 parser = argparse.ArgumentParser(description='Takes the name of the composites elements in directory server and apply it to them in netmod-server', )
