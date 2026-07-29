@@ -4,34 +4,28 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
-
+import os
 import requests
 import constant
 import socket
-from simplejson import JSONDecodeError
-from simplejson import dumps
+
+from requests.auth import HTTPBasicAuth
+from ..utils import prettyprint
+
 
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
-def prettyprint(result):
-    try:
-        # TODO this might not be a json format
-        pretty = dumps(result.json(), indent=2)
-        print(pretty)
-    except JSONDecodeError as jsonE:
-        print('Response could not be JSON serialized')
-        print(result.text) # try to print text if not JSON serialized
-
 def get_elasticsearch_host(serverHostName):
     # TODO use credentials because some server could have
     # we override host value in DEV otherwise services return 'elasticsearch:9200' as hostname
     try:
-        if constant.DEV :
-            return constant.DEV_ELASTICSEARCH_IP, constant.DEV_ELASTICSEARCH_URL 
+        if constant.DEV:
+            return constant.DEV_ELASTICSEARCH_IP, constant.DEV_ELASTICSEARCH_URL
         else:
-            elasticsearch_host = requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName = serverHostName)).text
+            elasticsearch_host = requests.get(constant.GET_ELASTICSEARCH_HOST.format(serverHostName=serverHostName),
+                                              auth=__get_authentification()).text
             # TODO don't parse here, instead have the server return structured information
             elasticsearch_ip = socket.gethostbyname(elasticsearch_host.split(':')[0])
             # TODO we force http but should get this protocol from the server, some servers are not exposed on http but only https for example
@@ -41,10 +35,20 @@ def get_elasticsearch_host(serverHostName):
         print(e)
         return ""
 
+
+def __get_authentification():
+    try:
+        login = os.environ['ELASTICSEARCH_LOGIN']
+        password = os.environ['ELASTICSEARCH_PASSWORD']
+    except KeyError:
+        return None
+    return HTTPBasicAuth(login, password)
+
+
 def check_status_elasticsearch(url):
     try:
-        result = requests.get(url + '/')
-        if not result.ok :
+        result = requests.get(url + '/', auth=__get_authentification())
+        if not result.ok:
             print("An error occured : ")
             prettyprint(result)
             return False
@@ -59,11 +63,12 @@ def check_status_elasticsearch(url):
         print(e)
         return False
 
+
 def request_elasticsearch(method, url):
     try:
         print(method + " " + url)
-        result = requests.request(method, url)
-        if not result.ok :
+        result = requests.request(method, url, auth=__get_authentification())
+        if not result.ok:
             print("An error occured : ")
             prettyprint(result)
             return False
@@ -75,6 +80,9 @@ def request_elasticsearch(method, url):
         print(e)
         return False
 
+
 def expunge_deletes(elasticsearchHost, indexName):
-    print("ES Force merge : " + constant.ES_FORCE_MERGE.format(elasticsearchHost = elasticsearchHost, indexName = indexName) + "?only_expunge_deletes=true")
-    result = requests.post(url = constant.ES_FORCE_MERGE.format(elasticsearchHost = elasticsearchHost, indexName = indexName), params={'only_expunge_deletes': 'true'})
+    print("ES Force merge : " + constant.ES_FORCE_MERGE.format(elasticsearchHost=elasticsearchHost,
+                                                               indexName=indexName) + "?only_expunge_deletes=true")
+    requests.post(url=constant.ES_FORCE_MERGE.format(elasticsearchHost=elasticsearchHost, indexName=indexName),
+                  params={'only_expunge_deletes': 'true'}, auth=__get_authentification())

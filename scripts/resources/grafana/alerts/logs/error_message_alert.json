@@ -1,0 +1,132 @@
+{
+  "uid": "99f9d0f9-ec17-4136-9db2-f0ef65a5f0bc",
+  "ruleGroup": "alert_eval_group_5m",
+  "folderUID": "{{FOLDER_UID}}",
+  "title": "Error logs",
+  "condition": "C",
+  "data": [
+    {
+      "refId": "A",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 1800,
+        "to": 0
+      },
+      "datasourceUid": "{{DATASOURCE_UID}}",
+      "model": {
+        "datasource": {
+          "type": "loki",
+          "uid": "{{DATASOURCE_UID}}"
+        },
+        "editorMode": "code",
+	"expr": "sum by(pod)(count_over_time({app=\"gridsuite\", pod!~\"apps-metadata-server-.*\", pod=~\".*-server-.*\"}| regexp `^(?P<outer_ts>[^ ]+) (?P<stream>[^ ]+) (P|F) (?P<timestamp>[^ ]+)\\s+(?P<level>WARN|DEBUG|INFO|ERROR|TRACE) (?P<pid>\\d+)\\s+---\\s+\\[(?P<server_name>[^\\]]+)\\]\\s+\\[(?P<thread>[^\\]]+)\\]\\s+\\[(?P<trace_id>[^\\]]+)\\]\\s+(?P<logger>[^ ]+)\\s+:(?<message>\\s+.*$)` | level= `ERROR` [5m]))",
+        "instant": false,
+        "interval": "",
+        "intervalMs": 15000,
+        "legendFormat": "{{pod}}",
+        "maxDataPoints": 43200,
+        "range": true,
+        "refId": "A"
+      }
+    },
+    {
+      "refId": "B",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 1800,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "B"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "A",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "reducer": "last",
+        "refId": "B",
+        "type": "reduce"
+      }
+    },
+    {
+      "refId": "C",
+      "queryType": "",
+      "relativeTimeRange": {
+        "from": 1800,
+        "to": 0
+      },
+      "datasourceUid": "__expr__",
+      "model": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "C"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "datasource": {
+          "type": "__expr__",
+          "uid": "__expr__"
+        },
+        "expression": "B",
+        "intervalMs": 1000,
+        "maxDataPoints": 43200,
+        "refId": "C",
+        "type": "threshold"
+      }
+    }
+  ],
+  "noDataState": "NoData",
+  "execErrState": "Error",
+  "annotations": {
+    "__dashboardUid__": "b98e62e3-2421-43ae-adfc-bbe66bd82f16",
+    "__panelId__": "1",
+    "summary": "Triggered when an error log is present"
+  },
+  "isPaused": false,
+  "labels": {
+    "severity": "warning"
+  },
+  "notification_settings": {
+    "receiver": "grafana-default-email"
+  }
+}

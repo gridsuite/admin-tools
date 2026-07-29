@@ -1,0 +1,20 @@
+name: Patch
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: version to patch (vX.X)
+        required: true
+
+jobs:
+  run-patch:
+    uses: powsybl/github-ci/.github/workflows/patch-base-docker-image-generic.yml@0d8ae1ddb3c03d77626232819c7026db6c5f2699
+    with:
+      githubappId: ${{ vars.GRIDSUITE_ACTIONS_APPID }}
+      dockerImage: gridsuite/admin-tools
+      dockerUsername: gridsuiteci
+      releaseVersion: ${{ github.event.inputs.releaseVersion }}
+    secrets:
+      VERSIONBUMP_GHAPP_PRIVATE_KEY: ${{ secrets.VERSIONBUMP_GHAPP_PRIVATE_KEY }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

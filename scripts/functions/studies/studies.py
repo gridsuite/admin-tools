@@ -13,7 +13,7 @@ import constant
 
 
 def get_all_studies_uuid():
-    return requests.get(constant.GET_STUDIES).json()
+    return requests.get(constant.GET_SUPERVISION_STUDIES).json()
 
 def get_all_orphan_indexed_equipments_network_uuids():
     return requests.get(constant.GET_ALL_ORPHAN_INDEXED_EQUIPMENTS_NETWORK_UUIDS).json()
@@ -34,6 +34,9 @@ def delete_indexed_equipments(networkUuid):
         print(f"Exception occurred while deleting indexed equipments for network UUID: {networkUuid}. Exception: {e}")
         return False
 
-def invalidate_nodes_builds(studyUuid):
-    return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = studyUuid))
+def invalidate_nodes_builds(study_uuid):
+    return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = study_uuid))
+
+def invalidate_study(study_uuid):
+    return requests.delete(constant.INVALIDATE_STUDY.format(studyUuid = study_uuid))
     
