@@ -9,11 +9,12 @@ import sys
 import time
 import requests
 import constant
-from functions.studies.studies import invalidate_study
+from functions.studies.studies import get_loaded_studies_uuids, invalidate_study
 from tqdm import tqdm
 
 #
-# Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration.
+# Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration
+# and whose network is still loaded.
 #
 # Usage:
 #   python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]
@@ -76,6 +77,10 @@ def get_unmodified_studies(duration):
     response.raise_for_status()
     return response.json()
 
+def filter_loaded_studies(studies):
+    loaded_uuids = set(get_loaded_studies_uuids([study['elementUuid'] for study in studies]))
+    return [study for study in studies if study['elementUuid'] in loaded_uuids]
+
 def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=None):
     if constant.DEV:
         print(f"\nDEV={str(constant.DEV)} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
@@ -88,6 +93,12 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
         return
 
     print(f"Found {len(studies)} unmodified study/studies.")
+
+    studies = filter_loaded_studies(studies)
+    print(f"Among them, {len(studies)} are still loaded and are candidates for invalidation.")
+
+    if not studies:
+        return
 
     if limit is not None and limit < len(studies):
         print(f"Limit applied: processing {limit} out of {len(studies)} studies.")

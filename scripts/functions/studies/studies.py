@@ -37,6 +37,16 @@ def delete_indexed_equipments(networkUuid):
 def invalidate_nodes_builds(study_uuid):
     return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = study_uuid))
 
+def get_unmodified_studies_uuids(duration):
+    elements = requests.get(constant.GET_UNMODIFIED_DIRECTORY_ELEMENTS,
+                             params = {"elementType": constant.STUDY_ELEMENT_TYPE, "duration": duration}).json()
+    return [element['elementUuid'] for element in elements]
+
+def get_loaded_studies_uuids(study_uuids):
+    if not study_uuids:
+        return []
+    return requests.get(constant.GET_SUPERVISION_LOADED_STUDIES, params = {"ids": study_uuids}).json()
+
 def invalidate_study(study_uuid):
     return requests.delete(constant.INVALIDATE_STUDY.format(studyUuid = study_uuid))
-    
+
