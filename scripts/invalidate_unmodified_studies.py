@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 #
 # Invalidates built nodes and delete initial variant network for all studies that have not been modified since a given duration
-# and whose network is still loaded.
+# and whose at least one root network is still loaded.
 #
 # Usage:
 #   python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]
