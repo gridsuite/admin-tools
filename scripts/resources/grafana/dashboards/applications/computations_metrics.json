@@ -1235,6 +1235,12 @@
           },
           {
             "selected": false,
+            "text": "stateestimation",
+            "value": "stateestimation"
+          },
+
+          {
+            "selected": false,
             "text": "ds",
             "value": "ds"
           },
@@ -1249,7 +1255,7 @@
             "value": "voltageinit"
           }
         ],
-        "query": "loadflow, sa, sensitivityanalysis, ds, shortcircuitanalysis, voltageinit",
+        "query": "loadflow, sa, sensitivityanalysis, stateestimation, ds, shortcircuitanalysis, voltageinit",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
