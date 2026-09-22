@@ -115,12 +115,14 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
     if delay is not None:
         print(f"\nDelay between requests: {delay}s")
 
-    print("\nUnmounting studies...")
+    print("\nInvalidating studies...")
     success_count = 0
     failure_count = 0
+    total_elapsed = 0.0
     for study in tqdm(studies):
         try:
             study_uuid = study["elementUuid"]
+            start = time.time()
             result = invalidate_study(study_uuid)
             result.raise_for_status()
             success_count += 1
@@ -131,9 +133,12 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
                 tqdm.write("Response body: " + repr(e.response.text)) # repr for cheap escaping
             tqdm.write("") # empty newline between errors for legibility
         finally:
+            elapsed = time.time() - start
+            total_elapsed += elapsed
+            tqdm.write(f"  {study_uuid} - {elapsed:.2f}s")
             if delay is not None:
                 time.sleep(delay)
 
-    print(f"\nDone. {success_count} succeeded, {failure_count} failed.")
+    print(f"\nDone. {success_count} succeeded, {failure_count} failed. Total invalidation time: {total_elapsed:.2f}s (avg {total_elapsed / len(studies):.2f}s/study)")
 
 invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg, delay=delay_arg)
