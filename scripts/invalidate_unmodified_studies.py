@@ -139,6 +139,7 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
             if delay is not None:
                 time.sleep(delay)
 
-    print(f"\nDone. {success_count} succeeded, {failure_count} failed. Total invalidation time: {total_elapsed:.2f}s (avg {total_elapsed / len(studies):.2f}s/study)")
+    delay_note = " (excludes --delay pauses)" if delay is not None else ""
+    print(f"\nDone. {success_count} succeeded, {failure_count} failed. Total invalidation time: {total_elapsed:.2f}s (avg {total_elapsed / len(studies):.2f}s/study){delay_note}")
 
 invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg, delay=delay_arg)
