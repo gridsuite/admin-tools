@@ -5,4 +5,4 @@ USER powsybl
 WORKDIR /home/powsybl
 COPY scripts/ ./
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install --only-binary :all: --require-hashes -r requirements.txt
