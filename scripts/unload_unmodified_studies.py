@@ -9,7 +9,7 @@ import sys
 import time
 import requests
 import constant
-from functions.studies.studies import get_loaded_studies_uuids, invalidate_study
+from functions.studies.studies import get_loaded_studies_uuids, unload_study
 from tqdm import tqdm
 
 #
@@ -17,7 +17,7 @@ from tqdm import tqdm
 # and whose at least one root network is still loaded.
 #
 # Usage:
-#   python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]
+#   python unload_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]
 #
 # Arguments:
 #   duration              ISO 8601 duration (e.g. P365D for 1 year, P30D for 30 days, PT24H for 24 hours)
@@ -26,9 +26,9 @@ from tqdm import tqdm
 #   --delay <seconds>     Optional delay in seconds between each study invalidation request (e.g. 1, 2, 60, 120)
 #
 # Example:
-#   python invalidate_unmodified_studies.py P365D --dry-run
-#   python invalidate_unmodified_studies.py P365D --limit 10 --dry-run
-#   python invalidate_unmodified_studies.py P365D --limit 10 --delay 2
+#   python unload_unmodified_studies.py P365D --dry-run
+#   python unload_unmodified_studies.py P365D --limit 10 --dry-run
+#   python unload_unmodified_studies.py P365D --limit 10 --delay 2
 #
 
 #
@@ -36,8 +36,8 @@ from tqdm import tqdm
 #
 
 if len(sys.argv) < 2:
-    print("Usage: python invalidate_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]")
-    print("Example: python invalidate_unmodified_studies.py P365D --limit 10 --delay 1.5 --dry-run")
+    print("Usage: python unload_unmodified_studies.py <duration> [--dry-run] [--limit <n>] [--delay <seconds>]")
+    print("Example: python unload_unmodified_studies.py P365D --limit 10 --delay 1.5 --dry-run")
     sys.exit(1)
 
 duration_arg = sys.argv[1]
@@ -81,7 +81,7 @@ def filter_loaded_studies(studies):
     loaded_uuids = set(get_loaded_studies_uuids([study['elementUuid'] for study in studies]))
     return [study for study in studies if study['elementUuid'] in loaded_uuids]
 
-def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=None):
+def unload_unmodified_studies(duration, dry_run=False, limit=None, delay=None):
     if constant.DEV:
         print(f"\nDEV={str(constant.DEV)} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 
@@ -109,7 +109,7 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
         print(f"  - {study['elementUuid']} | {study['elementName']} | last modified: {study['lastModificationDate']}")
 
     if dry_run:
-        print("\nDry run mode: no study will be invalidated.")
+        print("\nDry run mode: no study will be unloaded.")
         return
 
     if delay is not None:
@@ -123,7 +123,7 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
         try:
             study_uuid = study["elementUuid"]
             start = time.time()
-            result = invalidate_study(study_uuid)
+            result = unload_study(study_uuid)
             result.raise_for_status()
             success_count += 1
         except Exception as e:
@@ -142,4 +142,4 @@ def invalidate_unmodified_studies(duration, dry_run=False, limit=None, delay=Non
     delay_note = " (excludes --delay pauses)" if delay is not None else ""
     print(f"\nDone. {success_count} succeeded, {failure_count} failed. Total unload time: {total_elapsed:.2f}s (avg {total_elapsed / len(studies):.2f}s/study){delay_note}")
 
-invalidate_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg, delay=delay_arg)
+unload_unmodified_studies(duration_arg, dry_run=dry_run_arg, limit=limit_arg, delay=delay_arg)
