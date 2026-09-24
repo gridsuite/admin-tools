@@ -43,5 +43,5 @@ def get_loaded_studies_uuids(study_uuids):
     return requests.get(constant.GET_SUPERVISION_LOADED_STUDIES, params = {"ids": study_uuids}).json()
 
 def unload_study(study_uuid):
-    return requests.delete(constant.INVALIDATE_STUDY.format(studyUuid = study_uuid))
+    return requests.delete(constant.UNLOAD_STUDY.format(studyUuid = study_uuid))
 
