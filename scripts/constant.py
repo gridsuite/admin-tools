@@ -31,27 +31,27 @@ DEV = False
 DEV_HOSTNAME = "172.17.0.1" # NOSONAR S1313 : this local IP is not excluded from this sonar issue
 
 # hostnames
-GRIDEXPLORE_HOSTNAME = DEV_HOSTNAME + ":80" if DEV else "gridexplore-app"
-STUDY_SERVER_HOSTNAME = DEV_HOSTNAME + ":5001" if DEV else "study-server"
+GRIDEXPLORE_HOSTNAME = DEV_HOSTNAME + ":80" if DEV else "gridexplore-app" # NOSONAR : DEV is manually toggled for local development
+STUDY_SERVER_HOSTNAME = DEV_HOSTNAME + ":5001" if DEV else "study-server" # NOSONAR : DEV is manually toggled for local development
 
-NETWORK_STORE_SERVER_HOSTNAME = DEV_HOSTNAME + ":8080" if DEV else "network-store-server"
-DIRECTORY_SERVER_HOSTNAME = DEV_HOSTNAME + ":5026" if DEV else "directory-server"
-DYNAMIC_MAPPING_SERVER_HOSTNAME = DEV_HOSTNAME + ":5036" if DEV else "dynamic-mapping-server"
-ACTIONS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5022" if DEV else "actions-server"
-FILTER_SERVER_HOSTNAME = DEV_HOSTNAME + ":5027" if DEV else "filter-server"
-EXPLORE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5029" if DEV else "explore-server"
-CASE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5000" if DEV else "case-server"
-MODIFICATION_SERVER_HOSTNAME = DEV_HOSTNAME + ":5007" if DEV else "network-modification-server"
-S3_MIGRATION_CASE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5500" if DEV else "s3-case-server"
+NETWORK_STORE_SERVER_HOSTNAME = DEV_HOSTNAME + ":8080" if DEV else "network-store-server" # NOSONAR : DEV is manually toggled for local development
+DIRECTORY_SERVER_HOSTNAME = DEV_HOSTNAME + ":5026" if DEV else "directory-server" # NOSONAR : DEV is manually toggled for local development
+DYNAMIC_MAPPING_SERVER_HOSTNAME = DEV_HOSTNAME + ":5036" if DEV else "dynamic-mapping-server" # NOSONAR : DEV is manually toggled for local development
+ACTIONS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5022" if DEV else "actions-server" # NOSONAR : DEV is manually toggled for local development
+FILTER_SERVER_HOSTNAME = DEV_HOSTNAME + ":5027" if DEV else "filter-server" # NOSONAR : DEV is manually toggled for local development
+EXPLORE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5029" if DEV else "explore-server" # NOSONAR : DEV is manually toggled for local development
+CASE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5000" if DEV else "case-server" # NOSONAR : DEV is manually toggled for local development
+MODIFICATION_SERVER_HOSTNAME = DEV_HOSTNAME + ":5007" if DEV else "network-modification-server" # NOSONAR : DEV is manually toggled for local development
+S3_MIGRATION_CASE_SERVER_HOSTNAME = DEV_HOSTNAME + ":5500" if DEV else "s3-case-server" # NOSONAR : DEV is manually toggled for local development
 
-LOADFLOW_SERVER_HOSTNAME = DEV_HOSTNAME + ":5008" if DEV else "loadflow-server"
-DYNAMIC_SIMULATION_SERVER_HOSTNAME = DEV_HOSTNAME + ":5032" if DEV else "dynamic-simulation-server"
-SECURITY_ANALYSIS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5023" if DEV else "security-analysis-server"
-SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5030" if DEV else "sensitivity-analysis-server"
-SHORTCIRCUIT_SERVER_HOSTNAME = DEV_HOSTNAME + ":5031" if DEV else "shortcircuit-server"
-VOLTAGE_INIT_SERVER_HOSTNAME = DEV_HOSTNAME + ":5038" if DEV else "voltage-init-server"
+LOADFLOW_SERVER_HOSTNAME = DEV_HOSTNAME + ":5008" if DEV else "loadflow-server" # NOSONAR : DEV is manually toggled for local development
+DYNAMIC_SIMULATION_SERVER_HOSTNAME = DEV_HOSTNAME + ":5032" if DEV else "dynamic-simulation-server" # NOSONAR : DEV is manually toggled for local development
+SECURITY_ANALYSIS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5023" if DEV else "security-analysis-server" # NOSONAR : DEV is manually toggled for local development
+SENSITIVITY_ANALYSIS_SERVER_HOSTNAME = DEV_HOSTNAME + ":5030" if DEV else "sensitivity-analysis-server" # NOSONAR : DEV is manually toggled for local development
+SHORTCIRCUIT_SERVER_HOSTNAME = DEV_HOSTNAME + ":5031" if DEV else "shortcircuit-server" # NOSONAR : DEV is manually toggled for local development
+VOLTAGE_INIT_SERVER_HOSTNAME = DEV_HOSTNAME + ":5038" if DEV else "voltage-init-server" # NOSONAR : DEV is manually toggled for local development
 
-GRAFANA_HOSTNAME = DEV_HOSTNAME + ":7000" if DEV else "grafana"
+GRAFANA_HOSTNAME = DEV_HOSTNAME + ":7000" if DEV else "grafana" # NOSONAR : DEV is manually toggled for local development
 DEV_ELASTICSEARCH_IP = DEV_HOSTNAME
 DEV_ELASTICSEARCH_URL = HTTP_PROTOCOL + DEV_HOSTNAME + ":9200"
 
@@ -127,7 +127,7 @@ GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
 RECREATE_STUDY_INDICES = STUDY_SERVER_URL + "/supervision/studies/indices"
 DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
-INVALIDATE_STUDY = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/invalidate"
+UNLOAD_STUDY = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/unload"
 GET_STUDIES_INDEXED_STUDIES_COUNT = STUDY_SERVER_URL + "/supervision/studies/indexation-count"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/equipments/indexation-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/indexation-count"
