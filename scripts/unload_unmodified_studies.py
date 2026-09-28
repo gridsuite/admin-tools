@@ -115,7 +115,7 @@ def unload_unmodified_studies(duration, dry_run=False, limit=None, delay=None):
     if delay is not None:
         print(f"\nDelay between requests: {delay}s")
 
-    print("\nnUnloading studies...")
+    print("\nUnloading studies...")
     success_count = 0
     failure_count = 0
     total_elapsed = 0.0
