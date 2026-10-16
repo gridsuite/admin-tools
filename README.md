@@ -78,7 +78,7 @@ You can find a datasource UID ({{DATASOURCE_UID}}) in URL by selecting it in exp
  
 ### Import existing dashboards JSON
 First, only if the forder does not exist, we need to create a folder.
-If the folder already exist skip this step.
+If the folder already exists skip this step.
 Create a folder from the Grafana GUI or execute this command :
 ```py
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
@@ -125,7 +125,7 @@ You can create a subdirectory or use an existing subdirectory
 
 ### Import existing alert-rules JSON
 First, only if the forder does not exist, we need to create a folder.
-If the folder already exist skip this step.
+If the folder already exists skip this step.
 Create a folder from the Grafana GUI or execute this command :
 ```py
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
