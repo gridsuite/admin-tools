@@ -65,8 +65,20 @@ python3 scripts/ES_requests.py -m GET -u /_cat/indices?v
 All post requests are sent with the header "X-Disable-Provenance" set to "true". Without it, all created entities would be read-only.
 See REST API documentation : https://grafana.com/docs/grafana/v11.3/developers/http_api
 
+*Notes:*
+- **DATASOURCE_UID** can be found in URL by editing a datasource in grafana UI*
+- **FOLDER_UID** can be found in URL by clicking on a folder in grafana UI, "Dashboard" menu
+
+For example : you can find a folder UID ({{FOLDER_UID}}) in URL when inspecting/editing it from grafana UI for an existing folder :  
+grafana-ik8s-opf.rte-france.com/dashboards/f/**ef9cbq89g8em8a**/gridsuite 
+or  
+grafana-ik8s-opf.rte-france.com/dashboards/f/**applications_ec52bf07-f55c-4f2c**/?orgId=20  
+You can find a datasource UID ({{DATASOURCE_UID}}) in URL by selecting it in explore menu from grafana UI :  
+//grafana-ik8s-opf.rte-france.com/explore?schemaVersion=1&panes=%7B"jve":%7B"datasource":"**cep8b3zww4e0wb**"
+ 
 ### Import existing dashboards JSON
-First, we need to create a folder.
+First, only if the forder does not exist, we need to create a folder.
+If the folder already exists skip this step.
 Create a folder from the Grafana GUI or execute this command :
 ```py
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
@@ -74,7 +86,7 @@ python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 
 This command should return an "uid" which will be {{FOLDER_UID}} for the next command
 
-Then we can create dashboards in the previously created folder.
+Then we can create dashboards in the previously existing or created folder.
 
 To import all dashboards present in **resources/grafana/dashboards**, execute this command :
 ```py
@@ -86,6 +98,11 @@ To import a single dashboard or multiple dashboards from files, execute this com
 python3 scripts/grafana_create_dashboards.py -f {{PATH_TO_DASHBOARD_FILE_1}} [... -f {{PATH_TO_DASHBOARD_FILE_N}}] -p {{FOLDER_UID}}
 ```
 
+For example :
+```py
+python3 scripts/grafana_create_dashboards.py -f scripts/resources/grafana/dashboards/applications/computations_metrics.json -p applications_ec52bf07-f55c-4f2c
+```
+
 ### Create a new dashboard JSON file
 From local grafana, create the dashboard you want to export as a JSON file
 
@@ -93,7 +110,6 @@ Once done, export it using this curl command :
 ```
 curl localhost:7000/api/dashboards/uid/{{DASHBOARD_UID}} > new_dashboard.json
 ```
-*Note : you can find dashboard UID in URL when inspecting/editing it from grafana UI*
 
 Edit "new_dashboard.json" file, then :
 - replace "uid" value by a new value corresponding to a UUID (you can use https://www.uuidgenerator.net/)
@@ -108,7 +124,8 @@ Save it in **resources/grafana/dashboards** directory
 You can create a subdirectory or use an existing subdirectory
 
 ### Import existing alert-rules JSON
-First, we need to create a folder.
+First, only if the forder does not exist, we need to create a folder.
+If the folder already exists skip this step.
 Create a folder from the Grafana GUI or execute this command :
 ```py
 python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
@@ -116,7 +133,7 @@ python3 scripts/grafana_create_folder.py {{FOLDER_NAME}}
 
 This command should return an "uid" which will be {{FOLDER_UID}} for the next command
 
-Then we can create alert-rules in the previously created folder.
+Then we can create alert-rules in the previously existing or created folder.
 
 To import all alerts present in resources/grafana/alerts (logs for Loki and metrics for Prometheus):
 
@@ -133,9 +150,10 @@ Execute this command :
 python3 scripts/grafana_create_alerts.py -f {{PATH_TO_ALERT_RULES_1}} -f {{PATH_TO_ALERT_RULES_2}} -d {{DATASOURCE_UID}} -p {{FOLDER_UID}}
 ```
 
-*Notes:*
-- **DATASOURCE_UID** can be found in URL by editing a datasource in grafana UI*
-- **FOLDER_UID** can be found in URL by clicking on a folder in grafana UI, "Dashboard" menu
+For example :
+```py
+python3 scripts/grafana_create_dashboards.py -f scripts/resources/grafana/dashboards/applications/computations_metrics.json -p applications_ec52bf07-f55c-4f2c
+```
 
 ### Create a new alert-rule JSON file
 From local grafana, create the alert you want to export as a JSON file
