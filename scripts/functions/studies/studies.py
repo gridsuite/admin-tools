@@ -11,6 +11,8 @@ import constant
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
+# Fetch studies load status by batch of 100
+LOADED_STUDIES_BATCH_SIZE = 100
 
 def get_all_studies_uuid():
     return requests.get(constant.GET_SUPERVISION_STUDIES).json()
@@ -38,9 +40,13 @@ def invalidate_nodes_builds(study_uuid):
     return requests.delete(constant.DELETE_STUDY_NODES_BUILDS.format(studyUuid = study_uuid))
 
 def get_loaded_studies_uuids(study_uuids):
-    if not study_uuids:
-        return []
-    return requests.get(constant.GET_SUPERVISION_LOADED_STUDIES, params = {"ids": study_uuids}).json()
+    loaded_studies_uuids = []
+    for i in range(0, len(study_uuids), LOADED_STUDIES_BATCH_SIZE):
+        batch = study_uuids[i:i + LOADED_STUDIES_BATCH_SIZE]
+        response = requests.get(constant.GET_SUPERVISION_LOADED_STUDIES, params = {"ids": batch})
+        response.raise_for_status()
+        loaded_studies_uuids.extend(response.json())
+    return loaded_studies_uuids
 
 def invalidate_study(study_uuid):
     return requests.delete(constant.INVALIDATE_STUDY.format(studyUuid = study_uuid))
