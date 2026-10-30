@@ -45,5 +45,5 @@ def get_loaded_studies_uuids(study_uuids):
 def unload_study(study_uuid):
     return requests.delete(constant.UNLOAD_STUDY.format(studyUuid = study_uuid))
 
-def recreate_network_modifications_shared_links(study_uuid):
-    return requests.post(constant.RECREATE_NETWORK_MODIFICATIONS_SHARED_LINKS.format(studyUuid = study_uuid), headers=constant.SUPERVISION_USER_ID_HEADERS)
+def recreate_network_modifications_sharing_links(study_uuid):
+    return requests.post(constant.RECREATE_NETWORK_MODIFICATIONS_SHARING_LINKS.format(studyUuid = study_uuid), headers=constant.SUPERVISION_USER_ID_HEADERS)

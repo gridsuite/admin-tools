@@ -12,13 +12,13 @@ from tqdm import tqdm
 
 from functions.plateform.plateform import check_server_status
 from functions.plateform.plateform import get_plateform_info
-from functions.studies.studies import get_all_studies_uuid, recreate_network_modifications_shared_links
+from functions.studies.studies import get_all_studies_uuid, recreate_network_modifications_sharing_links
 
 #
 # @author Sylvain Bouzols <sylvain.bouzols at rte-france.com>
 #
 
-parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to recreate network modifications shared links', )
+parser = argparse.ArgumentParser(description='Send requests to the gridsuite services to recreate network modifications sharing links', )
 
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion or saving request",
                     action="store_true")
@@ -27,7 +27,7 @@ args = parser.parse_args()
 dry_run = args.dry_run
 
 print("---------------------------------------------------------")
-print("Network modifications shared links recreation script")
+print("Network modifications sharing links recreation script")
 if dry_run:
     print("dry-run=" + str(dry_run) + " -> will run without deleting or saving anything (test mode)")
 if constant.DEV:
@@ -48,16 +48,14 @@ print("This script will apply on plateform = " + plateformName )
 print("\n")
 print("===> study-server seems OK ! The script can proceed")
 print("\n")
-# print("Number of modifications with references before recreation = " + get_nb_indexed_modifications())
 studies = get_all_studies_uuid()
 print("For a total of " + str(len(studies)) + " studies")
 print("---------------------------------------------------------")
 if not dry_run:
-    print("Network modifications shared links recreation processing...")
+    print("Network modifications sharing links recreation processing...")
     for study in tqdm(studies):
-        recreate_network_modifications_shared_links(study['id'])
+        recreate_network_modifications_sharing_links(study['id'])
     print("End of recreation")
-    # print("Number of referenced modifications after recreation = " + get_nb_referenced_modifications())
 else:
     print("Nothing has been impacted (dry-run)")
 
