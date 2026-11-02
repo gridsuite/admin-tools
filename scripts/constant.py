@@ -114,7 +114,7 @@ DELETE_FILTERS = FILTER_SERVER_URL + "/filters"
 DELETE_COMPUTATION_RESULTS = STUDY_SERVER_URL + "/supervision/computation/results"
 
 # DIRECTORY ELEMENT SHARING LINKS
-RECREATE_NETWORK_MODIFICATIONS_SHARING_LINKS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/network-modification-sharing-links/recreate"
+RECREATE_NETWORK_MODIFICATIONS_SHARING_LINKS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/network-modifications/sharing-links/recreate"
 
 # DIRECTORY ELEMENT TYPES
 STUDY_ELEMENT_TYPE = "STUDY"
