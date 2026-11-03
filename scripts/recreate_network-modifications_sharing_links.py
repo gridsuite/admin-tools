@@ -54,7 +54,11 @@ print("---------------------------------------------------------")
 if not dry_run:
     print("Network modifications sharing links recreation processing...")
     for study in tqdm(studies):
-        recreate_network_modifications_sharing_links(study['id'])
+        try:
+            recreate_network_modifications_sharing_links(study['id'])
+        except Exception as e:
+            # prevents the progress bar from being disrupted by error messages
+            tqdm.write("Error for study " + study['id'] + " : " + str(e))
     print("End of recreation")
 else:
     print("Nothing has been impacted (dry-run)")
