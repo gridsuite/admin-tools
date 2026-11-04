@@ -36,7 +36,7 @@ directory_id = args.directory_uuid
 print(f"Getting elements from directory {directory_id} on explore-server")
 elements_response = requests.get(
     constant.GET_EXPLORE_DIRECTORY_ELEMENTS.format(directoryUuid=directory_id),
-    headers=headers, timeout=60)
+    headers=headers)
 elements_response.raise_for_status()
 elements = elements_response.json()
 expired_ids = []
@@ -49,6 +49,7 @@ for element in elements:
     if created < cutoff:
         expired_ids.append(str(UUID(element["elementUuid"])))
 
+# Batch delete elements in groups of 50 to avoid exceeding URL length limits
 for start in range(0, len(expired_ids), 50):
     ids = expired_ids[start:start + 50]
     if dry_run:
@@ -56,7 +57,7 @@ for start in range(0, len(expired_ids), 50):
     else:
         response = requests.delete(
             constant.DELETE_EXPLORE_ELEMENTS.format(directoryUuid=directory_id),
-            params={"ids": ids}, headers=headers, timeout=60)
+            params={"ids": ids}, headers=headers)
         response.raise_for_status()
         print(f"Requested deletion of elements: {','.join(ids)}")
 if dry_run:
