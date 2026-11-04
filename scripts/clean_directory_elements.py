@@ -29,7 +29,8 @@ if dry_run:
 if constant.DEV:
     print(f"DEV={constant.DEV} -> hostnames configured for a local execution (172.17.0.1:xxxx)")
 
-headers = {"userId": "cleanup-directory-elements", "roles": "ADMIN_EXPLORE"}
+# Use a role that allows deletion of elements in the directory
+headers = {"userId": "clean-directory-elements", "roles": "ADMIN_EXPLORE"}
 cutoff = datetime.now(timezone.utc) - timedelta(hours=args.older_than_hours)
 
 directory_id = args.directory_uuid
