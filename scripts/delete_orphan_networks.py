@@ -7,33 +7,31 @@
 
 import argparse
 
-import psycopg2
 import requests
 
 import constant
-
-FIND_ORPHAN_NETWORKS_QUERY = """
-SELECT n.uuid, n.id, n.name, n.casedate
-FROM iidm.network n
-WHERE n.variantnum = 0
-  AND NOT EXISTS (SELECT 1 FROM study.root_network r WHERE r.network_uuid = n.uuid)
-"""
+from functions.clean_orphan_elements.clean_orphan_networks import get_network_uuids_from_studies
 
 parser = argparse.ArgumentParser(description="Delete the networks which are not used by any root network")
 parser.add_argument("-n", "--dry-run", help="only list the orphan networks, without deleting them", action="store_true")
 args = parser.parse_args()
 
-connection = psycopg2.connect("")
-cursor = connection.cursor()
-cursor.execute(FIND_ORPHAN_NETWORKS_QUERY)
-orphan_networks = cursor.fetchall()
-connection.close()
+studies_response = requests.get(constant.GET_SUPERVISION_STUDIES)
+studies_response.raise_for_status()
+used_network_uuids = set(get_network_uuids_from_studies(studies_response.json()))
+
+networks_response = requests.get(constant.GET_NETWORKS)
+networks_response.raise_for_status()
+
+orphan_networks = []
+for network in networks_response.json():
+    if network["uuid"] not in used_network_uuids:
+        orphan_networks.append(network)
 
 print("Found " + str(len(orphan_networks)) + " orphan networks")
 
 for network in orphan_networks:
-    network_uuid = network[0]
-    print(network)
+    print(network["uuid"] + " " + network["id"])
     if not args.dry_run:
-        response = requests.delete(constant.DELETE_NETWORKS + "/" + network_uuid)
+        response = requests.delete(constant.DELETE_NETWORKS + "/" + network["uuid"])
         response.raise_for_status()
