@@ -104,6 +104,9 @@ GET_SUPERVISION_STUDIES = STUDY_SERVER_URL + "/supervision/studies"
 GET_SUPERVISION_LOADED_STUDIES = STUDY_SERVER_URL + "/supervision/studies/loaded"
 GET_DYNAMIC_MAPPING_FILTERS = DYNAMIC_MAPPING_SERVER_URL + "/supervision/filters"
 
+GET_EXPLORE_DIRECTORY_ELEMENTS = EXPLORE_SERVER_URL + "/explore/directories/{directoryUuid}/elements"
+DELETE_EXPLORE_ELEMENTS = EXPLORE_SERVER_URL + "/explore/elements/{directoryUuid}"
+
 GET_CONTINGENCY_LISTS = ACTIONS_SERVER_URL + "/supervision/contingency-lists"
 GET_CONTINGENCY_LISTS_METADATA = ACTIONS_SERVER_URL + "/contingency-lists/metadata"
 DELETE_CONTINGENCY_LISTS = ACTIONS_SERVER_URL + "/contingency-lists"
