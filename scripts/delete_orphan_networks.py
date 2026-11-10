@@ -14,6 +14,7 @@ from functions.clean_orphan_elements.clean_orphan_networks import get_network_uu
 
 parser = argparse.ArgumentParser(description="Delete the networks which are not used by any root network")
 parser.add_argument("-n", "--dry-run", help="only list the orphan networks, without deleting them", action="store_true")
+parser.add_argument("-l", "--limit", help="maximum number of orphan networks to delete", type=int)
 args = parser.parse_args()
 
 studies_response = requests.get(constant.GET_SUPERVISION_STUDIES)
@@ -29,6 +30,10 @@ for network in networks_response.json():
         orphan_networks.append(network)
 
 print("Found " + str(len(orphan_networks)) + " orphan networks")
+
+if args.limit is not None and args.limit < len(orphan_networks):
+    print("Limit applied: processing " + str(args.limit) + " out of " + str(len(orphan_networks)) + " orphan networks")
+    orphan_networks = orphan_networks[:args.limit]
 
 for network in orphan_networks:
     print(network["uuid"] + " " + network["id"])

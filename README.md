@@ -220,3 +220,8 @@ Has a test --dry-run mode, which only lists the orphan networks :
 <pre>
     python3 scripts/delete_orphan_networks.py --dry-run
 </pre>
+
+Has a --limit option to delete only a maximum number of orphan networks :
+<pre>
+    python3 scripts/delete_orphan_networks.py --limit 150
+</pre>
