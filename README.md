@@ -207,3 +207,21 @@ Has a test --dry-run mode :
 <pre>
     python3 scripts/clean_orphan_elements.py --dry-run
 </pre>
+
+# Delete orphan networks
+This python script sends requests to the study server and the network store server configured in "constant.py" to find the networks which are not referenced by any root network of a study, then deletes them by sending DELETE requests to the network store server.
+
+Command line to run script (will actually delete the networks) :
+<pre>
+    python3 scripts/delete_orphan_networks.py
+</pre>
+
+Has a test --dry-run mode, which only lists the orphan networks :
+<pre>
+    python3 scripts/delete_orphan_networks.py --dry-run
+</pre>
+
+Has a --limit option to delete only a maximum number of orphan networks :
+<pre>
+    python3 scripts/delete_orphan_networks.py --limit 150
+</pre>
