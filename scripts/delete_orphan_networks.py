@@ -6,8 +6,11 @@
 #
 
 import argparse
+import sys
+import time
 
 import requests
+from tqdm import tqdm
 
 import constant
 from functions.clean_orphan_elements.clean_orphan_networks import get_network_uuids_from_studies
@@ -35,8 +38,37 @@ if args.limit is not None and args.limit < len(orphan_networks):
     print("Limit applied: processing " + str(args.limit) + " out of " + str(len(orphan_networks)) + " orphan networks")
     orphan_networks = orphan_networks[:args.limit]
 
+if not orphan_networks:
+    print("No orphan network to process.")
+    sys.exit(0)
+
+print("Selected orphan networks:")
 for network in orphan_networks:
-    print(network["uuid"] + " " + network["id"])
-    if not args.dry_run:
-        response = requests.delete(constant.DELETE_NETWORKS + "/" + network["uuid"])
-        response.raise_for_status()
+    print("  - " + network["uuid"] + " | " + network["id"])
+
+if args.dry_run:
+    print("\nDry run mode: no network will be deleted.")
+else:
+    print("\nDeleting orphan networks...")
+    success_count = 0
+    failure_count = 0
+    total_elapsed = 0.0
+    for network in tqdm(orphan_networks):
+        network_uuid = network["uuid"]
+        start = time.time()
+        try:
+            response = requests.delete(constant.DELETE_NETWORKS + "/" + network_uuid)
+            response.raise_for_status()
+            success_count += 1
+        except Exception as e:
+            failure_count += 1
+            tqdm.write(f"  FAILED - {network_uuid} (error: {str(e)})")
+            if isinstance(e, requests.exceptions.RequestException) and e.response is not None:
+                tqdm.write("Response body: " + repr(e.response.text))
+            tqdm.write("")
+        finally:
+            elapsed = time.time() - start
+            total_elapsed += elapsed
+            tqdm.write(f"  {network_uuid} - {elapsed:.2f}s")
+
+    print(f"\nDone. {success_count} succeeded, {failure_count} failed. Total deletion time: {total_elapsed:.2f}s (avg {total_elapsed / len(orphan_networks):.2f}s/network)")
