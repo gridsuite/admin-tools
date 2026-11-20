@@ -225,3 +225,14 @@ Has a --limit option to delete only a maximum number of orphan networks :
 <pre>
     python3 scripts/delete_orphan_networks.py --limit 150
 </pre>
+
+## Recreate network modifications sharing links
+By default, this script recreates sharing links for all studies. Pass one or more study UUIDs with `--study-uuids` to process only those studies:
+```py
+python3 scripts/recreate_network-modifications_sharing_links.py --study-uuids {{STUDY_UUID_1}} {{STUDY_UUID_2}}
+```
+
+Use `--dry-run` to verify the selected studies without sending recreation requests:
+```py
+python3 scripts/recreate_network-modifications_sharing_links.py --study-uuids {{STUDY_UUID}} --dry-run
+```

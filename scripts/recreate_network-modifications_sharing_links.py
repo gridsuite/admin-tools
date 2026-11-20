@@ -22,6 +22,7 @@ parser = argparse.ArgumentParser(description='Send requests to the gridsuite ser
 
 parser.add_argument("-n", "--dry-run", help="test mode (default) will not execute any deletion or saving request",
                     action="store_true")
+parser.add_argument("-s", "--study-uuids", nargs="+", help="study UUIDs to process (default: all studies)")
 
 args = parser.parse_args()
 dry_run = args.dry_run
@@ -48,17 +49,17 @@ print("This script will apply on plateform = " + plateformName )
 print("\n")
 print("===> study-server seems OK ! The script can proceed")
 print("\n")
-studies = get_all_studies_uuid()
-print("For a total of " + str(len(studies)) + " studies")
+study_uuids = args.study_uuids or [study['id'] for study in get_all_studies_uuid()]
+print("For a total of " + str(len(study_uuids)) + " studies")
 print("---------------------------------------------------------")
 if not dry_run:
     print("Network modifications sharing links recreation processing...")
-    for study in tqdm(studies):
+    for study_uuid in tqdm(study_uuids):
         try:
-            recreate_network_modifications_sharing_links(study['id'])
+            recreate_network_modifications_sharing_links(study_uuid)
         except Exception as e:
             # prevents the progress bar from being disrupted by error messages
-            tqdm.write("Error for study " + study['id'] + " : " + str(e))
+            tqdm.write("Error for study " + study_uuid + " : " + str(e))
     print("End of recreation")
 else:
     print("Nothing has been impacted (dry-run)")
