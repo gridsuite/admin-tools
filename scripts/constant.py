@@ -80,6 +80,7 @@ VOLTAGE_INIT_SERVER_URL = HTTP_PROTOCOL + VOLTAGE_INIT_SERVER_HOSTNAME + API_VER
 
 # COMMON HEADERS
 SUPERVISION_USER_ID_HEADERS = {"userId": "supervision"}
+ADMIN_EXPLORE_HEADERS = {"userId": "supervision", "roles": "ADMIN_EXPLORE"}
 
 # PATHS
 GET_ACTUATOR_INFO = HTTP_PROTOCOL + "{serverHostName}/actuator/info"
@@ -136,7 +137,7 @@ GET_PLATEFORM_INFO = GRIDEXPLORE_URL + "/idpSettings.json"
 RECREATE_STUDY_INDICES = STUDY_SERVER_URL + "/supervision/studies/indices"
 DELETE_STUDY_INDEXED_EQUIPMENTS_BY_NETWORK_UUID = STUDY_SERVER_URL + "/supervision/studies/{networkUuid}/indexed-equipments-by-network-uuid"
 DELETE_STUDY_NODES_BUILDS = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/nodes/builds"
-UNLOAD_STUDY = STUDY_SERVER_URL + "/supervision/studies/{studyUuid}/unload"
+UNLOAD_STUDY = STUDY_SERVER_URL + "/studies/{studyUuid}/unload"
 GET_STUDIES_INDEXED_STUDIES_COUNT = STUDY_SERVER_URL + "/supervision/studies/indexation-count"
 GET_STUDIES_INDEXED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/equipments/indexation-count"
 GET_STUDIES_INDEXED_TOMBSTONED_EQUIPMENTS_COUNT = STUDY_SERVER_URL + "/supervision/tombstoned-equipments/indexation-count"
